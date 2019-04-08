@@ -1,0 +1,11 @@
+@font-face{
+    font-family: "Source Sans Pro";
+    src: url("../font/SourceSansPro-Light.ttf");
+    font-weight: 300;
+}
+
+@font-face{
+    font-family: "Dosis";
+    src: url("../font/Dosis-Medium-3.ttf");
+    font-weight: 300;
+}
