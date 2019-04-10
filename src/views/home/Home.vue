@@ -1,19 +1,123 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+
+  <HomeWrapper>
+
+    <!--侧边栏文章列表-->
+    <ArticleList>
+      <transition-group name="slide-up-fade">
+        <ArticleSummary :article=article
+                        v-for="article in articleList"
+                        :key="article.article_id"/>
+      </transition-group>
+
+      <ForMoreWrapper v-if="articleList.length!==0">
+        <ForMore :noMore="noMore"
+                 :loading="loadingMore"
+                 :moreDataGetter="actionGetArticleListOfHome"/>
+      </ForMoreWrapper>
+
+      <!--loading文章列表-->
+      <LoadingArticleSummary v-if="articleList.length===0">
+        <Loading/>
+      </LoadingArticleSummary>
+    </ArticleList>
+
+
+    <!--文章详情-->
+    <ArticleDetail v-show="!loadingArticleDetail">
+      <ArticleDetailFixer>
+          <RouterView></RouterView>
+      </ArticleDetailFixer>
+    </ArticleDetail>
+
+    <!--loading文章详情-->
+    <transition name="fade">
+      <LoadingWrapper v-show="loadingArticleDetail">
+        <Loading/>
+      </LoadingWrapper>
+    </transition>
+
+  </HomeWrapper>
+
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import {mapActions, mapState} from 'vuex'
+import Article from '@/components/article/Article.vue'
+import ArticleSummary from '@/components/articleSummary/ArticleSummary.vue'
+import {Loading} from '@/components'
+import {ForMore} from '@/components'
+import {HomeWrapper,
+        ArticleList,
+        LoadingArticleSummary,
+        ArticleDetail,
+        LoadingWrapper,
+        ArticleDetailFixer,
+        ForMoreWrapper} from './style'
+import {ACTION_GET_ARTICLE_LIST_DATA_HOME} from "../../store/modules/api/actionTypeConstant";
 
 
 export default {
-  name: 'home',
-  components: {
-      HelloWorld
-  }
+
+    created() {
+
+        this.actionGetArticleListOfHome()
+
+    },
+
+    computed: {
+        ...mapState({
+            articleList: state => state.home.articleList,
+            loadingArticleDetail: state => state.home.loadingArticleDetail,
+            noMore: state => (state.home.nextPage === state.home.maxPage),
+            loadingMore: state => state.home.loadingMore
+        })
+    },
+
+    methods: {
+        ...mapActions({
+            actionGetArticleListOfHome: ACTION_GET_ARTICLE_LIST_DATA_HOME
+        })
+    },
+
+    components: {
+        Article,
+        ArticleSummary,
+        LoadingArticleSummary,
+        HomeWrapper,
+        ArticleList,
+        ArticleDetail,
+        Loading,
+        ForMore,
+        LoadingWrapper,
+        ArticleDetailFixer,
+        ForMoreWrapper
+    }
 }
 </script>
+
+<style scoped>
+
+  .slide-up-fade-enter-active {
+    transition: all .4s ease;
+  }
+  .slide-up-fade-leave-active {
+    transition: all .4s ease;
+  }
+  .slide-up-fade-enter, .slide-up-fade-leave-to {
+    transform: translateY(50px);
+    opacity: 0;
+    filter: brightness(70%);
+  }
+
+  .fade-enter-active {
+    transition: all .2s ease;
+  }
+  .fade-leave-active {
+    transition: all .2s ease;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0.5;
+  }
+
+</style>

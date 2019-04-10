@@ -1,0 +1,3 @@
+export const ACTION_GET_ARTICLE_DATA_ARTICLE = 'action_getArticleData_article'
+
+export const ACTION_GET_ARTICLE_LIST_DATA_HOME = 'action_getArticleListData_home'

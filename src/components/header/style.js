@@ -1,6 +1,10 @@
 import styled from 'vue-styled-components'
 
 export const HeaderWrapper = styled.div`
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background: white;
         padding: 0 2rem; 
         display: flex;
         align-items: center;

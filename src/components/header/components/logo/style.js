@@ -28,6 +28,6 @@ export const SmallOther = styled.span`
 
 export const CharLower = styled.div`
         font-size: 0.9rem;
-        font-family: 'Dosis', SimSun, Arial;
+        font-family: 'Source Sans Pro', SimSun, Arial;
         border-top: solid 1px ${window.metaColor};
     `

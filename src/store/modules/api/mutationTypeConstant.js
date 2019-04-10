@@ -1,0 +1,7 @@
+export const MUTATION_RESOVLE_ARTICLE_FROM_API = 'mutation_resolveArticle_api'
+
+export const MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME_FROM_API = 'mutation_resolveArticleListDataToHome_api'
+
+export const MUTATION_TRIGGER_IS_LOADING = 'mutation_triggerIsLoading'
+
+export const MUTATION_RECORD_CURRENT_ARTICLE_ID_ARTICLE_FROM_API = 'mutation_recordCurrentArticleId_article_api'

@@ -1,0 +1,98 @@
+<template>
+    <ArticleSummaryWrapper v-bind:class="{active: isActive}"
+                           v-on:click="goToTheArticle">
+
+        <Title>
+            <Label>
+                [{{article.article_label}}]
+            </Label>
+            {{article.article_title}}
+        </Title>
+
+        <ContentAndImage>
+            <Content withPreviewImage="withPreviewImage">
+                {{article.article_summary}}
+            </Content>
+            <PreviewImage v-if="withPreviewImage"
+                          class="lazyload"
+                          :data-src="article.article_previewImageUrl"
+                          :src="defaultImageSrc"/>
+        </ContentAndImage>
+
+        <Info>
+            <InfoItem>
+                <i class="fa fa-pencil"/>&nbsp;{{article.article_author}}
+            </InfoItem>
+            &nbsp;&nbsp;
+            <InfoItem>
+                {{DateFormat('yyyy-MM-dd',new Date(article.article_releaseTime))}}
+            </InfoItem>
+            &nbsp;|&nbsp;
+            <InfoItem>
+                <span class="iconfont">&#xe634;</span>&nbsp;
+                {{article.article_countOfAllComment}}
+            </InfoItem>
+        </Info>
+
+    </ArticleSummaryWrapper>
+</template>
+
+<script>
+    import {DateFormat} from "../../exJs/dateFormatUtil";
+    import {ArticleSummaryWrapper,
+            Title,
+            Label,
+            ContentAndImage,
+            Content,
+            PreviewImage,
+            Info,
+            InfoItem} from './style'
+    import {mapState} from "vuex";
+
+    export default {
+        props: {
+            article: {
+                type: Object,
+                required: true
+            }
+        },
+        data(){
+            return {
+                defaultImageSrc: window.defaultImageSrc
+            }
+        },
+        computed: {
+            ...mapState({
+                currentArticleId: state => state.article.currentArticleId
+            }),
+            withPreviewImage(){
+                return (this.article.article_previewImageUrl !== null) && (this.article.article_previewImageUrl !== '')
+            },
+            isActive(){
+                return this.article.article_id.toString() === this.currentArticleId
+            }
+        },
+        methods: {
+            DateFormat,
+            goToTheArticle() {
+                this.$router.push({path: '/home/article/' + this.article.article_id})
+            }
+        },
+        components: {
+            ArticleSummaryWrapper,
+            Title,
+            Label,
+            ContentAndImage,
+            Content,
+            PreviewImage,
+            Info,
+            InfoItem
+        }
+    }
+</script>
+
+<style scoped>
+.active{
+    background: #F0F0F0;
+}
+</style>
