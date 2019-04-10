@@ -4,11 +4,13 @@ export default {
 
         payload.article.article_content = generateArticleContentWithLazyloadImage(payload.article.article_content)
 
+        if(state.article.article_id === payload.article.article_id){
+            return
+        }
+
         state.article = payload.article
 
     },
-
-
 
     mutation_recordCurrentArticleId_article_api(state, payload){
         state.currentArticleId = payload.currentArticleId

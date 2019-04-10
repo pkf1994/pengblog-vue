@@ -9,6 +9,10 @@ export default {
     //获取文章详情
     async action_getArticleData_article(context,payload) {
 
+        if(parseInt(payload.article_id) === context.rootState.article.article.article_id){
+            return
+        }
+
         //打开loading状态
         const payload_ = {
             id: 'home_article',

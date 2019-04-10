@@ -24,18 +24,19 @@
 
 
     <!--文章详情-->
-    <ArticleDetail v-show="!loadingArticleDetail">
-      <ArticleDetailFixer>
-          <RouterView></RouterView>
-      </ArticleDetailFixer>
-    </ArticleDetail>
+    <transition name="slide-up-fade">
+      <ArticleDetail v-if="refreshIndex">
+        <ArticleDetailFixer>
+
+            <RouterView></RouterView>
+        </ArticleDetailFixer>
+      </ArticleDetail>
+    </transition>
 
     <!--loading文章详情-->
-    <transition name="fade">
       <LoadingWrapper v-show="loadingArticleDetail">
         <Loading/>
       </LoadingWrapper>
-    </transition>
 
   </HomeWrapper>
 
@@ -59,6 +60,12 @@ import {ACTION_GET_ARTICLE_LIST_DATA_HOME} from "../../store/modules/api/actionT
 
 export default {
 
+    data(){
+      return {
+        refreshIndex: true
+      }
+    },
+
     created() {
 
         this.actionGetArticleListOfHome()
@@ -68,6 +75,7 @@ export default {
     computed: {
         ...mapState({
             articleList: state => state.home.articleList,
+            article: state => state.article.article,
             loadingArticleDetail: state => state.home.loadingArticleDetail,
             noMore: state => (state.home.nextPage === state.home.maxPage),
             loadingMore: state => state.home.loadingMore
@@ -78,6 +86,13 @@ export default {
         ...mapActions({
             actionGetArticleListOfHome: ACTION_GET_ARTICLE_LIST_DATA_HOME
         })
+    },
+
+    watch: {
+        article(){
+          this.refreshIndex = false
+          this.$nextTick(() => (this.refreshIndex = true))
+      }
     },
 
     components: {
@@ -111,10 +126,9 @@ export default {
   }
 
   .fade-enter-active {
-    transition: all .2s ease;
+    transition: all .4s ease;
   }
   .fade-leave-active {
-    transition: all .2s ease;
   }
   .fade-enter, .fade-leave-to {
     opacity: 0.5;

@@ -2,7 +2,7 @@
     <ArticleWrapper>
 
         <!--题图-->
-        <ArticleTitleImage v-if="refreshIndex && withTitleImage"
+        <ArticleTitleImage v-if="withTitleImage"
                            class="lazyload"
                            :data-src="article.article_titleImageUrl"
                            :src="defaultImageSrc"/>
@@ -32,19 +32,14 @@
                 发布于: {{DateFormat('yyyy-MM-dd', new Date(article.article_releaseTime))}}
             </ArticleInfo>
         </ArticleMultiContent>
-
-
-
         <!--分享-->
         <!--<Share/>-->
-
-
 
     </ArticleWrapper>
 </template>
 
 <script>
-    import {mapState,mapActions} from 'vuex'
+    import {mapState, mapActions, mapMutations} from 'vuex'
     import {DateFormat} from '@/exJs/dateFormatUtil'
     //import {Share} from './components'
     import {ArticleWrapper,
@@ -54,6 +49,7 @@
             ArticleContent,ArticleMultiContent} from './style'
 
     import {ACTION_GET_ARTICLE_DATA_ARTICLE} from "../../store/modules/api/actionTypeConstant";
+    import {MUTATION_RECORD_CURRENT_ARTICLE_ID_ARTICLE_FROM_API} from "../../store/modules/api/mutationTypeConstant";
 
     export default {
 
@@ -77,6 +73,9 @@
             ...mapActions({
                 actionGetArticleData: ACTION_GET_ARTICLE_DATA_ARTICLE
             }),
+            ...mapMutations({
+                recordCurrentArticleId: MUTATION_RECORD_CURRENT_ARTICLE_ID_ARTICLE_FROM_API
+            }),
             DateFormat
         },
 
@@ -85,14 +84,13 @@
             this.actionGetArticleData({article_id: this.article_id})
         },
 
+        mounted(){
+            window.scrollTo(0,0)
+        },
+
         watch: {
             article_id(){
                 this.actionGetArticleData({article_id: this.article_id})
-                window.scrollTo(0,0)
-            },
-            article(){
-                this.refreshIndex = false
-                this.$nextTick(() => (this.refreshIndex = true))
             }
         },
 

@@ -73,7 +73,7 @@ export const LoadingWrapper = styled.div`
         bottom: 0;
         right: 0;
         background: white;
-        
+        opacity: 0.5;
          @media(min-width:${window.milePost}px){
             left: 350px;
         }
