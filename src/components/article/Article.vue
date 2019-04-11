@@ -31,9 +31,13 @@
             <ArticleInfo>
                 发布于: {{DateFormat('yyyy-MM-dd', new Date(article.article_releaseTime))}}
             </ArticleInfo>
+
+            <Share/>
+
+            <Comments/>
+
         </ArticleMultiContent>
-        <!--分享-->
-        <!--<Share/>-->
+
 
     </ArticleWrapper>
 </template>
@@ -41,15 +45,19 @@
 <script>
     import {mapState, mapActions, mapMutations} from 'vuex'
     import {DateFormat} from '@/exJs/dateFormatUtil'
-    //import {Share} from './components'
+    import {Share,Comments} from './components'
     import {ArticleWrapper,
             ArticleTitleImage,
             ArticleTitle,
             ArticleInfo,
             ArticleContent,ArticleMultiContent} from './style'
 
-    import {ACTION_GET_ARTICLE_DATA_ARTICLE} from "../../store/modules/api/actionTypeConstant";
-    import {MUTATION_RECORD_CURRENT_ARTICLE_ID_ARTICLE_FROM_API} from "../../store/modules/api/mutationTypeConstant";
+    import {
+        ACTION_GET_ARTICLE_DATA_ARTICLE,
+        ACTION_GET_TOP_COMMENT_LIST_OF_SPECIFIC_ARTICLE_ARTICLE,
+        MUTATION_RECORD_CURRENT_ARTICLE_ID_ARTICLE_FROM_API,
+        MUTATION_RESET_PAGINATION_INDEX_OF_TOP_COMMENT_LIST_OF_SPECIFIC_ARTICLE
+    } from "../../store/modules/api/constant";
 
     export default {
 
@@ -71,17 +79,21 @@
 
         methods: {
             ...mapActions({
-                actionGetArticleData: ACTION_GET_ARTICLE_DATA_ARTICLE
+                action_GetArticleData: ACTION_GET_ARTICLE_DATA_ARTICLE,
+                action_GetCommentListData: ACTION_GET_TOP_COMMENT_LIST_OF_SPECIFIC_ARTICLE_ARTICLE
             }),
             ...mapMutations({
-                recordCurrentArticleId: MUTATION_RECORD_CURRENT_ARTICLE_ID_ARTICLE_FROM_API
+                mutation_recordCurrentArticleId: MUTATION_RECORD_CURRENT_ARTICLE_ID_ARTICLE_FROM_API,
+                mutation_resetPaginationIndexOfTopCommentListOfSpecificArticle: MUTATION_RESET_PAGINATION_INDEX_OF_TOP_COMMENT_LIST_OF_SPECIFIC_ARTICLE
             }),
             DateFormat
         },
 
 
         created(){
-            this.actionGetArticleData({article_id: this.article_id})
+
+            this.action_GetArticleData({article_id: this.article_id})
+            this.action_GetCommentListData({article_id: this.article_id})
         },
 
         mounted(){
@@ -90,11 +102,14 @@
 
         watch: {
             article_id(){
-                this.actionGetArticleData({article_id: this.article_id})
+                this.mutation_resetPaginationIndexOfTopCommentListOfSpecificArticle()
+                this.action_GetArticleData({article_id: this.article_id})
             }
         },
 
         components: {
+            Share,
+            Comments,
             ArticleWrapper,
             ArticleTitleImage,
             ArticleTitle,

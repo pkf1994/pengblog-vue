@@ -1,8 +1,11 @@
-import {ArticleRequest} from './request'
-import {MUTATION_RESOVLE_ARTICLE_FROM_API,
-        MUTATION_TRIGGER_IS_LOADING,
-        MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME_FROM_API,
-        MUTATION_RECORD_CURRENT_ARTICLE_ID_ARTICLE_FROM_API} from "./mutationTypeConstant";
+import {ArticleRequest,CommentRequest} from './request'
+import {
+    MUTATION_RESOVLE_ARTICLE_FROM_API,
+    MUTATION_TRIGGER_IS_LOADING,
+    MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME_FROM_API,
+    MUTATION_RECORD_CURRENT_ARTICLE_ID_ARTICLE_FROM_API, MUTATION_RESOVLE_TOP_COMMENT_LIST_OF_SPECIFIC_ARTICLE_FROM_API
+} from "./constant";
+import {MUTATION_TRIGGER_SHOW_NOTICE} from "../notice/constant";
 
 export default {
 
@@ -54,7 +57,69 @@ export default {
             context.commit(MUTATION_TRIGGER_IS_LOADING, payload____)
 
         }catch(err){
+
+            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,({
+                noticeContent: '获取文章数据失败',
+                show: true
+            }))
+
+        }
+
+    },
+
+    //获取article对应的topCommentList
+    async action_getTopCommentListOfSpecificArticle_article(context,payload){
+
+        //trigger forMore组件为loading状态
+        const payload_ = {
+            id: 'article_forMore',
+            loading: true
+        }
+
+        context.commit(MUTATION_TRIGGER_IS_LOADING, payload_)
+
+        //如果此时存在未完成的同类请求，取消它
+        if(window.RequestTopCommentListOfSpecificArticleAxiosSource){
+            window.RequestTopCommentListOfSpecificArticleAxiosSource.cancel('Cancel')
+        }
+
+        try{
+
+            const payload__ = {
+                article_id: payload.article_id,
+                startIndex: context.rootState.article.startIndex,
+                pageScale: context.rootState.article.pageScale
+            }
+
+            const res = await CommentRequest.RequestTopCommentList(payload__)
+
+            window.RequestTopCommentListOfSpecificArticleAxiosSource = undefined
+
+            const payload___ = {
+                commentList: res.data.commentList,
+                countOfAllComment: res.data.countOfComment,
+                maxPage: res.data.maxPage
+            }
+
+            context.commit(MUTATION_RESOVLE_TOP_COMMENT_LIST_OF_SPECIFIC_ARTICLE_FROM_API,payload___)
+
+            //关闭loading状态
+            const payload____ = {
+                id: 'article_forMore',
+                loading: false
+            }
+
+            context.commit(MUTATION_TRIGGER_IS_LOADING, payload____)
+
+        }catch(err){
+
             console.log(err)
+
+            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,({
+                noticeContent: '获取评论数据失败',
+                show: true
+            }))
+
         }
 
     },
@@ -87,8 +152,20 @@ export default {
             context.commit(MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME_FROM_API,payload__)
 
         }catch(err){
-            console.log(err)
+
+            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,({
+                noticeContent: '获取文章列表数据失败',
+                show: true
+            }))
+
         }
 
     }
+}
+
+
+const timeout = (ms) => {
+    return new Promise((resolve) => {
+        setTimeout(resolve, ms)
+    })
 }

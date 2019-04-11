@@ -1,7 +1,6 @@
-import {MUTATION_TRIGGER_IS_LOADING} from "../api/mutationTypeConstant";
 
 export default {
-    mutation_resolveArticleListDataToHome_api(state,payload){
+    mutation_resolveArticleListDataToHome(state,payload){
 
         state.articleList = state.articleList.concat(payload.articleList)
 

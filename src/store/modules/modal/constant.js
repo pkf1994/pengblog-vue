@@ -1,0 +1,1 @@
+export const MUTATION_TRIGGER_SHOW_MODAL = 'mutation_triggerShowModal'

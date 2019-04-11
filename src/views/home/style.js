@@ -66,14 +66,17 @@ export const ArticleDetailFixer = styled.div`
         }
     `
 
-export const LoadingWrapper = styled.div`
+const loadingWrapperProps = {
+    opaque: Boolean
+}
+export const LoadingWrapper = styled('div',loadingWrapperProps)`
         position: fixed;
         top: ${window.heightOfHeader};
         left: 300px;
         bottom: 0;
         right: 0;
         background: white;
-        opacity: 0.5;
+        opacity: ${props => props.opaque ? '1' : '0.5'};
          @media(min-width:${window.milePost}px){
             left: 350px;
         }

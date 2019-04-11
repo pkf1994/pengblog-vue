@@ -27,14 +27,14 @@
     <transition name="slide-up-fade">
       <ArticleDetail v-if="refreshIndex">
         <ArticleDetailFixer>
-
             <RouterView></RouterView>
         </ArticleDetailFixer>
       </ArticleDetail>
     </transition>
 
     <!--loading文章详情-->
-      <LoadingWrapper v-show="loadingArticleDetail">
+      <LoadingWrapper v-show="loadingArticleDetail"
+                      :opaque="!article.article_id">
         <Loading/>
       </LoadingWrapper>
 
@@ -55,7 +55,7 @@ import {HomeWrapper,
         LoadingWrapper,
         ArticleDetailFixer,
         ForMoreWrapper} from './style'
-import {ACTION_GET_ARTICLE_LIST_DATA_HOME} from "../../store/modules/api/actionTypeConstant";
+import {ACTION_GET_ARTICLE_LIST_DATA_HOME} from "../../store/modules/api/constant";
 
 
 export default {
@@ -89,7 +89,12 @@ export default {
     },
 
     watch: {
-        article(){
+        article(newArticle,oldArticle){
+
+          //如果是第一次加载，则不刷新article组件
+          if(!oldArticle.article_id){
+              return
+          }
           this.refreshIndex = false
           this.$nextTick(() => (this.refreshIndex = true))
       }

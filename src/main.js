@@ -8,9 +8,11 @@ import './assets/iconfont/iconfont.css'
 import './registerServiceWorker'
 import './style.css'
 import '@/assets/style'
+import {MUTATION_TRIGGER_SHOW_NOTICE} from "./store/modules/notice/constant";
 
 Vue.config.productionTip = false
 
+Vue.prototype.notify = (payload) => {store.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload)}
 
 new Vue({
   router,
