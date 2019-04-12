@@ -8,14 +8,14 @@ export const ForMoreWrapper = styled.div`
         align-items: center;
     `
 
-export const NoMore = styled.div`
+export const NoMore = styled('div',{fontSize: String})`
         color:'#BB0025';
-        font-size: 1rem;
+        font-size: ${props => props.fontSize ? props.fontSize : '1rem'};
     `
 
-export const ClickToGetMore = styled.div`
+export const ClickToGetMore = styled('div',{fontSize: String})`
         color: rgb(23, 81, 153);
-        font-size: 1rem;
+        font-size: ${props => props.fontSize ? props.fontSize : '1rem'};
         cursor: pointer;
         &:hover{
             text-decoration: underline;

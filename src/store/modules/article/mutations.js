@@ -12,7 +12,7 @@ export default {
 
     },
 
-    mutation_resolveTopCommentListOfSpecificArticle(state,payload){
+    mutation_resolveTopCommentList(state,payload){
 
         state.commentList = uniqueCommentList(state.commentList.concat(payload.commentList))
 
@@ -30,7 +30,7 @@ export default {
         state.currentArticleId = payload.currentArticleId
     },
 
-    mutation_resetPaginationIndexOfTopCommentListOfSpecificArticle(state){
+    mutation_resetPaginationIndexOfTopCommentList(state){
 
         console.log('reset')
 
@@ -39,6 +39,14 @@ export default {
         state.nextPage = resetState.nextPage
 
         state.maxPage = resetState.maxPage
+
+        state.commentList = resetState.commentList
+    },
+
+    mutation_triggerIsLoading(state,payload) {
+        if(payload.id === 'article_forMore'){
+            state.loadingMoreComment = payload.loading
+        }
     }
 
 }

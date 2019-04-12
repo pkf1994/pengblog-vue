@@ -34,7 +34,7 @@
 
             <Share/>
 
-            <Comments/>
+            <Comments :article_id="article_id"/>
 
         </ArticleMultiContent>
 
@@ -61,7 +61,9 @@
 
     export default {
 
-        props:['article_id'],
+        props: {
+            article_id: String
+        },
 
         data(){
             return {
@@ -72,7 +74,6 @@
 
         computed: {...mapState({
                 article: state => state.article.article,
-                isLoading: state => state.article.isLoading,
                 withTitleImage: state => (state.article.article.article_titleImageUrl !== undefined) && (state.article.article.article_titleImageUrl !== '')
             }),
         },
@@ -80,20 +81,16 @@
         methods: {
             ...mapActions({
                 action_GetArticleData: ACTION_GET_ARTICLE_DATA_ARTICLE,
-                action_GetCommentListData: ACTION_GET_TOP_COMMENT_LIST_OF_SPECIFIC_ARTICLE_ARTICLE
             }),
             ...mapMutations({
                 mutation_recordCurrentArticleId: MUTATION_RECORD_CURRENT_ARTICLE_ID_ARTICLE_FROM_API,
-                mutation_resetPaginationIndexOfTopCommentListOfSpecificArticle: MUTATION_RESET_PAGINATION_INDEX_OF_TOP_COMMENT_LIST_OF_SPECIFIC_ARTICLE
             }),
             DateFormat
         },
 
 
         created(){
-
             this.action_GetArticleData({article_id: this.article_id})
-            this.action_GetCommentListData({article_id: this.article_id})
         },
 
         mounted(){
@@ -102,7 +99,6 @@
 
         watch: {
             article_id(){
-                this.mutation_resetPaginationIndexOfTopCommentListOfSpecificArticle()
                 this.action_GetArticleData({article_id: this.article_id})
             }
         },

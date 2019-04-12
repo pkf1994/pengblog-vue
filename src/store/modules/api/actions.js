@@ -3,7 +3,8 @@ import {
     MUTATION_RESOVLE_ARTICLE_FROM_API,
     MUTATION_TRIGGER_IS_LOADING,
     MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME_FROM_API,
-    MUTATION_RECORD_CURRENT_ARTICLE_ID_ARTICLE_FROM_API, MUTATION_RESOVLE_TOP_COMMENT_LIST_OF_SPECIFIC_ARTICLE_FROM_API
+    MUTATION_RECORD_CURRENT_ARTICLE_ID_ARTICLE_FROM_API,
+    MUTATION_RESOVLE_TOP_COMMENT_LIST
 } from "./constant";
 import {MUTATION_TRIGGER_SHOW_NOTICE} from "../notice/constant";
 
@@ -68,7 +69,7 @@ export default {
     },
 
     //获取article对应的topCommentList
-    async action_getTopCommentListOfSpecificArticle_article(context,payload){
+    async action_getTopCommentList(context,payload){
 
         //trigger forMore组件为loading状态
         const payload_ = {
@@ -101,7 +102,7 @@ export default {
                 maxPage: res.data.maxPage
             }
 
-            context.commit(MUTATION_RESOVLE_TOP_COMMENT_LIST_OF_SPECIFIC_ARTICLE_FROM_API,payload___)
+            context.commit(MUTATION_RESOVLE_TOP_COMMENT_LIST,payload___)
 
             //关闭loading状态
             const payload____ = {
@@ -160,6 +161,26 @@ export default {
 
         }
 
+    },
+
+    //获取subCommentList
+    async action_getSubCommentList(context,payload) {
+
+        payload.loadingMoreSubComment = true
+
+        const payload_ = {
+            comment_id: payload.comment.comment_id,
+            startIndex: payload.startIndex,
+            pageScale: payload.pageScale
+        }
+
+        const res = await CommentRequest.RequestSubCommentList(payload_)
+
+        payload.subCommentList = payload.subCommentList.concat(res.data.subCommentList)
+        payload.maxPage = res.data.maxPage
+        payload.startIndex = payload.startIndex + payload.pageScale
+        payload.nextPage = payload.nextPage + 1
+        payload.loadingMoreSubComment = false
     }
 }
 

@@ -24,13 +24,13 @@
 
 
     <!--文章详情-->
-    <transition name="slide-up-fade">
-      <ArticleDetail v-if="refreshIndex">
+      <ArticleDetail >
         <ArticleDetailFixer>
-            <RouterView></RouterView>
+          <transition name="slide-up-fade">
+            <RouterView v-if="refreshIndex"></RouterView>
+          </transition>
         </ArticleDetailFixer>
       </ArticleDetail>
-    </transition>
 
     <!--loading文章详情-->
       <LoadingWrapper v-show="loadingArticleDetail"

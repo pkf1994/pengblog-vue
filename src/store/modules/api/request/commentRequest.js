@@ -12,3 +12,13 @@ export function RequestTopCommentList(payload) {
 
     return axios.get(Api.API_GET_TOP_LEVEL_COMMENT_LIST_BY_LIMITINDEX, config)
 }
+
+export function RequestSubCommentList(payload) {
+
+
+    let config = {
+        params: payload
+    }
+
+    return axios.get(Api.API_GET_SUB_COMMENT_LIST, config)
+}
