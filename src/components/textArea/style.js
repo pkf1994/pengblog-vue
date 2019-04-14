@@ -4,14 +4,15 @@ const backgroundColor = '#f7f7f7'
 
 export const TextareaWrapper = styled.div`
         position: relative;
+        display: flex;
     `
 
 export const Textarear = styled('textarea', {showWarn: Boolean})`
+        flex-grow: 1;
         position: relative;
         font-family: Microsoft YaHei;
         font-size: 16px;
         line-height: 1.4;
-        width: 100%;
         outline: none;
         padding: 0.5em;
         background: #f7f7f7;
@@ -35,13 +36,13 @@ export const WarnPopover = styled.div`
         background: ${backgroundColor};
         border: 1px solid rgba(0,0,0,.2);
         border-radius: .3rem;
-        right: 0;
+        left: 0;
     `
 
 export const PopoverArrow = styled.div`
         position: absolute;
         overflow: hidden;
-        right: 0.4rem;
+        left: 0.4rem;
         top: 100%;
         width: 2rem;
         height: 1rem;

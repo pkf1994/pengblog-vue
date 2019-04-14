@@ -19,7 +19,7 @@ export const Button = styled('button',buttonProps)`
         text-align: center;
         white-space: nowrap;
         vertical-align: middle;
-        padding: ${window.innerWidth < window.maxMobileWidth ? '0.8rem' : '0.4rem'} 0.6rem;
+        padding: 0.4rem 0.6rem;
         background-color: ${props => props.backgroundColor ? props.backgroundColor : "white"};
         filter:brightness(1);
         color: ${props => props.disabled ? '#CCCCCC' : (props.color ? props.color : "black")};

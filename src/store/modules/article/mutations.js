@@ -32,8 +32,6 @@ export default {
 
     mutation_resetPaginationIndexOfTopCommentList(state){
 
-        console.log('reset')
-
         state.startIndex = resetState.startIndex
 
         state.nextPage = resetState.nextPage

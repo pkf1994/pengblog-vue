@@ -1,7 +1,7 @@
 <template>
     <LoadingWrapper>
         <img :src="loadingSpin" alt="Loading icon"/>
-        <Title>IS LOADING</Title>
+        <Title v-if="showTitle">IS LOADING</Title>
     </LoadingWrapper>
 </template>
 
@@ -10,6 +10,9 @@
     import {LoadingWrapper,Title} from './style'
 
     export default {
+        props: {
+            showTitle: true
+        },
         data(){
             return {loadingSpin: loadingSpin}
         },

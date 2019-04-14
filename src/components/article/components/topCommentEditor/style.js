@@ -8,6 +8,8 @@ export const TopCommentEditorWrapper = styled.div`
 
 
 export const Title = styled.div`
+        display: flex;
+        align-items: center;
         font-size: 1.3rem;
         font-weight: bold;
     `
@@ -48,21 +50,66 @@ export const VisitorInfo = styled.div`
         margin-bottom: 1rem;    
         display:flex;
         flex-wrap: wrap;
-        justify-content: space-between;
-        @media(max-width:${window.maxMobileWidth}px){
-           display:default;
-        }
     `
 
 export const Space = styled.div`
         width: 2rem;
     `
 
-export const InputWrapper = styled.div`
-        width: 47.5%;
-        margin-bottom: 1rem;
+export const InputWrapper = styled('div',{withMarginRight: Boolean})`
+        margin: 1rem 0;
+        margin-bottom: 0;
+        @media(max-width:${maxMobileWidth}px){
+            width: 100%;
+        }
+         ${props => props.withMarginRight ? `
+            @media(min-width:${maxMobileWidth}px){
+                margin-right: 1rem;
+            }
+        ` : ''}
+    `
+
+export const SubmitButtonWrapper = styled.div`
+        position: absolute;
+        right: 0;
+        top: 0.5rem;
+        width: auto;
+       
         @media(max-width:${window.maxMobileWidth}px){
-           width:100%;
+            position: static;
+            margin-bottom: 1rem;
         }
     `
 
+export const SubmitButton = styled(Button)`
+         width: 100%;
+         @media(max-width:${window.maxMobileWidth}px){
+            padding: 0.5rem;
+         }
+         @media(min-width:${window.maxMobileWidth}px){
+            display: none;
+        } 
+    `
+
+export const SubmitTextBtn = styled.span`
+        color: #0066AA;
+        cursor: pointer;
+        text-decoration: underline;
+        &:hover{
+            color: black;
+            
+        }
+        @media(max-width:${window.maxMobileWidth}px){
+            display: none;
+        }    
+    `
+
+export const LoadingWrapper = styled.div`
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        opacity: 0.5
+    `

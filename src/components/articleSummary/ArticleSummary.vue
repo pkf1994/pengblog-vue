@@ -3,7 +3,7 @@
                            v-on:click="goToTheArticle">
 
         <Title>
-            <Label>
+            <Label :color="featureLabelColor">
                 [{{article.article_label}}]
             </Label>
             {{article.article_title}}
@@ -39,6 +39,7 @@
 
 <script>
     import {DateFormat} from "../../exJs/dateFormatUtil";
+    import {GenerateFeatureColor} from '@/exJs/generateFeatureColor'
     import {ArticleSummaryWrapper,
             Title,
             Label,
@@ -58,8 +59,12 @@
         },
         data(){
             return {
-                defaultImageSrc: window.defaultImageSrc
+                defaultImageSrc: window.defaultImageSrc,
+                featureLabelColor: window.metaColor
             }
+        },
+        created() {
+            this.generateFeatureLabelColor()
         },
         computed: {
             ...mapState({
@@ -74,6 +79,9 @@
         },
         methods: {
             DateFormat,
+            generateFeatureLabelColor() {
+                this.featureLabelColor = GenerateFeatureColor(this.article.article_label)
+            },
             goToTheArticle() {
                 this.$router.push({path: '/home/article/' + this.article.article_id})
             }

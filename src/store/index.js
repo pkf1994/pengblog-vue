@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 
-import {articleStore,apiStore,homeStore,modalStore,noticeStore} from './modules'
+import {articleStore,apiStore,homeStore,modalStore,noticeStore,topCommentEditorStore} from './modules'
 
 
 export default new Vuex.Store ({
@@ -12,7 +12,8 @@ export default new Vuex.Store ({
         api: apiStore,
         home: homeStore,
         modal: modalStore,
-        notice: noticeStore
+        notice: noticeStore,
+        topCommentEditor: topCommentEditorStore
     }
 })
 

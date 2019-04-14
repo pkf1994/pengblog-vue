@@ -2,17 +2,17 @@ import styled from 'vue-styled-components'
 
 const backgroundColor = '#F7F7F7'
 
-export const InputWrapper = styled('div',{width: Number})`
+export const InputWrapper = styled.div`
         position: relative;
-        width: ${props => props.width};
+        display: flex;
     `
 
 export const Inputer = styled('input',{fontColor: String,backgroundColor:String,fontSize:String,padding:String,showWarn:Boolean,disableFocusStyle:Boolean})`
+        flex-grow: 1;
         color:${props => props.fontColor ? props.fontColor : 'black'};
-        width: 100%;
         position: relative;
         background: ${props => props.backgroundColor ? props.backgroundColor : '#F7F7F7'};
-        font-size: ${props => props.fontSize ? props.fontSize + 'px' : '1rem'};
+        font-size: ${props => props.fontSize ? props.fontSize : '1rem'};
         outline: none;
         padding: ${props => props.padding ? props.padding : (window.innerWidth < window.maxMobileWidth ? '0.8rem' : '0.5rem')};
         padding-left: 2rem;

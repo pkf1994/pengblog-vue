@@ -54,11 +54,11 @@ export const ArticleDetail = styled.div`
     `
 
 export const ArticleDetailFixer = styled.div`
-        width: 700px;
+        width: 600px;
         max-width: 100%;
         
         @media(min-width:${window.milePost}px){
-            width: 750px;
+            width: 650px;
         }
         
          @media(min-width:${window.bigScreenWidth}px){

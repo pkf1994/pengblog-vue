@@ -4,7 +4,7 @@ import {
     MUTATION_TRIGGER_IS_LOADING,
     MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME_FROM_API,
     MUTATION_RECORD_CURRENT_ARTICLE_ID_ARTICLE_FROM_API,
-    MUTATION_RESOVLE_TOP_COMMENT_LIST
+    MUTATION_RESOVLE_TOP_COMMENT_LIST, ACTION_SUBMIT_COMMENT, ACTION_CHECK_WHETHER_NEED_CAPTCHA_TO_SUBMIT_COMMENT
 } from "./constant";
 import {MUTATION_TRIGGER_SHOW_NOTICE} from "../notice/constant";
 
@@ -181,7 +181,33 @@ export default {
         payload.startIndex = payload.startIndex + payload.pageScale
         payload.nextPage = payload.nextPage + 1
         payload.loadingMoreSubComment = false
+    },
+
+    //提交评论
+    async action_submitComment(context, commentEditorVM) {
+
+        //await timeout(2000)
+        console.log(commentEditorVM)
+        commentEditorVM.loading = false
+
+        context.dispatch(ACTION_CHECK_WHETHER_NEED_CAPTCHA_TO_SUBMIT_COMMENT)
+    },
+
+    //查看提交评论时是否需要验证
+    async action_checkWhetherNeedCaptchaToSubmitComment(context) {
+
+        try{
+            const res = await CommentRequest.CheckWhetherNeedCaptcha()
+
+            console.log(res)
+
+        }catch(err) {
+
+        }
+
+
     }
+
 }
 
 

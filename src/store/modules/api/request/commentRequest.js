@@ -15,10 +15,13 @@ export function RequestTopCommentList(payload) {
 
 export function RequestSubCommentList(payload) {
 
-
     let config = {
         params: payload
     }
 
     return axios.get(Api.API_GET_SUB_COMMENT_LIST, config)
+}
+
+export const CheckWhetherNeedCaptcha = () => {
+    return axios.get(Api.API_CHECK_WHETHER_NEED_CAPTCHA_TO_SUBMIT_COMMENT)
 }

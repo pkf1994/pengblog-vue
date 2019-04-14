@@ -17,8 +17,8 @@ export const Title = styled.div`
         cursor: pointer;
     `
 
-export const Label = styled.span`
-        color: ${window.metaColor};
+export const Label = styled('span',{color: String})`
+        color: ${props => props.color};
     `
 
 export const ContentAndImage = styled.div`

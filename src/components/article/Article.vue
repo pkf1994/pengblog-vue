@@ -36,6 +36,8 @@
 
             <Comments :article_id="article_id"/>
 
+            <TopCommentEditor/>
+
         </ArticleMultiContent>
 
 
@@ -45,7 +47,7 @@
 <script>
     import {mapState, mapActions, mapMutations} from 'vuex'
     import {DateFormat} from '@/exJs/dateFormatUtil'
-    import {Share,Comments} from './components'
+    import {Share,Comments,TopCommentEditor} from './components'
     import {ArticleWrapper,
             ArticleTitleImage,
             ArticleTitle,
@@ -54,9 +56,7 @@
 
     import {
         ACTION_GET_ARTICLE_DATA_ARTICLE,
-        ACTION_GET_TOP_COMMENT_LIST_OF_SPECIFIC_ARTICLE_ARTICLE,
         MUTATION_RECORD_CURRENT_ARTICLE_ID_ARTICLE_FROM_API,
-        MUTATION_RESET_PAGINATION_INDEX_OF_TOP_COMMENT_LIST_OF_SPECIFIC_ARTICLE
     } from "../../store/modules/api/constant";
 
     export default {
@@ -106,11 +106,13 @@
         components: {
             Share,
             Comments,
+            TopCommentEditor,
             ArticleWrapper,
             ArticleTitleImage,
             ArticleTitle,
             ArticleInfo,
-            ArticleContent,ArticleMultiContent
+            ArticleContent,
+            ArticleMultiContent
         }
     }
 </script>

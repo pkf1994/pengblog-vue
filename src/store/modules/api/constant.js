@@ -6,6 +6,9 @@ export const ACTION_GET_TOP_COMMENT_LIST = 'action_getTopCommentList'
 
 export const ACTION_GET_SUB_COMMENT_LIST = 'action_getSubCommentList'
 
+export const ACTION_SUBMIT_COMMENT = 'action_submitComment'
+
+export const ACTION_CHECK_WHETHER_NEED_CAPTCHA_TO_SUBMIT_COMMENT = 'action_checkWhetherNeedCaptchaToSubmitComment'
 /*++++++++++++++++++++++++++++++++++++++*/
 
 export const MUTATION_RESOVLE_ARTICLE_FROM_API = 'mutation_resolveArticle'
