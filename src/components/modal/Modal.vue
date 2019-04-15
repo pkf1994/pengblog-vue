@@ -9,7 +9,10 @@
         <transition name="slide-in">
             <ModalBody v-if="show">
 
-                <ShareToWechatModalItem/>
+                <ShareToWechatModalItem v-if="context === 'shareToWechat'"/>
+
+                <CaptchaModalItem v-if="context === 'captcha'"/>
+
                 <CloseButton class="iconfont"
                              :loading="loading"
                              v-on:click="close">&#xe70b;</CloseButton>
@@ -25,7 +28,7 @@
             BackgroundCover,
             ModalBody,
             CloseButton} from './style'
-    import {ShareToWechatModalItem} from './modalItems'
+    import {ShareToWechatModalItem,CaptchaModalItem} from './modalItems'
     import {mapMutations, mapState} from "vuex";
     import {MUTATION_TRIGGER_SHOW_MODAL} from "../../store/modules/modal/constant";
 
@@ -34,7 +37,8 @@
         computed: {
             ...mapState({
                 loading: state => state.modal.loading,
-                show: state => state.modal.show
+                show: state => state.modal.show,
+                context: state => state.modal.context
             })
         },
         methods: {
@@ -54,7 +58,8 @@
             BackgroundCover,
             ModalBody,
             CloseButton,
-            ShareToWechatModalItem
+            ShareToWechatModalItem,
+            CaptchaModalItem
         }
     }
 </script>

@@ -1,5 +1,6 @@
 import styled from 'vue-styled-components'
 import { Button } from '@/components'
+import store from '@/store'
 
 export const TopCommentEditorWrapper = styled.div`
         position: relative;
@@ -16,7 +17,7 @@ export const Title = styled.div`
 
 export const Name = styled.div`
         margin-bottom: 1rem;
-        @media(max-width: ${window.maxMobileWidth}px) {
+        @media(max-width: ${store.state.meta.maxMobileWidth}px) {
             width: 100%;
         }
     `
@@ -59,11 +60,11 @@ export const Space = styled.div`
 export const InputWrapper = styled('div',{withMarginRight: Boolean})`
         margin: 1rem 0;
         margin-bottom: 0;
-        @media(max-width:${maxMobileWidth}px){
+        @media(max-width:${store.state.meta.maxMobileWidth}px){
             width: 100%;
         }
          ${props => props.withMarginRight ? `
-            @media(min-width:${maxMobileWidth}px){
+            @media(min-width:${store.state.meta.maxMobileWidth}px){
                 margin-right: 1rem;
             }
         ` : ''}
@@ -75,7 +76,7 @@ export const SubmitButtonWrapper = styled.div`
         top: 0.5rem;
         width: auto;
        
-        @media(max-width:${window.maxMobileWidth}px){
+        @media(max-width:${store.state.meta.maxMobileWidth}px){
             position: static;
             margin-bottom: 1rem;
         }
@@ -83,10 +84,10 @@ export const SubmitButtonWrapper = styled.div`
 
 export const SubmitButton = styled(Button)`
          width: 100%;
-         @media(max-width:${window.maxMobileWidth}px){
+         @media(max-width:${store.state.meta.maxMobileWidth}px){
             padding: 0.5rem;
          }
-         @media(min-width:${window.maxMobileWidth}px){
+         @media(min-width:${store.state.meta.maxMobileWidth}px){
             display: none;
         } 
     `
@@ -99,7 +100,7 @@ export const SubmitTextBtn = styled.span`
             color: black;
             
         }
-        @media(max-width:${window.maxMobileWidth}px){
+        @media(max-width:${store.state.meta.maxMobileWidth}px){
             display: none;
         }    
     `

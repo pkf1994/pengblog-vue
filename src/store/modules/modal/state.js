@@ -1,4 +1,6 @@
 export default {
     loading: false,
-    show: false
+    show: false,
+    context: 'context',
+    postHandler: () => {}
 }

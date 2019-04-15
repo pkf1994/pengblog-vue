@@ -1,11 +1,11 @@
 import styled from 'vue-styled-components'
-
+import store from '@/store'
 
 export const CommentWrapper = styled('div',{isBeenDeleting:Boolean,isBanned:Boolean})`
         position: relative;
         display: flex;
         align-items: stretch;
-        border-bottom: solid 1px ${window.metaBorderColor};
+        border-bottom: solid 1px ${store.state.meta.metaBorderColor};
         filter: brightness(${props => props.isBeenDeleting ? '95%' : '100%'});
         background: ${props => props.isBanned ? '#F7F7F7' : 'white'};
         transition: all 0.4s ease;
@@ -18,7 +18,7 @@ export const VisitorInfo = styled.div`
         align-items: center;
         flex-shrink: 0;
         width: 90px;
-        @media(max-width: ${window.maxMobileWidth}px) {
+        @media(max-width: ${store.state.meta.maxMobileWidth}px) {
             width: 65px;
         }
     `
@@ -29,7 +29,7 @@ export const AvatarWrapper = styled.div`
         height: 55px;
         border: solid 1px #F7F7F7;
         border-radius: 0.4rem;
-        background: #EEEEEE;
+        background: #F7F7F7;
     `
 
 export const Avatar = styled('div',{metaColor: String})`
@@ -91,7 +91,7 @@ export const Content = styled('div',{isBanned:Boolean})`
         flex-grow: 1;    
         text-decoration: ${props => props.isBanned ? 'line-through' : 'none'};
         color: ${props => props.isBanned ? 'grey' : 'black'};
-        @media(min-width: ${window.maxMobileWidth}px) {
+        @media(min-width: ${store.state.meta.maxMobileWidth}px) {
             padding-right: 0;
         }    
     `
@@ -117,7 +117,7 @@ export const ReleaseTime = styled.span``
 export const ReplyButton = styled.span``
 
 export const ForMoreWrapper = styled.div`
-        border-top: solid 1px ${window.metaBorderColor};
+        border-top: solid 1px ${store.state.meta.metaBorderColor};
         margin: 0 1rem;
         height: 60px;        
     `

@@ -59,8 +59,7 @@
         },
         data(){
             return {
-                defaultImageSrc: window.defaultImageSrc,
-                featureLabelColor: window.metaColor
+                featureLabelColor: "black"
             }
         },
         created() {
@@ -68,6 +67,7 @@
         },
         computed: {
             ...mapState({
+                defaultImageSrc: state => state.meta.defaultImageSrc,
                 currentArticleId: state => state.article.currentArticleId
             }),
             withPreviewImage(){

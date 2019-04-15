@@ -1,5 +1,5 @@
 import styled from 'vue-styled-components'
-
+import store from '@/store'
 
 export const LogoWrapper = styled.div`
         display: flex;
@@ -19,7 +19,7 @@ export const CharactersUpper = styled.div`
 export const BigOne = styled.span`
         font-size: 1.8rem;
         font-weight: bold;
-        color: ${window.metaColor};
+        color: ${store.state.meta.metaColor};
     `
 
 export const SmallOther = styled.span`
@@ -29,5 +29,5 @@ export const SmallOther = styled.span`
 export const CharLower = styled.div`
         font-size: 0.9rem;
         font-family: 'Source Sans Pro', SimSun, Arial;
-        border-top: solid 1px ${window.metaColor};
+        border-top: solid 1px ${store.state.meta.metaColor};
     `

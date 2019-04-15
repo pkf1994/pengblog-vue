@@ -21,6 +21,5 @@ export default {
         warnMsg: '格式错误',
         showWarn: false,
         iconClassName: 'fa fa-compass'
-    },
-
+    }
 }

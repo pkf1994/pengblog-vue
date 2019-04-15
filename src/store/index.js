@@ -3,7 +3,14 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 
-import {articleStore,apiStore,homeStore,modalStore,noticeStore,topCommentEditorStore} from './modules'
+import {articleStore,
+    apiStore,
+    homeStore,
+    modalStore,
+    noticeStore,
+    topCommentEditorStore,
+    captchaStore,
+    metaStore} from './modules'
 
 
 export default new Vuex.Store ({
@@ -13,7 +20,9 @@ export default new Vuex.Store ({
         home: homeStore,
         modal: modalStore,
         notice: noticeStore,
-        topCommentEditor: topCommentEditorStore
+        topCommentEditor: topCommentEditorStore,
+        captcha: captchaStore,
+        meta: metaStore
     }
 })
 

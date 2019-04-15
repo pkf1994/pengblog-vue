@@ -67,12 +67,12 @@
 
         data(){
             return {
-                defaultImageSrc: window.defaultImageSrc,
                 refreshIndex: true
             }
         },
 
         computed: {...mapState({
+                defaultImageSrc: state => state.meta.defaultImageSrc,
                 article: state => state.article.article,
                 withTitleImage: state => (state.article.article.article_titleImageUrl !== undefined) && (state.article.article.article_titleImageUrl !== '')
             }),

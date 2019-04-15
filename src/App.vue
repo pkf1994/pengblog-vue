@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <StartUp/>
     <router-view name="header"/>
     <router-view/>
     <Notice/>
@@ -12,10 +11,10 @@
 
 
 
-    import {Modal,StartUp,Notice} from './components'
+    import {Modal,Notice} from './components'
   export default {
         components: {
-            Modal,StartUp,Notice
+            Modal,Notice
         }
   }
 </script>

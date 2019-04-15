@@ -1,7 +1,7 @@
 <template>
     <ShareWrapper>
 
-        <ShareItem color="#00bb29" v-on:click="() => {mutation_triggerShowModal({show: true})}">
+        <ShareItem color="#00bb29" v-on:click="showShareToWechatModal">
             <i class="fa fa-wechat"/>
         </ShareItem>
 
@@ -36,6 +36,13 @@
         },
 
         methods:{
+            showShareToWechatModal() {
+                const payload = {
+                    context: 'shareToWechat',
+                    show: true
+                }
+                this.mutation_triggerShowModal(payload)
+            },
             initClipboard(){
 
                 const _this = this

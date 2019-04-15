@@ -23,13 +23,14 @@
     import {TextareaWrapper,
             WarnPopover,
             PopoverArrow} from "./style";
+    import {mapState} from "vuex";
 
     export default {
 
         data(){
             return {
                 _value: '',
-                metaBorderColor: window.metaBorderColor
+
             }
         },
 
@@ -46,6 +47,9 @@
         },
 
         computed: {
+            ...mapState({
+                metaBorderColor: state => state.meta.metaBorderColor
+            }),
             inputListeners: function () {
                 let vm = this
                 // `Object.assign` 将所有的对象合并为一个新对象

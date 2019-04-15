@@ -1,17 +1,17 @@
 import styled from 'vue-styled-components'
-
+import store from '@/store'
 
 export const HomeWrapper = styled.div``
 
 export const ArticleList = styled.div`
         position: fixed;
-        top: ${window.heightOfHeader};
+        top: ${store.state.meta.heightOfHeader};
         bottom: 0;
         left: 0;
         width: 300px;
-        border-right: solid 1px ${window.metaBorderColor};
-        overflow-y: ${window.browserEdit === 'Edge' ? 'auto' : 'overlay'};
-        ${window.browserEdit !== 'Safari' ? `
+        border-right: solid 1px ${store.state.meta.metaBorderColor};
+        overflow-y: ${store.state.meta.browserEdit === 'Edge' ? 'auto' : 'overlay'};
+        ${store.state.meta.browserEdit !== 'Safari' ? `
         &::-webkit-scrollbar{
             width:2px;
             height:1px;
@@ -23,11 +23,11 @@ export const ArticleList = styled.div`
         
         }` : ''}
         
-        @media(min-width:${window.milePost}px){
+        @media(min-width:${store.state.meta.milePost}px){
             width: 350px;
         }
         
-         @media(min-width:${window.bigScreenWidth}px){
+         @media(min-width:${store.state.meta.bigScreenWidth}px){
             width: 450px;
         }
     `
@@ -44,11 +44,11 @@ export const ArticleDetail = styled.div`
         justify-content: center;
         margin-left: 300px;
         
-        @media(min-width:${window.milePost}px){
+        @media(min-width:${store.state.meta.milePost}px){
             margin-left: 350px;
         }
         
-         @media(min-width:${window.bigScreenWidth}px){
+         @media(min-width:${store.state.meta.bigScreenWidth}px){
             margin-left: 450px;
         }
     `
@@ -57,11 +57,11 @@ export const ArticleDetailFixer = styled.div`
         width: 600px;
         max-width: 100%;
         
-        @media(min-width:${window.milePost}px){
+        @media(min-width:${store.state.meta.milePost}px){
             width: 650px;
         }
         
-         @media(min-width:${window.bigScreenWidth}px){
+         @media(min-width:${store.state.meta.bigScreenWidth}px){
             width: 850px;
         }
     `
@@ -71,17 +71,17 @@ const loadingWrapperProps = {
 }
 export const LoadingWrapper = styled('div',loadingWrapperProps)`
         position: fixed;
-        top: ${window.heightOfHeader};
+        top: ${store.state.meta.heightOfHeader};
         left: 300px;
         bottom: 0;
         right: 0;
         background: white;
         opacity: ${props => props.opaque ? '1' : '0.5'};
-         @media(min-width:${window.milePost}px){
+         @media(min-width:${store.state.meta.milePost}px){
             left: 350px;
         }
         
-         @media(min-width:${window.bigScreenWidth}px){
+         @media(min-width:${store.state.meta.bigScreenWidth}px){
             left: 450px;
         }
     `

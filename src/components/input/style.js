@@ -4,7 +4,6 @@ const backgroundColor = '#F7F7F7'
 
 export const InputWrapper = styled.div`
         position: relative;
-        display: flex;
     `
 
 export const Inputer = styled('input',{fontColor: String,backgroundColor:String,fontSize:String,padding:String,showWarn:Boolean,disableFocusStyle:Boolean})`
@@ -83,4 +82,19 @@ export const PopoverArrow = styled.div`
             transform: rotate(45deg);
             pointer-events: auto;
         }
+    `
+
+export const TheLine = styled.div`
+        position: relative;    
+        width: 100%;
+        height: 1px;
+        border-bottom: solid 1px #F0F0F0;
+    `
+
+export const Color = styled('div',{isFocus: Boolean,lineColor: String})`
+        position: absolute;
+        width: ${props => props.isFocus ? '100%' : '0'};
+        height: 1px;
+        border-bottom: solid 1px ${props => props.lineColor ? props.lineColor : window.metaColor};
+        transition: all 0.5s ease;
     `

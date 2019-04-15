@@ -1,10 +1,10 @@
 import styled from 'vue-styled-components'
-
+import store from '@/store'
 
 export const SubCommentWrapper = styled('div',{isBeenDeleting:Boolean,isBanned:Boolean})`
         position: relative;
         align-items: stretch;
-        border-top: solid 1px ${window.metaBorderColor};
+        border-top: solid 1px ${store.state.meta.metaBorderColor};
         filter: brightness(${props => props.isBeenDeleting ? '95%' : '100%'});
         background: ${props => props.isBanned ? '#F7F7F7' : 'white'};
         transition: all 0.4s ease;
@@ -19,7 +19,7 @@ export const Content = styled('div',{isBanned:Boolean})`
         flex-grow: 1;    
         text-decoration: ${props => props.isBanned ? 'line-through' : 'none'};
         color: ${props => props.isBanned ? 'grey' : 'black'};
-        @media(min-width: ${window.maxMobileWidth}px) {
+        @media(min-width: ${store.state.meta.maxMobileWidth}px) {
             padding-right: 0;
         }    
     `

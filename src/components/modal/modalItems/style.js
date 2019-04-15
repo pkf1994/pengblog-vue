@@ -5,3 +5,8 @@ export const QrcodeContainer = styled.div`
         justify-content: center;
         padding: 1rem 0rem;
     `
+
+export const CaptchaWrapper = styled.div`
+        padding 3rem 2rem;
+        padding-bottom: 0;
+    `

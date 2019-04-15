@@ -88,7 +88,7 @@
     import {MUTATION_APPOINT_INPUT} from "../../../../store/modules/topCommentEditor/constant";
     import {CountLength} from "@/exJs/countStringLength";
     import {DeleteCookie,SetCookie,ReadCookie} from "@/exJs/cookieUtil";
-    import {ACTION_SUBMIT_COMMENT} from "../../../../store/modules/api/constant";
+    import {ACTION_TRY_SUBMIT_COMMENT} from "../../../../store/modules/api/constant";
 
 
     const EMAIL_REGULAR = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
@@ -133,7 +133,12 @@
                 //将数据存入cookie
                 this.rememberMe(this.name.value,this.email.value,this.site.value)
 
-                this.action_submitComment(this)
+                const payload = {
+                    commentEditorVM: this,
+                    commentEditorId: 'topCommentEditor'
+                }
+
+                this.action_trySubmitComment(payload)
 
             },
             //更新元素
@@ -266,7 +271,7 @@
                 mutation_appointInput: MUTATION_APPOINT_INPUT
             }),
             ...mapActions({
-                action_submitComment: ACTION_SUBMIT_COMMENT
+                action_trySubmitComment: ACTION_TRY_SUBMIT_COMMENT
             })
         },
         components: {
