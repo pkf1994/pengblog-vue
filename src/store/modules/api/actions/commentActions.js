@@ -3,10 +3,11 @@ import {
     MUTATION_TRIGGER_IS_LOADING,
     MUTATION_RESOVLE_TOP_COMMENT_LIST,
     ACTION_SUBMIT_COMMENT,
-    ACTION_CHECK_WHETHER_NEED_CAPTCHA_TO_SUBMIT_COMMENT, ACTION_CHECK_CAPTCHA
+    ACTION_CHECK_WHETHER_NEED_CAPTCHA_TO_SUBMIT_COMMENT, ACTION_CHECK_CAPTCHA, MUTATION_APPEND_COMMENT_JUST_SUBMIT
 } from "../constant";
 import {MUTATION_TRIGGER_SHOW_NOTICE} from "../../notice/constant";
 import {MUTATION_TRIGGER_SHOW_MODAL} from "../../modal/constant";
+import {MUTATION_APPOINT_CAPTCHA} from "../../captcha/constant";
 
 export default {
 
@@ -90,7 +91,6 @@ export default {
     //提交评论
     async action_trySubmitComment(context, payload) {
 
-
         context.dispatch(ACTION_CHECK_WHETHER_NEED_CAPTCHA_TO_SUBMIT_COMMENT,payload)
     },
 
@@ -112,15 +112,68 @@ export default {
             const payload_ = {
                 show: true,
                 context: 'captcha',
-                ...payload
+                postHandler: async () => {
+                    try{
+
+
+                        try{
+                            //进行验证
+                            const payload__ = {
+                                captchaHost: 'modal'
+                            }
+                            await context.dispatch(ACTION_CHECK_CAPTCHA,payload__)
+
+                        }catch(err) {
+                            console.log(err)
+                            if(err.response){
+                                const payload = {
+                                    captchaHost: 'modal',
+                                    showWarn: true,
+                                    warnMsg: err.response.data
+                                }
+                                context.commit(MUTATION_APPOINT_CAPTCHA,payload)
+                            }
+                            return
+                        }
+
+                        //验证通过，打开modal的loading状态
+                        const payload___ = {
+                            id: 'modal',
+                            loading: true
+                        }
+                        context.commit(MUTATION_TRIGGER_IS_LOADING,payload___)
+
+                        const payload____ = {
+                            commentEditorId: payload.commentEditorId
+                        }
+
+                        await context.dispatch(ACTION_SUBMIT_COMMENT,payload____)
+
+                    }catch (err) {
+                        console.log(err)
+
+                        const payload = {
+                            show: true,
+                            noticeContent: err.response ? err.response.data : err
+                        }
+
+                        context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload)
+
+                        //关闭modal
+                        const payload__ = {
+                            show: false
+                        }
+                        context.commit(MUTATION_TRIGGER_SHOW_MODAL,payload__)
+
+                    }
+                }
             }
             context.commit(MUTATION_TRIGGER_SHOW_MODAL,payload_)
-
-            payload.commentEditorVM.loading = false
 
         }
 
         catch(err) {
+            console.log(err)
 
             const payload = {
                 show: true,
@@ -135,9 +188,12 @@ export default {
 
     async action_submitComment(context,payload) {
 
+        console.log(payload.commentEditorId)
+
         const payload_ = {
             comment_hostId: context.rootState.article.currentArticleId,
             comment_content: context.rootState[payload.commentEditorId].content.value,
+            comment_referComment: payload.commentEditorId === 'subCommentEditor' ? context.rootState.subCommentEditor.referingComment : undefined,
             visitor_name: context.rootState[payload.commentEditorId].name.value,
             visitor_email: context.rootState[payload.commentEditorId].email.value,
             visitor_site: context.rootState[payload.commentEditorId].site.value,
@@ -146,8 +202,56 @@ export default {
             captchaCode: context.rootState.captcha.modal.captchaValue,
         }
 
-        await CommentRequest.RequestSubmitComment(payload_)
+        const res = await CommentRequest.RequestSubmitComment(payload_)
+        console.log(res)
 
+
+        //关闭modal
+        const payload__ = {
+            show: false
+        }
+        context.commit(MUTATION_TRIGGER_SHOW_MODAL,payload__)
+
+
+        const payload___ = {
+            id: 'modal',
+            loading: false
+        }
+        context.commit(MUTATION_TRIGGER_IS_LOADING,payload___)
+
+        const commentJustSubmit = constructComment(payload_,res.data.commentIdJustSubmit)
+
+        const payload____ = {
+            comment: commentJustSubmit,
+            commentEditorId: payload.commentEditorId
+        }
+
+        context.commit(MUTATION_APPEND_COMMENT_JUST_SUBMIT,payload____)
     }
 
+}
+
+const constructComment = (payload,comment_id) => {
+
+    const date = new Date()
+
+    const comment = {
+        comment_author: {
+            visitor_name: payload.visitor_name,
+            visitor_siteAddress: payload.visitor_siteAddress,
+            visitor_email: payload.visitor_email
+        },
+        comment_hostArticle: {
+            article_id: payload.article_id,
+        },
+        comment_referComment: {
+            comment_id: payload.comment_referComment
+        },
+        comment_id: comment_id,
+        comment_content: payload.comment_content,
+        comment_releaseTime: date.toString(),
+        comment_platform: payload.comment_platform
+    }
+
+    return comment
 }

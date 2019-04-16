@@ -45,6 +45,9 @@
         created() {
             this.init()
         },
+        beforeDestroy(){
+            this.reset()
+        },
 
         methods: {
             ...mapMutations({
@@ -53,6 +56,15 @@
             ...mapActions({
                 action_getCaptchaImage: ACTION_GET_CAPTCHA_IMAGE
             }),
+            reset() {
+                const payload = {
+                    captchaHost: this.captchaHost,
+                    captchaValue: '',
+                    showWarn: false
+                }
+                console.log('reset')
+                this.mutation_appointCaptcha(payload)
+            },
             focusHandler() {
                 const payload = {
                     captchaHost: this.captchaHost,

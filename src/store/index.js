@@ -9,6 +9,7 @@ import {articleStore,
     modalStore,
     noticeStore,
     topCommentEditorStore,
+    subCommentEditorStore,
     captchaStore,
     metaStore} from './modules'
 
@@ -21,6 +22,7 @@ export default new Vuex.Store ({
         modal: modalStore,
         notice: noticeStore,
         topCommentEditor: topCommentEditorStore,
+        subCommentEditor: subCommentEditorStore,
         captcha: captchaStore,
         meta: metaStore
     }

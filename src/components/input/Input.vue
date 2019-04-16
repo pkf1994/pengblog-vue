@@ -40,8 +40,7 @@
             return {
                 isFocus: false,
                 inputStyle: {
-                    borderColor: this.showWarn ? 'red' : this.metaBorderColor,
-                    padding: window.innerWidth > this.maxMobileWidth ? '0.5rem' : '0.8rem'
+                    borderColor: this.showWarn ? 'red' : this.metaBorderColor
                 }
             }
         },
@@ -139,6 +138,7 @@
      }
 
     .input-ex{
+        font-size: 1rem;
         width: 100%;
         position: relative;
         background: none;

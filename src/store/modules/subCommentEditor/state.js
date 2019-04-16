@@ -1,4 +1,5 @@
 export default {
+    referingComment: undefined,
     loading: false,
     name: {
         value: '',

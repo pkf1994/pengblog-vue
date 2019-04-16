@@ -88,7 +88,7 @@
     import {MUTATION_APPOINT_INPUT} from "../../../../store/modules/topCommentEditor/constant";
     import {CountLength} from "@/exJs/countStringLength";
     import {DeleteCookie,SetCookie,ReadCookie} from "@/exJs/cookieUtil";
-    import {ACTION_TRY_SUBMIT_COMMENT} from "../../../../store/modules/api/constant";
+    import {ACTION_TRY_SUBMIT_COMMENT, MUTATION_TRIGGER_IS_LOADING} from "../../../../store/modules/api/constant";
 
 
     const EMAIL_REGULAR = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
@@ -128,24 +128,28 @@
                 }
 
                 //loading
-                this.loading = true
+                const payload = {
+                    id: 'topCommentEditor',
+                    loading: true
+                }
+                this.mutation_triggerIsLoading(payload)
 
                 //将数据存入cookie
                 this.rememberMe(this.name.value,this.email.value,this.site.value)
 
-                const payload = {
-                    commentEditorVM: this,
+                const payload_ = {
                     commentEditorId: 'topCommentEditor'
                 }
 
-                this.action_trySubmitComment(payload)
+                this.action_trySubmitComment(payload_)
 
             },
             //更新元素
             inputHandler(id, event) {
                 const payload = {
                     id: id,
-                    value: id === 'content' ? event : event.target.value
+                    value: id === 'content' ? event : event.target.value,
+                    commentEditorId: 'topCommentEditor'
                 }
                 this.mutation_appointInput(payload)
             },
@@ -153,7 +157,8 @@
             shutdownWarnMsg(id) {
                 const payload = {
                     id: id,
-                    showWarn: false
+                    showWarn: false,
+                    commentEditorId: 'topCommentEditor'
                 }
                 this.mutation_appointInput(payload)
             },
@@ -174,7 +179,8 @@
                 if(cookieMap.name){
                     const payload = {
                         id: 'name',
-                        value: cookieMap.name
+                        value: cookieMap.name,
+                        commentEditorId: 'topCommentEditor'
                     }
                     this.mutation_appointInput(payload)
                 }
@@ -182,7 +188,8 @@
                 if(cookieMap.email){
                     const payload = {
                         id: 'email',
-                        value: cookieMap.email
+                        value: cookieMap.email,
+                        commentEditorId: 'topCommentEditor'
                     }
                     this.mutation_appointInput(payload)
                 }
@@ -190,7 +197,8 @@
                 if(cookieMap.site){
                     const payload = {
                         id: 'site',
-                        value: cookieMap.site
+                        value: cookieMap.site,
+                        commentEditorId: 'topCommentEditor'
                     }
                     this.mutation_appointInput(payload)
                 }
@@ -204,7 +212,8 @@
                             const payload = {
                                 id: id,
                                 showWarn: true,
-                                warnMsg: '您还未填写任何内容'
+                                warnMsg: '您还未填写任何内容',
+                                commentEditorId: 'topCommentEditor'
                             }
                             this.mutation_appointInput(payload)
                             return false
@@ -213,10 +222,12 @@
 
                     case 'name':
                         if(value.trim() === '') {
+                            console.log('name')
                             const payload = {
                                 id: id,
                                 showWarn: true,
-                                warnMsg: '昵称不能为空'
+                                warnMsg: '昵称不能为空',
+                                commentEditorId: 'topCommentEditor'
                             }
                             this.mutation_appointInput(payload)
                             return false
@@ -225,7 +236,8 @@
                             const payload_ = {
                                 id: id,
                                 showWarn: true,
-                                warnMsg: '昵称太长'
+                                warnMsg: '昵称太长',
+                                commentEditorId: 'topCommentEditor'
                             }
                             this.mutation_appointInput(payload_)
                             return false
@@ -236,7 +248,8 @@
                             const payload = {
                                 id: id,
                                 showWarn: true,
-                                warnMsg: '邮件不能为空'
+                                warnMsg: '邮件不能为空',
+                                commentEditorId: 'topCommentEditor'
                             }
                             this.mutation_appointInput(payload)
                             return false
@@ -245,7 +258,8 @@
                             const payload_ = {
                                 id: id,
                                 showWarn: true,
-                                warnMsg: '非法的邮件地址'
+                                warnMsg: '非法的邮件地址',
+                                commentEditorId: 'topCommentEditor'
                             }
                             this.mutation_appointInput(payload_)
                             return false
@@ -259,7 +273,8 @@
                             const payload = {
                                 id: id,
                                 showWarn: true,
-                                warnMsg: '请填写正确格式的网址'
+                                warnMsg: '请填写正确格式的网址',
+                                commentEditorId: 'topCommentEditor'
                             }
                             this.mutation_appointInput(payload)
                             return false
@@ -268,7 +283,8 @@
                 }
             },
             ...mapMutations({
-                mutation_appointInput: MUTATION_APPOINT_INPUT
+                mutation_appointInput: MUTATION_APPOINT_INPUT,
+                mutation_triggerIsLoading: MUTATION_TRIGGER_IS_LOADING
             }),
             ...mapActions({
                 action_trySubmitComment: ACTION_TRY_SUBMIT_COMMENT

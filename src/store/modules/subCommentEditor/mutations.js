@@ -1,7 +1,7 @@
 export default {
     mutation_appointInput(state,payload){
 
-        if(payload.commentEditorId !== 'topCommentEditor'){
+        if(payload.commentEditorId !== 'subCommentEditor'){
             return
         }
 
@@ -15,7 +15,7 @@ export default {
 
     },
     mutation_triggerIsLoading(state,payload) {
-        if(payload.id === 'topCommentEditor') {
+        if(payload.id === 'subCommentEditor') {
             state.loading = payload.loading
         }
     }

@@ -2,5 +2,7 @@ export default {
     loading: false,
     show: false,
     context: 'context',
-    postHandler: () => {}
+    postHandler: () => {},
+    commentEditorVM: undefined,
+    commentEditorId: undefined
 }

@@ -10,7 +10,7 @@
 
         <OperationColumn>
 
-            <ConfirmButton v-on:click="postHandler">
+            <ConfirmButton v-on:click="postMethod">
                 确定
             </ConfirmButton>
 
@@ -50,48 +50,20 @@
                 loading: state => state.modal.loading,
                 captchaValue: state => state.captcha.modal.captchaValue,
                 commentEditorVM: state => state.modal.commentEditorVM,
-                commentEditorId: state => state.modal.commentEditorId
+                commentEditorId: state => state.modal.commentEditorId,
+                postHandler: state => state.modal.postHandler
             })
         },
         methods: {
-            async postHandler() {
+            async postMethod() {
 
                 //先检查是否未填写
                 if(!this.preCheckCaptchaValue()){
                     return
                 }
 
-                try{
-                    //进行验证
-                    const payload = {
-                        captchaHost: 'modal'
-                    }
+                await this.postHandler()
 
-                    await this.action_checkCaptcha(payload)
-
-                    //验证通过，打开loading状态
-                    const payload_ = {
-                        id: 'modal'
-                    }
-                    this.mutation_triggerIsLoading(payload_)
-
-                    const payload__ = {
-                        commentEditorVM: this.commentEditorVM,
-                        commentEditorId: this.commentEditorId
-                    }
-
-                    await this.action_submitComment(payload__)
-
-                }catch (err) {
-                    if(err.response){
-                        const payload = {
-                            captchaHost: 'modal',
-                            showWarn: true,
-                            warnMsg: err.response.data
-                        }
-                        this.mutation_appointCaptcha(payload)
-                    }
-                }
             },
             preCheckCaptchaValue() {
                 if(this.captchaValue.trim() === ''){

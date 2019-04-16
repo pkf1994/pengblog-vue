@@ -28,3 +28,5 @@ export const MUTATION_TRIGGER_IS_LOADING = 'mutation_triggerIsLoading'
 export const MUTATION_RECORD_CURRENT_ARTICLE_ID_ARTICLE_FROM_API = 'mutation_recordCurrentArticleId'
 
 export const MUTATION_RESET_PAGINATION_INDEX_OF_TOP_COMMENT_LIST = 'mutation_resetPaginationIndexOfTopCommentList'
+
+export const MUTATION_APPEND_COMMENT_JUST_SUBMIT = 'mutation_appendCommentJustSubmit'

@@ -81,6 +81,7 @@ export const ContentWrapper = styled('div',{showAll:Boolean,heightOfCommentConte
         max-height: ${props => props.showAll ? props.heightOfCommentContent + 'px' : '210px'};
         transition: all 0.4s ease;
         overflow: hidden;
+        flex-grow: 1;
     `
 
 export const Content = styled('div',{isBanned:Boolean})`
@@ -88,7 +89,6 @@ export const Content = styled('div',{isBanned:Boolean})`
         font-size: 0.9rem;
         line-height: 1.5;
         padding: 0.8rem 1rem;
-        flex-grow: 1;    
         text-decoration: ${props => props.isBanned ? 'line-through' : 'none'};
         color: ${props => props.isBanned ? 'grey' : 'black'};
         @media(min-width: ${store.state.meta.maxMobileWidth}px) {

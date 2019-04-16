@@ -1,4 +1,5 @@
 import styled from 'vue-styled-components'
+import store from '@/store'
 
 const backgroundColor = '#F7F7F7'
 
@@ -13,7 +14,7 @@ export const Inputer = styled('input',{fontColor: String,backgroundColor:String,
         background: ${props => props.backgroundColor ? props.backgroundColor : '#F7F7F7'};
         font-size: ${props => props.fontSize ? props.fontSize : '1rem'};
         outline: none;
-        padding: ${props => props.padding ? props.padding : (window.innerWidth < window.maxMobileWidth ? '0.8rem' : '0.5rem')};
+        padding: ${props => props.padding ? props.padding : (window.innerWidth < store.state.meta.maxMobileWidth ? '0.8rem' : '0.5rem')};
         padding-left: 2rem;
         border: solid 1px ${props => props.showWarn ? 'red' : backgroundColor};
         border-radius: 0.4rem;
@@ -52,10 +53,10 @@ export const WarnPopover = styled.div`
         background: ${backgroundColor};
         border: 1px solid rgba(0,0,0,.2);
         border-radius: .3rem;
-        @media(min-width: ${window.maxMobileWidth}px){
+        @media(min-width: ${store.state.meta.maxMobileWidth}px){
             left: 0;
         }
-        @media(max-width: ${window.maxMobileWidth}px){
+        @media(max-width: ${store.state.meta.maxMobileWidth}px){
             right: 0;
         }
     `
@@ -95,6 +96,6 @@ export const Color = styled('div',{isFocus: Boolean,lineColor: String})`
         position: absolute;
         width: ${props => props.isFocus ? '100%' : '0'};
         height: 1px;
-        border-bottom: solid 1px ${props => props.lineColor ? props.lineColor : window.metaColor};
+        border-bottom: solid 1px ${props => props.lineColor ? props.lineColor : store.state.meta.metaColor};
         transition: all 0.5s ease;
     `

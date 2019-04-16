@@ -5,7 +5,7 @@ export default {
 
         payload.captchaImage && (target.captchaImage = payload.captchaImage)
 
-        payload.captchaValue && (target.captchaValue = payload.captchaValue)
+        payload.captchaValue !== undefined && (target.captchaValue = payload.captchaValue)
 
         payload.captchaId &&  (target.captchaId = payload.captchaId)
 
@@ -13,4 +13,6 @@ export default {
 
         payload.warnMsg && (target.warnMsg = payload.warnMsg)
     }
+
+
 }

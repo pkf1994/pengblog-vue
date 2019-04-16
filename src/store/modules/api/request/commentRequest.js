@@ -25,3 +25,11 @@ export function RequestSubCommentList(payload) {
 export const CheckWhetherNeedCaptcha = () => {
     return axios.get(Api.API_CHECK_WHETHER_NEED_CAPTCHA_TO_SUBMIT_COMMENT)
 }
+
+export const RequestSubmitComment = (payload) => {
+
+    console.log(payload)
+
+    return axios.post(Api.API_POST_SUBMIT_COMMENT,payload)
+
+}

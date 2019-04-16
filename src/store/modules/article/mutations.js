@@ -45,8 +45,13 @@ export default {
         if(payload.id === 'article_forMore'){
             state.loadingMoreComment = payload.loading
         }
-    }
+    },
 
+    mutation_appendCommentJustSubmit(state,payload) {
+        if(payload.commentEditorId === "topCommentEditor") {
+            state.commentList.push(payload.comment)
+        }
+    }
 }
 
 const generateArticleContentWithLazyloadImage = (htmlStr) => {
