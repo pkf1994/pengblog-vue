@@ -1,1 +1,0 @@
-export const MUTATION_APPOINT_INPUT = 'mutation_appointInput'

@@ -1,16 +1,16 @@
 import {ArticleRequest} from '../request'
 import {
-    MUTATION_RESOVLE_ARTICLE_FROM_API,
-    MUTATION_TRIGGER_IS_LOADING,
-    MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME_FROM_API,
-    MUTATION_RECORD_CURRENT_ARTICLE_ID_ARTICLE_FROM_API
-} from "../constant";
-import {MUTATION_TRIGGER_SHOW_NOTICE} from "../../notice/constant";
+    MUTATION_RECORD_CURRENT_ARTICLE_ID,
+    MUTATION_RESOVLE_ARTICLE, MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME,
+    MUTATION_TRIGGER_IS_LOADING, MUTATION_TRIGGER_SHOW_NOTICE
+} from "../../mutation_types";
+import {ACTION_GET_ARTICLE_DATA, ACTION_GET_ARTICLE_LIST_DATA} from "../../action_types";
+
 
 export default {
 
     //获取文章详情
-    async action_getArticleData_article(context,payload) {
+    async [ACTION_GET_ARTICLE_DATA](context,payload) {
 
         if(parseInt(payload.article_id) === context.rootState.article.article.article_id){
             return
@@ -29,7 +29,7 @@ export default {
         const payload__ = {
             currentArticleId: payload.article_id
         }
-        context.commit(MUTATION_RECORD_CURRENT_ARTICLE_ID_ARTICLE_FROM_API, payload__)
+        context.commit(MUTATION_RECORD_CURRENT_ARTICLE_ID, payload__)
 
         //如果此时存在未完成的同类请求，取消它
         if(window.RequestArticleAxiosSource){
@@ -46,7 +46,7 @@ export default {
                 article: res.data
             }
 
-            context.commit(MUTATION_RESOVLE_ARTICLE_FROM_API,payload___)
+            context.commit(MUTATION_RESOVLE_ARTICLE,payload___)
 
             //关闭loading状态
             const payload____ = {
@@ -68,7 +68,7 @@ export default {
     },
 
     //获取home页面文章列表数据
-    async action_getArticleListData_home(context){
+    async [ACTION_GET_ARTICLE_LIST_DATA](context){
 
         //trigger forMore组件为loading状态
         const payload = {
@@ -92,7 +92,7 @@ export default {
                 maxPage: res.data.maxPage
             }
 
-            context.commit(MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME_FROM_API,payload__)
+            context.commit(MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME,payload__)
 
         }catch(err){
 

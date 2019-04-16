@@ -1,18 +1,22 @@
 import {CommentRequest} from '../request'
 import {
-    MUTATION_TRIGGER_IS_LOADING,
+    MUTATION_APPEND_COMMENT_JUST_SUBMIT,
+    MUTATION_APPOINT_CAPTCHA,
     MUTATION_RESOVLE_TOP_COMMENT_LIST,
-    ACTION_SUBMIT_COMMENT,
-    ACTION_CHECK_WHETHER_NEED_CAPTCHA_TO_SUBMIT_COMMENT, ACTION_CHECK_CAPTCHA, MUTATION_APPEND_COMMENT_JUST_SUBMIT
-} from "../constant";
-import {MUTATION_TRIGGER_SHOW_NOTICE} from "../../notice/constant";
-import {MUTATION_TRIGGER_SHOW_MODAL} from "../../modal/constant";
-import {MUTATION_APPOINT_CAPTCHA} from "../../captcha/constant";
+    MUTATION_TRIGGER_IS_LOADING, MUTATION_TRIGGER_SHOW_MODAL,
+    MUTATION_TRIGGER_SHOW_NOTICE
+} from "../../mutation_types";
+import {
+    ACTION_CHECK_CAPTCHA,
+    ACTION_CHECK_WHETHER_NEED_CAPTCHA_TO_SUBMIT_COMMENT, ACTION_GET_SUB_COMMENT_LIST, ACTION_GET_TOP_COMMENT_LIST,
+    ACTION_SUBMIT_COMMENT, ACTION_TRY_SUBMIT_COMMENT
+} from "../../action_types";
+
 
 export default {
 
     //获取article对应的topCommentList
-    async action_getTopCommentList(context,payload){
+    async [ACTION_GET_TOP_COMMENT_LIST](context,payload){
 
         //trigger forMore组件为loading状态
         const payload_ = {
@@ -69,7 +73,7 @@ export default {
     },
 
     //获取subCommentList
-    async action_getSubCommentList(context,payload) {
+    async [ACTION_GET_SUB_COMMENT_LIST](context,payload) {
 
         payload.loadingMoreSubComment = true
 
@@ -89,13 +93,13 @@ export default {
     },
 
     //提交评论
-    async action_trySubmitComment(context, payload) {
+    async [ACTION_TRY_SUBMIT_COMMENT](context, payload) {
 
         context.dispatch(ACTION_CHECK_WHETHER_NEED_CAPTCHA_TO_SUBMIT_COMMENT,payload)
     },
 
     //查看提交评论时是否需要验证
-    async action_checkWhetherNeedCaptchaToSubmitComment(context,payload) {
+    async [ACTION_CHECK_WHETHER_NEED_CAPTCHA_TO_SUBMIT_COMMENT](context,payload) {
 
         try{
             const res = await CommentRequest.CheckWhetherNeedCaptcha()
@@ -186,7 +190,7 @@ export default {
 
     },
 
-    async action_submitComment(context,payload) {
+    async [ACTION_SUBMIT_COMMENT](context,payload) {
 
         console.log(payload.commentEditorId)
 

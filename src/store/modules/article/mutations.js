@@ -1,6 +1,14 @@
+import {
+    MUTATION_APPEND_COMMENT_JUST_SUBMIT,
+    MUTATION_RECORD_CURRENT_ARTICLE_ID, MUTATION_RESET_PAGINATION_INDEX_OF_TOP_COMMENT_LIST,
+    MUTATION_RESET_STORE,
+    MUTATION_RESOVLE_ARTICLE,
+    MUTATION_RESOVLE_TOP_COMMENT_LIST, MUTATION_TRIGGER_IS_LOADING
+} from "../mutation_types";
+
 export default {
 
-    mutation_resolveArticle(state,payload){
+    [MUTATION_RESOVLE_ARTICLE](state,payload){
 
         payload.article.article_content = generateArticleContentWithLazyloadImage(payload.article.article_content)
 
@@ -12,7 +20,7 @@ export default {
 
     },
 
-    mutation_resolveTopCommentList(state,payload){
+    [MUTATION_RESOVLE_TOP_COMMENT_LIST](state,payload){
 
         state.commentList = uniqueCommentList(state.commentList.concat(payload.commentList))
 
@@ -26,11 +34,11 @@ export default {
 
     },
 
-    mutation_recordCurrentArticleId(state, payload){
+    [MUTATION_RECORD_CURRENT_ARTICLE_ID](state, payload){
         state.currentArticleId = payload.currentArticleId
     },
 
-    mutation_resetPaginationIndexOfTopCommentList(state){
+    [MUTATION_RESET_PAGINATION_INDEX_OF_TOP_COMMENT_LIST](state){
 
         state.startIndex = resetState.startIndex
 
@@ -41,15 +49,25 @@ export default {
         state.commentList = resetState.commentList
     },
 
-    mutation_triggerIsLoading(state,payload) {
+    [MUTATION_TRIGGER_IS_LOADING](state,payload) {
         if(payload.id === 'article_forMore'){
             state.loadingMoreComment = payload.loading
         }
     },
 
-    mutation_appendCommentJustSubmit(state,payload) {
+    [MUTATION_APPEND_COMMENT_JUST_SUBMIT](state,payload) {
         if(payload.commentEditorId === "topCommentEditor") {
             state.commentList.push(payload.comment)
+        }
+    },
+
+    [MUTATION_RESET_STORE](state,payload) {
+
+        if(payload.id === 'article'){
+            for (var i in resetState) {
+                state[i] = resetState[i] // 递归赋值
+            }
+
         }
     }
 }

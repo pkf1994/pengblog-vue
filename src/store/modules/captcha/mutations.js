@@ -1,5 +1,7 @@
+import {MUTATION_APPOINT_CAPTCHA} from "../mutation_types";
+
 export default {
-    mutation_appointCaptcha(state,payload) {
+    [MUTATION_APPOINT_CAPTCHA](state,payload) {
 
         let target = state[payload.captchaHost]
 

@@ -1,6 +1,8 @@
 <template>
     <HeaderWrapper>
-        <Logo/>
+        <RouterLink to="/">
+            <Logo/>
+        </RouterLink>
     </HeaderWrapper>
 </template>
 

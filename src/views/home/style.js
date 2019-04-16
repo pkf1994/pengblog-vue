@@ -11,7 +11,7 @@ export const ArticleList = styled.div`
         width: 300px;
         border-right: solid 1px ${store.state.meta.metaBorderColor};
         overflow-y: ${store.state.meta.browserEdit === 'Edge' ? 'auto' : 'overlay'};
-        ${store.state.meta.browserEdit !== 'Safari' ? `
+        ${store.state.meta.browserEdit !== 'Safari' && window.innerWidth > store.state.meta.maxMobileWidth && `
         &::-webkit-scrollbar{
             width:2px;
             height:1px;
@@ -21,7 +21,7 @@ export const ArticleList = styled.div`
         }
         &::-webkit-scrollbar-track{
         
-        }` : ''}
+        }` }
         
         @media(min-width:${store.state.meta.milePost}px){
             width: 350px;
@@ -29,6 +29,12 @@ export const ArticleList = styled.div`
         
          @media(min-width:${store.state.meta.bigScreenWidth}px){
             width: 450px;
+        }
+        
+        @media(max-width:${store.state.meta.maxMobileWidth}px) {
+            position: static;
+            width: 100%;
+            overflow-y: auto;
         }
     `
 
@@ -44,12 +50,35 @@ export const ArticleDetail = styled.div`
         justify-content: center;
         margin-left: 300px;
         
+        @media(min-width:${store.state.meta.milePost}px) {
+            margin-left: 350px;
+        }
+        
+         @media(min-width:${store.state.meta.bigScreenWidth}px) {
+            margin-left: 450px;
+        }
+        
+        @media(max-width:${store.state.meta.maxMobileWidth}px) {
+            display: none
+        }
+    `
+
+export const Theme = styled.div`
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 300px;
+        
         @media(min-width:${store.state.meta.milePost}px){
             margin-left: 350px;
         }
         
          @media(min-width:${store.state.meta.bigScreenWidth}px){
             margin-left: 450px;
+        }
+        
+         @media(max-width:${store.state.meta.maxMobileWidth}px) {
+            display: none
         }
     `
 
@@ -83,6 +112,10 @@ export const LoadingWrapper = styled('div',loadingWrapperProps)`
         
          @media(min-width:${store.state.meta.bigScreenWidth}px){
             left: 450px;
+        }
+        
+        @media(max-width:${store.state.meta.maxMobileWidth}px) {
+            display: none
         }
     `
 

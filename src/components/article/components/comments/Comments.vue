@@ -25,10 +25,9 @@
     import {CommentsWrapper,Title,CommentsIcon,ForMoreWrapper} from './style'
     import {Comment} from './components'
     import {mapActions, mapMutations, mapState} from "vuex";
-    import {
-        ACTION_GET_TOP_COMMENT_LIST,
-        MUTATION_RESET_PAGINATION_INDEX_OF_TOP_COMMENT_LIST
-    } from "../../../../store/modules/api/constant";
+    import {ACTION_GET_TOP_COMMENT_LIST} from "../../../../store/modules/action_types";
+    import {MUTATION_RESET_PAGINATION_INDEX_OF_TOP_COMMENT_LIST} from "../../../../store/modules/mutation_types";
+
 
     export default {
         props: {

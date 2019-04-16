@@ -68,7 +68,8 @@
         computed: {
             ...mapState({
                 defaultImageSrc: state => state.meta.defaultImageSrc,
-                currentArticleId: state => state.article.currentArticleId
+                currentArticleId: state => state.article.currentArticleId,
+                maxMobileWidth: state => state.meta.maxMobileWidth
             }),
             withPreviewImage(){
                 return (this.article.article_previewImageUrl !== null) && (this.article.article_previewImageUrl !== '')
@@ -83,7 +84,11 @@
                 this.featureLabelColor = GenerateFeatureColor(this.article.article_label)
             },
             goToTheArticle() {
-                this.$router.push({path: '/home/article/' + this.article.article_id})
+                if(window.innerWidth > this.maxMobileWidth) {
+                    this.$router.push({path: '/home/article/' + this.article.article_id})
+                }else{
+                    this.$router.push({path: '/article/' + this.article.article_id})
+                }
             }
         },
         components: {

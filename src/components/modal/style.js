@@ -119,3 +119,23 @@ export const LoadingWrapper = styled.div`
         background: white;
         opacity: 0.5;
     `
+
+
+export const WechatQrcodeWrapper = styled.div`
+        display: flex;
+        justify-content: center;
+    `
+
+export const WechatQrcode = styled.img`
+        width: 180px;
+        height: 180px;
+        margin-bottom: 1rem;
+    `
+
+export const Email = styled.div`
+        padding: 1rem 2rem;
+        padding-top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    `

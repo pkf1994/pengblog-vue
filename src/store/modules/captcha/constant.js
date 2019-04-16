@@ -1,1 +1,0 @@
-export const MUTATION_APPOINT_CAPTCHA = 'mutation_appointCaptcha'

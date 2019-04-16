@@ -1,11 +1,11 @@
-import {MUTATION_APPOINT_CAPTCHA} from "../../captcha/constant";
 import {CaptchaRequest} from '../request'
-import {MUTATION_TRIGGER_SHOW_NOTICE} from "../../notice/constant";
 import {timeout} from './articleActions'
+import {MUTATION_APPOINT_CAPTCHA, MUTATION_TRIGGER_SHOW_NOTICE} from "../../mutation_types";
+import {ACTION_CHECK_CAPTCHA, ACTION_GET_CAPTCHA_IMAGE} from "../../action_types";
 
 
 export default {
-    async action_getCaptchaImage(context,payload) {
+    async [ACTION_GET_CAPTCHA_IMAGE](context,payload) {
 
         try{
             //打开loading状态
@@ -41,7 +41,7 @@ export default {
 
     },
 
-    async action_checkCaptcha(context,payload) {
+    async [ACTION_CHECK_CAPTCHA](context,payload) {
 
         const payload_ = {
             captchaId: context.rootState.captcha[payload.captchaHost].captchaId,

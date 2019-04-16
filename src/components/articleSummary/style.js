@@ -32,7 +32,7 @@ const ContentProps = {
 }
 
 export const Content = styled('div',ContentProps)`
-        font-size: ${store.state.meta.innerWidth < store.state.meta.maxMobileWidth ? '1rem' : '0.8rem'};
+        font-size: ${window.innerWidth < store.state.meta.maxMobileWidth ? '1rem' : '0.8rem'};
         width: ${props => props.withPreviewImage ? '68%' : '100%'};
         line-height:1.5;
         cursor: pointer;
@@ -42,6 +42,8 @@ export const Content = styled('div',ContentProps)`
         -webkit-box-orient: vertical;
         -webkit-line-clamp: ${store.state.meta.innerWidth > store.state.meta.bigScreenWidth ? '4' : '3'};
         overflow: hidden;
+        
+        
     `
 
 export const PreviewImage = styled.img`

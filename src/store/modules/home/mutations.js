@@ -1,6 +1,7 @@
+import {MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME, MUTATION_TRIGGER_IS_LOADING} from "../mutation_types";
 
 export default {
-    mutation_resolveArticleListDataToHome(state,payload){
+    [MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME](state,payload){
 
         state.articleList = state.articleList.concat(payload.articleList)
 
@@ -14,7 +15,7 @@ export default {
 
     },
 
-    mutation_triggerIsLoading(state,payload){
+    [MUTATION_TRIGGER_IS_LOADING](state,payload){
         if(payload.id === 'home_article'){
             state.loadingArticleDetail = payload.loading
         }

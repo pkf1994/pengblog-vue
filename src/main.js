@@ -8,7 +8,7 @@ import './assets/iconfont/iconfont.css'
 import './registerServiceWorker'
 import './style.css'
 import '@/assets/style'
-import {MUTATION_TRIGGER_SHOW_NOTICE} from "./store/modules/notice/constant";
+import {MUTATION_TRIGGER_SHOW_NOTICE} from "./store/modules/mutation_types";
 
 
 

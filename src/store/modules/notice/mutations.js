@@ -1,6 +1,8 @@
+import {MUTATION_TRIGGER_SHOW_NOTICE} from "../mutation_types";
+
 export default {
 
-    mutation_triggerShowNotice(state,payload){
+    [MUTATION_TRIGGER_SHOW_NOTICE](state,payload){
 
         state.show = payload.show
 

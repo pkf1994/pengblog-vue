@@ -37,13 +37,13 @@
     import Captcha from '../../captcha/Captcha.vue'
     import {mapActions, mapMutations, mapState} from "vuex";
     import Loading from '../../loading/Loading.vue'
-    import {MUTATION_TRIGGER_SHOW_MODAL} from "../../../store/modules/modal/constant";
     import {
-        ACTION_CHECK_CAPTCHA,
-        ACTION_SUBMIT_COMMENT,
-        MUTATION_TRIGGER_IS_LOADING
-    } from "../../../store/modules/api/constant";
-    import {MUTATION_APPOINT_CAPTCHA} from "../../../store/modules/captcha/constant";
+        MUTATION_APPOINT_CAPTCHA,
+        MUTATION_TRIGGER_IS_LOADING,
+        MUTATION_TRIGGER_SHOW_MODAL
+    } from "../../../store/modules/mutation_types";
+    import {ACTION_CHECK_CAPTCHA, ACTION_SUBMIT_COMMENT} from "../../../store/modules/action_types";
+
     export default {
         computed: {
             ...mapState({

@@ -22,21 +22,29 @@
       </LoadingArticleSummary>
     </ArticleList>
 
-
     <!--文章详情-->
-      <ArticleDetail >
+    <transition name="slide-up-fade">
+      <ArticleDetail v-if="currentRoute === 'home_article'">
         <ArticleDetailFixer>
-          <transition name="slide-up-fade">
-            <RouterView v-if="refreshIndex"></RouterView>
-          </transition>
+            <RouterView></RouterView>
         </ArticleDetailFixer>
       </ArticleDetail>
+    </transition>
+
+    <transition name="slide-up-fade">
+      <Theme v-if="currentRoute !== 'home_article'">
+        <ThemeJumbotron/>
+        <Footer/>
+      </Theme>
+    </transition>
 
     <!--loading文章详情-->
       <LoadingWrapper v-show="loadingArticleDetail"
                       :opaque="!article.article_id">
         <Loading/>
       </LoadingWrapper>
+
+
 
   </HomeWrapper>
 
@@ -46,33 +54,27 @@
 import {mapActions, mapState} from 'vuex'
 import Article from '@/components/article/Article.vue'
 import ArticleSummary from '@/components/articleSummary/ArticleSummary.vue'
-import {Loading} from '@/components'
-import {ForMore} from '@/components'
+import {Loading,ForMore,ThemeJumbotron,Footer} from '@/components'
 import {HomeWrapper,
         ArticleList,
         LoadingArticleSummary,
         ArticleDetail,
         LoadingWrapper,
-        ArticleDetailFixer,
+        ArticleDetailFixer,Theme,
         ForMoreWrapper} from './style'
-import {ACTION_GET_ARTICLE_LIST_DATA_HOME} from "../../store/modules/api/constant";
+import {ACTION_GET_ARTICLE_LIST_DATA} from "../../store/modules/action_types";
 
 
 export default {
 
-    data(){
-      return {
-        refreshIndex: true
-      }
-    },
-
     created() {
-
         this.actionGetArticleListOfHome()
-
     },
 
     computed: {
+        currentRoute(){
+            return this.$route.name
+        },
         ...mapState({
             articleList: state => state.home.articleList,
             article: state => state.article.article,
@@ -84,20 +86,8 @@ export default {
 
     methods: {
         ...mapActions({
-            actionGetArticleListOfHome: ACTION_GET_ARTICLE_LIST_DATA_HOME
+            actionGetArticleListOfHome: ACTION_GET_ARTICLE_LIST_DATA
         })
-    },
-
-    watch: {
-        article(newArticle,oldArticle){
-
-          //如果是第一次加载，则不刷新article组件
-          if(!oldArticle.article_id){
-              return
-          }
-          this.refreshIndex = false
-          this.$nextTick(() => (this.refreshIndex = true))
-      }
     },
 
     components: {
@@ -106,12 +96,13 @@ export default {
         LoadingArticleSummary,
         HomeWrapper,
         ArticleList,
-        ArticleDetail,
+        ArticleDetail,Theme,
         Loading,
         ForMore,
         LoadingWrapper,
         ArticleDetailFixer,
-        ForMoreWrapper
+        ForMoreWrapper,
+        ThemeJumbotron,Footer
     }
 }
 </script>
@@ -121,13 +112,10 @@ export default {
   .slide-up-fade-enter-active {
     transition: all .4s ease;
   }
-  .slide-up-fade-leave-active {
-    transition: all .4s ease;
-  }
+
   .slide-up-fade-enter, .slide-up-fade-leave-to {
     transform: translateY(50px);
     opacity: 0;
-    filter: brightness(70%);
   }
 
   .fade-enter-active {

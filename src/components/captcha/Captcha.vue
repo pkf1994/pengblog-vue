@@ -19,8 +19,8 @@
     import {mapActions, mapMutations, mapState} from "vuex";
     import Input from '../input/Input.vue'
     import {CaptchaWrapper,CaptchaImage,LoadingWrapper} from "./style";
-    import {ACTION_GET_CAPTCHA_IMAGE} from "../../store/modules/api/constant";
-    import {MUTATION_APPOINT_CAPTCHA} from "../../store/modules/captcha/constant";
+    import {MUTATION_APPOINT_CAPTCHA} from "../../store/modules/mutation_types";
+    import {ACTION_GET_CAPTCHA_IMAGE} from "../../store/modules/action_types";
     const uuidv4 = require('uuid/v4');
 
     export default {

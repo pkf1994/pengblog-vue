@@ -1,4 +1,5 @@
 import styled from 'vue-styled-components'
+import store from '@/store'
 
 export const ArticleWrapper = styled.div`
         position: relative;
@@ -31,5 +32,16 @@ export const ArticleInfo = styled.div`
 export const ArticleContent = styled.div`
         line-height: 1.7;
         word-wrap: break-word;
+    `
+
+export const LoadingWrapper = styled.div`
+        position: absolute;
+        height: calc(${window.innerHeight}px - ${store.state.meta.heightOfHeader});
+        width: 100%;
+        top: 0;
+        background: white;
+        @media(min-width:${store.state.meta.maxMobileWidth}px){
+            display: none;
+        }
     `
 

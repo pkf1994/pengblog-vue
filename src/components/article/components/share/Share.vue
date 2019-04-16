@@ -21,7 +21,7 @@
 
     import {ShareWrapper,ShareItem} from './style'
     import {mapMutations, mapState} from "vuex";
-    import {MUTATION_TRIGGER_SHOW_MODAL} from "../../../../store/modules/modal/constant";
+    import {MUTATION_TRIGGER_SHOW_MODAL} from "../../../../store/modules/mutation_types";
 
     export default {
 

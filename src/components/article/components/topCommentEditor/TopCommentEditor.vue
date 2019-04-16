@@ -73,7 +73,9 @@
 </template>
 
 <script>
-    import {Input, TextArea, Loading} from '@/components'
+    import {Loading} from '@/components'
+    import Input from '../../../input/Input.vue'
+    import TextArea from '../../../textArea/TextArea.vue'
     import {TopCommentEditorWrapper,
             Name,
             Title,
@@ -85,10 +87,10 @@
             SubmitTextBtn,
             LoadingWrapper} from './style'
     import {mapActions, mapMutations, mapState} from "vuex";
-    import {MUTATION_APPOINT_INPUT} from "../../../../store/modules/topCommentEditor/constant";
     import {CountLength} from "@/exJs/countStringLength";
     import {DeleteCookie,SetCookie,ReadCookie} from "@/exJs/cookieUtil";
-    import {ACTION_TRY_SUBMIT_COMMENT, MUTATION_TRIGGER_IS_LOADING} from "../../../../store/modules/api/constant";
+    import {MUTATION_APPOINT_INPUT, MUTATION_TRIGGER_IS_LOADING} from "../../../../store/modules/mutation_types";
+    import {ACTION_TRY_SUBMIT_COMMENT} from "../../../../store/modules/action_types";
 
 
     const EMAIL_REGULAR = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/

@@ -92,9 +92,9 @@
             ReplyButton,
             ForMoreWrapper} from './style'
     import {mapActions} from "vuex";
-    import {ACTION_GET_SUB_COMMENT_LIST} from "../../../../../../store/modules/api/constant";
     import SubComment from '../subComment/SubComment.vue'
     import ForMore from '../../../../../forMore/ForMore.vue'
+    import {ACTION_GET_SUB_COMMENT_LIST} from "../../../../../../store/modules/action_types";
     export default {
 
         props: {

@@ -13,6 +13,8 @@
 
                 <CaptchaModalItem v-if="context === 'captcha'"/>
 
+                <ContactMeModalItem v-if="context === 'contactMe'"/>
+
                 <CloseButton class="iconfont"
                              :loading="loading"
                              v-on:click="close">&#xe70b;</CloseButton>
@@ -28,9 +30,11 @@
             BackgroundCover,
             ModalBody,
             CloseButton} from './style'
-    import {ShareToWechatModalItem,CaptchaModalItem} from './modalItems'
+    import {ShareToWechatModalItem,
+            CaptchaModalItem,
+            ContactMeModalItem} from './modalItems'
     import {mapMutations, mapState} from "vuex";
-    import {MUTATION_TRIGGER_SHOW_MODAL} from "../../store/modules/modal/constant";
+    import {MUTATION_TRIGGER_SHOW_MODAL} from "../../store/modules/mutation_types";
 
     export default {
 
@@ -59,7 +63,8 @@
             ModalBody,
             CloseButton,
             ShareToWechatModalItem,
-            CaptchaModalItem
+            CaptchaModalItem,
+            ContactMeModalItem
         }
     }
 </script>

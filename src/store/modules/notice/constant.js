@@ -1,1 +1,0 @@
-export const MUTATION_TRIGGER_SHOW_NOTICE = 'mutation_triggerShowNotice'

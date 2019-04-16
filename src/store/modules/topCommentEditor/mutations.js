@@ -1,5 +1,7 @@
+import {MUTATION_APPOINT_INPUT, MUTATION_TRIGGER_IS_LOADING} from "../mutation_types";
+
 export default {
-    mutation_appointInput(state,payload){
+    [MUTATION_APPOINT_INPUT](state,payload){
 
         if(payload.commentEditorId !== 'topCommentEditor'){
             return
@@ -14,7 +16,7 @@ export default {
         payload.warnMsg !== undefined && (targetInput.warnMsg = payload.warnMsg)
 
     },
-    mutation_triggerIsLoading(state,payload) {
+    [MUTATION_TRIGGER_IS_LOADING](state,payload) {
         if(payload.id === 'topCommentEditor') {
             state.loading = payload.loading
         }
