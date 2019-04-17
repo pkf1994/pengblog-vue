@@ -21,3 +21,5 @@ export const MUTATION_TRIGGER_SHOW_MODAL = 'mutation_triggerShowModal'
 export const MUTATION_TRIGGER_SHOW_NOTICE = 'mutation_triggerShowNotice'
 
 export const MUTATION_APPOINT_INPUT = 'mutation_appointInput'
+
+export const MUTATION_PUSH_PROGRASS_BAR_TO_END = 'mutation_pushPrograssBarToEnd'

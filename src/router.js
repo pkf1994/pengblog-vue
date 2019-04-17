@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '@/store'
 Vue.use(Router)
 
 const Article = () => import('./components/article/Article.vue')
@@ -53,14 +54,24 @@ let router =  new Router({
 
 
 router.afterEach((to, from) => {
-    if(to.path.match(/^\/home$/) != null) {
-        document.title = '远方有鱼'
-    }else if(to.path.match(/^\/$/) != null) {
-        document.title = '远方有鱼'
-    }else if(to.path.match(/^\/routine\/article_edit/) != null) {
-        document.title = '彭凯帆的博客-编辑'
-    }
+    //launchPrograssBar()
+    appointDocumentTitle(to)
+
 })
 
 
 export default router
+
+const launchPrograssBar = () => {
+    store.state.prograssBar.nanobarGoToMilePost()
+}
+
+const appointDocumentTitle = (to) => {
+    if(to.path.match(/^\/home$/) != null) {
+        document.title = '远方有鱼'
+    }else if(to.path.match(/^\/$/) != null) {
+        document.title = '远方有鱼'
+    }else if(to.path.match(/^\/home\/article/) != null) {
+        document.title = store.state.article.article.article_title
+    }
+}

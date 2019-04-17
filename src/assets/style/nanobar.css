@@ -1,0 +1,6 @@
+.bar {
+    width: 0;
+    height: 100%;
+    transition: height .3s;
+    background: #4fc08d;
+}

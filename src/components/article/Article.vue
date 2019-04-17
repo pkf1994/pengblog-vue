@@ -104,9 +104,6 @@
             this.action_GetArticleData({article_id: this.article_id})
         },
 
-        mounted(){
-           // window.scrollTo(0,0)
-        },
 
         methods: {
             refresh() {

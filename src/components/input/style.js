@@ -5,6 +5,7 @@ const backgroundColor = '#F7F7F7'
 
 export const InputWrapper = styled.div`
         position: relative;
+        display: flex;
     `
 
 export const Inputer = styled('input',{fontColor: String,backgroundColor:String,fontSize:String,padding:String,showWarn:Boolean,disableFocusStyle:Boolean})`

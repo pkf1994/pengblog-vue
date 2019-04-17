@@ -10,7 +10,7 @@ export default {
 
     [MUTATION_RESOVLE_ARTICLE](state,payload){
 
-        payload.article.article_content = generateArticleContentWithLazyloadImage(payload.article.article_content)
+        payload.article.article_content = generateArticleContentWithLazyloadImage(payload.article.article_content,'https://pengblogimage-1257899590.cos.ap-guangzhou.myqcloud.com/default.png')
 
         if(state.article.article_id === payload.article.article_id){
             return
@@ -72,7 +72,7 @@ export default {
     }
 }
 
-const generateArticleContentWithLazyloadImage = (htmlStr) => {
+const generateArticleContentWithLazyloadImage = (htmlStr,defaultImageSrc) => {
 
     let virtualElement = document.createElement('div')
     virtualElement.innerHTML = htmlStr
@@ -84,7 +84,7 @@ const generateArticleContentWithLazyloadImage = (htmlStr) => {
             let src = imgs.item(i).getAttribute('src')
             imgs.item(i).setAttribute('data-src',src)
             imgs.item(i).setAttribute('class','lazyload')
-            imgs.item(i).setAttribute('src',window.defaultImageSrc)
+            imgs.item(i).setAttribute('src',defaultImageSrc)
         }
     }
 

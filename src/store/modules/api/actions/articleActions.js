@@ -1,5 +1,6 @@
 import {ArticleRequest} from '../request'
 import {
+    MUTATION_PUSH_PROGRASS_BAR_TO_END,
     MUTATION_RECORD_CURRENT_ARTICLE_ID,
     MUTATION_RESOVLE_ARTICLE, MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME,
     MUTATION_TRIGGER_IS_LOADING, MUTATION_TRIGGER_SHOW_NOTICE
@@ -56,10 +57,12 @@ export default {
 
             context.commit(MUTATION_TRIGGER_IS_LOADING, payload____)
 
+            context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
+
         }catch(err){
 
             context.commit(MUTATION_TRIGGER_SHOW_NOTICE,({
-                noticeContent: '获取文章数据失败',
+                noticeContent: '获取文章数据失败, err:' + err.response ? err.response.data : err,
                 show: true
             }))
 
@@ -94,10 +97,14 @@ export default {
 
             context.commit(MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME,payload__)
 
+            context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
+
         }catch(err){
 
+            console.log(err)
+
             context.commit(MUTATION_TRIGGER_SHOW_NOTICE,({
-                noticeContent: '获取文章列表数据失败',
+                noticeContent: '获取文章列表数据失败,err:' + err.response ? err.response.data : err,
                 show: true
             }))
 

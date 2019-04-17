@@ -8,7 +8,6 @@ export const SubCommentWrapper = styled('div',{isBeenDeleting:Boolean,isBanned:B
         filter: brightness(${props => props.isBeenDeleting ? '95%' : '100%'});
         background: ${props => props.isBanned ? '#F7F7F7' : 'white'};
         transition: all 0.4s ease;
-        margin: 0 1rem;
     `
 
 export const Content = styled('div',{isBanned:Boolean})`

@@ -75,7 +75,7 @@
                 return (this.article.article_previewImageUrl !== null) && (this.article.article_previewImageUrl !== '')
             },
             isActive(){
-                return this.article.article_id.toString() === this.currentArticleId
+                return this.article.article_id.toString() === this.currentArticleId && window.innerWidth > this.maxMobileWidth
             }
         },
         methods: {

@@ -9,7 +9,6 @@ export const CommentWrapper = styled('div',{isBeenDeleting:Boolean,isBanned:Bool
         filter: brightness(${props => props.isBeenDeleting ? '95%' : '100%'});
         background: ${props => props.isBanned ? '#F7F7F7' : 'white'};
         transition: all 0.4s ease;
-        margin: 0 1rem;
     `
 
 export const VisitorInfo = styled.div`
@@ -51,7 +50,7 @@ export const Name = styled('div',{isBanned: Boolean})`
         font-size: 0.9rem;
         line-height: 1.2;
         text-align: center;
-        word-wrap: break-word 
+        word-wrap: break-word; 
         text-decoration: ${props => props.isBanned ? 'line-through' : 'none'};
         color: ${props => props.isBanned ? 'grey' : 'black'};
         
@@ -78,7 +77,7 @@ export const MultiContent = styled.div`
     `
 
 export const ContentWrapper = styled('div',{showAll:Boolean,heightOfCommentContent:Number})`
-        max-height: ${props => props.showAll ? props.heightOfCommentContent + 'px' : '210px'};
+        max-height: ${props => props.showAll ? props.heightOfCommentContent + 'px' : '6.2rem'};
         transition: all 0.4s ease;
         overflow: hidden;
         flex-grow: 1;

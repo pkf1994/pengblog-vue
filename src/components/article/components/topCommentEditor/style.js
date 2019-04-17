@@ -1,5 +1,5 @@
 import styled from 'vue-styled-components'
-import { Button } from '@/components'
+import {Button} from '../../../button/index'
 import store from '@/store'
 
 export const TopCommentEditorWrapper = styled.div`
@@ -85,11 +85,8 @@ export const SubmitButtonWrapper = styled.div`
 export const SubmitButton = styled(Button)`
          width: 100%;
          @media(max-width:${store.state.meta.maxMobileWidth}px){
-            padding: 0.5rem;
+            padding: 1rem;
          }
-         @media(min-width:${store.state.meta.maxMobileWidth}px){
-            display: none;
-        } 
     `
 
 export const SubmitTextBtn = styled.span`

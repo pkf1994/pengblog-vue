@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import {mapActions, mapState} from 'vuex'
+    import {mapActions, mapState} from 'vuex'
 import Article from '@/components/article/Article.vue'
 import ArticleSummary from '@/components/articleSummary/ArticleSummary.vue'
 import {Loading,ForMore,ThemeJumbotron,Footer} from '@/components'
@@ -69,6 +69,7 @@ export default {
 
     created() {
         this.actionGetArticleListOfHome()
+        this.prograssBarManager.nanobarGoToMilePost()
     },
 
     computed: {
@@ -80,7 +81,8 @@ export default {
             article: state => state.article.article,
             loadingArticleDetail: state => state.home.loadingArticleDetail,
             noMore: state => (state.home.nextPage === state.home.maxPage),
-            loadingMore: state => state.home.loadingMore
+            loadingMore: state => state.home.loadingMore,
+            prograssBarManager: state => state.prograssBar
         })
     },
 

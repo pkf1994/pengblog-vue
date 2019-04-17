@@ -59,8 +59,9 @@
             </SubmitTextBtn>
 
             <SubmitButton v-on:click="tryToSubmitComment">
-                submit
+                <i class="fa fa-send-o submit-btn-icon" />
             </SubmitButton>
+
         </SubmitButtonWrapper>
 
         <transition name="fade">
@@ -317,6 +318,9 @@
 
     .fade-enter,.fade-leave-to{
         opacity: 0;
+    }
+    .submit-btn-icon{
+        transform: scale(1.5);
     }
 
 </style>

@@ -7,6 +7,7 @@ import topCommentEditorStore from './topCommentEditor'
 import subCommentEditorStore from './subCommentEditor'
 import captchaStore from './captcha'
 import metaStore from './meta'
+import prograssBarStore from './prograssBar'
 
 export {articleStore,
         apiStore,
@@ -16,4 +17,5 @@ export {articleStore,
         topCommentEditorStore,
         subCommentEditorStore,
         captchaStore,
-        metaStore}
+        metaStore,
+        prograssBarStore}
