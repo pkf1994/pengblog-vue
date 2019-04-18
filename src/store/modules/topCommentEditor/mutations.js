@@ -1,4 +1,8 @@
-import {MUTATION_APPOINT_INPUT, MUTATION_TRIGGER_IS_LOADING} from "../mutation_types";
+import {
+    MUTATION_APPEND_TO_COMMENT_EDITOR,
+    MUTATION_APPOINT_INPUT,
+    MUTATION_TRIGGER_IS_LOADING
+} from "../mutation_types";
 
 export default {
     [MUTATION_APPOINT_INPUT](state,payload){
@@ -19,6 +23,11 @@ export default {
     [MUTATION_TRIGGER_IS_LOADING](state,payload) {
         if(payload.id === 'topCommentEditor') {
             state.loading = payload.loading
+        }
+    },
+    [MUTATION_APPEND_TO_COMMENT_EDITOR](state, payload) {
+        if(payload.commentEditorId === 'topCommentEditor') {
+            state.content.value = state.content.value + payload.value
         }
     }
 }

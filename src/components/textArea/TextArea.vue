@@ -4,6 +4,7 @@
         <textarea class="textarea"
                   v-model="_value"
                   :rows="rows"
+                  :maxlength="maxLength"
                   :placeholder="placeholder"
                   v-on="inputListeners"
                   :style="{borderColor: showWarn ? 'red' : metaBorderColor}">

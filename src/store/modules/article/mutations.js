@@ -92,7 +92,7 @@ const generateArticleContentWithLazyloadImage = (htmlStr,defaultImageSrc) => {
 
 }
 
-const uniqueCommentList = (commentList) => {
+export const uniqueCommentList = (commentList) => {
 
     let uniqueCommentList = []
 

@@ -96,51 +96,51 @@
             }
         },
 
-        beforeDestroy() {
-            this.mutation_resetStore({id: 'article'})
-        },
+    beforeDestroy() {
+    this.mutation_resetStore({id: 'article'})
+    },
 
-        created(){
-            this.action_GetArticleData({article_id: this.article_id})
-        },
-
-
-        methods: {
-            refresh() {
-                this.refreshIndex = false
-                this.$nextTick(() => {
-                    this.refreshIndex = true
-                })
-            },
-            ...mapActions({
-                action_GetArticleData: ACTION_GET_ARTICLE_DATA,
-            }),
-            ...mapMutations({
-                mutation_recordCurrentArticleId: MUTATION_RECORD_CURRENT_ARTICLE_ID,
-                mutation_resetStore: MUTATION_RESET_STORE
-            }),
-            DateFormat
-        },
+    created(){
+    this.action_GetArticleData({article_id: this.article_id})
+    },
 
 
-        components: {
-            Share,
-            Comments,
-            TopCommentEditor,
-            ArticleWrapper,
-            ArticleTitleImage,
-            ArticleTitle,
-            ArticleInfo,
-            ArticleContent,
-            ArticleMultiContent,Loading,LoadingWrapper
-        }
+    methods: {
+    refresh() {
+    this.refreshIndex = false
+                        this.$nextTick(() => {
+                                               this.refreshIndex = true
+                                           })
+    },
+    ...mapActions({
+        action_GetArticleData: ACTION_GET_ARTICLE_DATA,
+    }),
+    ...mapMutations({
+        mutation_recordCurrentArticleId: MUTATION_RECORD_CURRENT_ARTICLE_ID,
+        mutation_resetStore: MUTATION_RESET_STORE
+    }),
+    DateFormat
+    },
+
+
+    components: {
+        Share,
+        Comments,
+        TopCommentEditor,
+        ArticleWrapper,
+        ArticleTitleImage,
+        ArticleTitle,
+        ArticleInfo,
+        ArticleContent,
+        ArticleMultiContent,Loading,LoadingWrapper
     }
-</script>
-
-<style scoped>
-    .slide-up-fade-enter-active,.slide-up-fade-leave-active {
-        transition: all .4s ease;
     }
+    </script>
+
+      <style scoped>
+      .slide-up-fade-enter-active,.slide-up-fade-leave-active {
+          transition: all .4s ease;
+      }
 
     .slide-up-fade-enter, .slide-up-fade-leave-to {
         transform: translateY(50px);

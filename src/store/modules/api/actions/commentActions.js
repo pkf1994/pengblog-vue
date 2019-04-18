@@ -1,10 +1,11 @@
 import {CommentRequest} from '../request'
 import {
     MUTATION_APPEND_COMMENT_JUST_SUBMIT,
-    MUTATION_APPOINT_CAPTCHA,
+    MUTATION_APPOINT_CAPTCHA, MUTATION_APPOINT_REFERING_COMMENT,
     MUTATION_RESOVLE_TOP_COMMENT_LIST,
     MUTATION_TRIGGER_IS_LOADING, MUTATION_TRIGGER_SHOW_MODAL,
-    MUTATION_TRIGGER_SHOW_NOTICE
+    MUTATION_TRIGGER_SHOW_NOTICE,
+    MUTATION_RESOVLE_SUB_COMMENT_LIST_DATA
 } from "../../mutation_types";
 import {
     ACTION_CHECK_CAPTCHA,
@@ -83,13 +84,34 @@ export default {
             pageScale: payload.pageScale
         }
 
-        const res = await CommentRequest.RequestSubCommentList(payload_)
+        try{
 
-        payload.subCommentList = payload.subCommentList.concat(res.data.subCommentList)
-        payload.maxPage = res.data.maxPage
-        payload.startIndex = payload.startIndex + payload.pageScale
-        payload.nextPage = payload.nextPage + 1
-        payload.loadingMoreSubComment = false
+            const res = await CommentRequest.RequestSubCommentList(payload_)
+            payload.maxPage = res.data.maxPage
+            payload.startIndex = payload.startIndex + payload.pageScale
+            payload.nextPage = payload.nextPage + 1
+            payload.loadingMoreSubComment = false
+
+            const payload__ = {
+                hostCommentId: payload.comment.comment_id,
+                subCommentList: res.data.subCommentList
+            }
+
+            context.commit(MUTATION_RESOVLE_SUB_COMMENT_LIST_DATA,payload__)
+
+        }catch (err) {
+
+            console.log(err)
+
+            const payload___ = {
+                show: true,
+                noticeContent: err.response ? err.response.data : err
+            }
+
+            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload___)
+
+        }
+
     },
 
     //提交评论
@@ -192,12 +214,10 @@ export default {
 
     async [ACTION_SUBMIT_COMMENT](context,payload) {
 
-        console.log(payload.commentEditorId)
-
         const payload_ = {
             comment_hostId: context.rootState.article.currentArticleId,
             comment_content: context.rootState[payload.commentEditorId].content.value,
-            comment_referComment: payload.commentEditorId === 'subCommentEditor' ? context.rootState.subCommentEditor.referingComment : undefined,
+            comment_referComment: payload.commentEditorId === 'subCommentEditor' ? (context.rootState.subCommentEditor.referingComment.comment_referComment ? context.rootState.subCommentEditor.referingComment.comment_referComment.comment_id : context.rootState.subCommentEditor.referingComment.comment_id) : undefined,
             visitor_name: context.rootState[payload.commentEditorId].name.value,
             visitor_email: context.rootState[payload.commentEditorId].email.value,
             visitor_site: context.rootState[payload.commentEditorId].site.value,
@@ -207,8 +227,6 @@ export default {
         }
 
         const res = await CommentRequest.RequestSubmitComment(payload_)
-        console.log(res)
-
 
         //关闭modal
         const payload__ = {
@@ -225,12 +243,29 @@ export default {
 
         const commentJustSubmit = constructComment(payload_,res.data.commentIdJustSubmit)
 
+        //关闭commentEditor loading状态
         const payload____ = {
+            id: payload.commentEditorId,
+            loading: false
+        }
+        context.commit(MUTATION_TRIGGER_IS_LOADING,payload____)
+        //挂载comment
+        const payload_____ = {
+            comment_referComment: payload_.comment_referComment,
+            comment_appendTo: context.rootState.subCommentEditor.referingComment,
             comment: commentJustSubmit,
             commentEditorId: payload.commentEditorId
         }
 
-        context.commit(MUTATION_APPEND_COMMENT_JUST_SUBMIT,payload____)
+        context.commit(MUTATION_APPEND_COMMENT_JUST_SUBMIT,payload_____)
+
+        //关闭subCommentEditor
+        if(payload.commentEditorId === 'subCommentEditor') {
+            const payload______ = {
+                comment: undefined
+            }
+            context.commit(MUTATION_APPOINT_REFERING_COMMENT,payload______)
+        }
     }
 
 }

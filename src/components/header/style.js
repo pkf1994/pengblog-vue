@@ -2,8 +2,9 @@ import styled from 'vue-styled-components'
 import store from '@/store'
 
 export const HeaderWrapper = styled.div`
-        position: sticky;
+        position: fixed;
         top: 0;
+        width: 100%;
         z-index: 2;
         background: white;
         padding: 0 2rem; 

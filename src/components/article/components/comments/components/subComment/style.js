@@ -2,6 +2,7 @@ import styled from 'vue-styled-components'
 import store from '@/store'
 
 export const SubCommentWrapper = styled('div',{isBeenDeleting:Boolean,isBanned:Boolean})`
+        margin-left: 1rem;
         position: relative;
         align-items: stretch;
         border-top: solid 1px ${store.state.meta.metaBorderColor};
@@ -14,7 +15,7 @@ export const Content = styled('div',{isBanned:Boolean})`
         box-sizing: border-box;
         font-size: 0.9rem;
         line-height: 1.5;
-        padding: 0.8rem 1rem;
+        padding: 0.8rem 0;
         flex-grow: 1;    
         text-decoration: ${props => props.isBanned ? 'line-through' : 'none'};
         color: ${props => props.isBanned ? 'grey' : 'black'};
@@ -40,4 +41,18 @@ export const Platform = styled.span``
 
 export const ReleaseTime = styled.span``
 
-export const ReplyButton = styled.span``
+
+export const ReplyButton = styled.span`
+        cursor: pointer;
+        &:hover{
+            color: black;
+        }
+    `
+
+export const SubCommentEditorFixer = styled('div',{height: String,isBeenRefering: Boolean})`
+        padding: 0 1rem;
+        padding-bottom: ${props => props.isBeenRefering ? '1rem' : '0px'};
+        transition: all .4s ease;
+        overflow: hidden;
+        height: ${props => props.isBeenRefering ? props.height : '0px'};
+    `

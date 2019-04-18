@@ -1,4 +1,4 @@
-import {MUTATION_APPOINT_INPUT, MUTATION_TRIGGER_IS_LOADING} from "../mutation_types";
+import {MUTATION_APPOINT_INPUT, MUTATION_TRIGGER_IS_LOADING,MUTATION_APPOINT_REFERING_COMMENT} from "../mutation_types";
 
 export default {
     [MUTATION_APPOINT_INPUT](state,payload){
@@ -20,6 +20,10 @@ export default {
         if(payload.id === 'subCommentEditor') {
             state.loading = payload.loading
         }
+    },
+    [MUTATION_APPOINT_REFERING_COMMENT](state,payload) {
+        state.referingComment = payload.comment
+        payload.comment && (state.content.value = '回复  ' + payload.comment.comment_author.visitor_name + ' : ')
     }
 }
 

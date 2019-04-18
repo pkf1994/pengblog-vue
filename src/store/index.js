@@ -12,7 +12,8 @@ import {articleStore,
     subCommentEditorStore,
     captchaStore,
     metaStore,
-    prograssBarStore} from './modules'
+    prograssBarStore,
+    subCommentStore} from './modules'
 
 
 export default new Vuex.Store ({
@@ -26,7 +27,8 @@ export default new Vuex.Store ({
         subCommentEditor: subCommentEditorStore,
         captcha: captchaStore,
         meta: metaStore,
-        prograssBar: prograssBarStore
+        prograssBar: prograssBarStore,
+        subComment: subCommentStore
     }
 })
 

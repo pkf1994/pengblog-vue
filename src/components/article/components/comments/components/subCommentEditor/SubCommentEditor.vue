@@ -1,23 +1,15 @@
 <template>
-    <TopCommentEditorWrapper>
-
-        <Title>
-            <span class="iconfont" :style="{fontSize:'1.6rem'}">&#xe632;</span>&nbsp;说点什么
-        </Title>
+    <SubCommentEditorWrapper>
 
         <Content>
             <TextArea :value="content.value"
                       placeholder="开始编辑你的评论"
                       :rows="4"
-                      :max-length="1000"
+                      :max-length="300"
                       :showWarn="content.showWarn"
                       :warnMsg="content.warnMsg"
                       @input="(event) => inputHandler('content',event)"
                       @focus="() => shutdownWarnMsg('content')"/>
-
-            <EmojiPickerFixer>
-                <EmojiPicker :post-handler="appendEmoji"/>
-            </EmojiPickerFixer>
         </Content>
 
         <VisitorInfo>
@@ -57,20 +49,18 @@
                        @focus="() => {shutdownWarnMsg('site')}"/>
             </InputWrapper>
 
+            <SubmitButtonWrapper>
+
+                <SubmitButton v-on:click="tryToSubmitComment">
+                    <i v-if="isMobile" class="fa fa-send-o submit-btn-icon"/>
+                    <span v-if="!isMobile">submit</span>
+                </SubmitButton>
+
+            </SubmitButtonWrapper>
+
         </VisitorInfo>
 
-        <SubmitButtonWrapper>
 
-            <SubmitTextBtn v-on:click="tryToSubmitComment">
-                <i class="fa fa-send-o"/>
-               {{loading ? 'trying...' : 'submit'}}
-            </SubmitTextBtn>
-
-            <SubmitButton v-on:click="tryToSubmitComment">
-                <i class="fa fa-send-o submit-btn-icon" />
-            </SubmitButton>
-
-        </SubmitButtonWrapper>
 
         <transition name="fade">
             <LoadingWrapper v-if="loading">
@@ -78,15 +68,14 @@
             </LoadingWrapper>
         </transition>
 
-    </TopCommentEditorWrapper>
+    </SubCommentEditorWrapper>
 </template>
 
 <script>
     import {Loading} from '@/components'
-    import Input from '../../../input/Input.vue'
-    import TextArea from '../../../textArea/TextArea.vue'
-    import EmojiPicker from '../../../emojiPicker/EmojiPicker.vue'
-    import {TopCommentEditorWrapper,
+    import Input from '../../../../../input/Input.vue'
+    import TextArea from '../../../../../textArea/TextArea.vue'
+    import {SubCommentEditorWrapper,
             Name,
             Title,
             Content,
@@ -94,17 +83,12 @@
             InputWrapper,
             SubmitButtonWrapper,
             SubmitButton,
-            SubmitTextBtn,
-            LoadingWrapper,EmojiPickerFixer} from './style'
+            LoadingWrapper} from './style'
     import {mapActions, mapMutations, mapState} from "vuex";
     import {CountLength} from "@/exJs/countStringLength";
     import {DeleteCookie,SetCookie,ReadCookie} from "@/exJs/cookieUtil";
-    import {
-        MUTATION_APPEND_TO_COMMENT_EDITOR,
-        MUTATION_APPOINT_INPUT,
-        MUTATION_TRIGGER_IS_LOADING
-    } from "../../../../store/modules/mutation_types";
-    import {ACTION_TRY_SUBMIT_COMMENT} from "../../../../store/modules/action_types";
+    import {MUTATION_APPOINT_INPUT, MUTATION_TRIGGER_IS_LOADING} from "../../../../../../store/modules/mutation_types";
+    import {ACTION_TRY_SUBMIT_COMMENT} from "../../../../../../store/modules/action_types";
 
 
     const EMAIL_REGULAR = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
@@ -114,12 +98,16 @@
 
         computed: {
             ...mapState({
-                name: state => state.topCommentEditor.name,
-                content: state => state.topCommentEditor.content,
-                email: state => state.topCommentEditor.email,
-                site: state => state.topCommentEditor.site,
-                loading: state => state.topCommentEditor.loading
-            })
+                name: state => state.subCommentEditor.name,
+                content: state => state.subCommentEditor.content,
+                email: state => state.subCommentEditor.email,
+                site: state => state.subCommentEditor.site,
+                loading: state => state.subCommentEditor.loading,
+                maxMobileWidth: state => state.meta.maxMobileWidth
+            }),
+            isMobile() {
+                return window.innerWidth < this.maxMobileWidth
+            }
         },
 
         created() {
@@ -141,7 +129,7 @@
 
                 //loading
                 const payload = {
-                    id: 'topCommentEditor',
+                    id: 'subCommentEditor',
                     loading: true
                 }
                 this.mutation_triggerIsLoading(payload)
@@ -150,7 +138,7 @@
                 this.rememberMe(this.name.value,this.email.value,this.site.value)
 
                 const payload_ = {
-                    commentEditorId: 'topCommentEditor'
+                    commentEditorId: 'subCommentEditor'
                 }
 
                 this.action_trySubmitComment(payload_)
@@ -161,7 +149,7 @@
                 const payload = {
                     id: id,
                     value: id === 'content' ? event : event.target.value,
-                    commentEditorId: 'topCommentEditor'
+                    commentEditorId: 'subCommentEditor'
                 }
                 this.mutation_appointInput(payload)
             },
@@ -170,7 +158,7 @@
                 const payload = {
                     id: id,
                     showWarn: false,
-                    commentEditorId: 'topCommentEditor'
+                    commentEditorId: 'subCommentEditor'
                 }
                 this.mutation_appointInput(payload)
             },
@@ -192,7 +180,7 @@
                     const payload = {
                         id: 'name',
                         value: cookieMap.name,
-                        commentEditorId: 'topCommentEditor'
+                        commentEditorId: 'subCommentEditor'
                     }
                     this.mutation_appointInput(payload)
                 }
@@ -201,7 +189,7 @@
                     const payload = {
                         id: 'email',
                         value: cookieMap.email,
-                        commentEditorId: 'topCommentEditor'
+                        commentEditorId: 'subCommentEditor'
                     }
                     this.mutation_appointInput(payload)
                 }
@@ -210,18 +198,11 @@
                     const payload = {
                         id: 'site',
                         value: cookieMap.site,
-                        commentEditorId: 'topCommentEditor'
+                        commentEditorId: 'subCommentEditor'
                     }
                     this.mutation_appointInput(payload)
                 }
 
-            },
-            appendEmoji(value) {
-                const payload = {
-                    commentEditorId: 'topCommentEditor',
-                    value: value
-                }
-                this.mutation_appendToCommentEditor(payload)
             },
             //检查
             checkInput(id,value) {
@@ -232,7 +213,7 @@
                                 id: id,
                                 showWarn: true,
                                 warnMsg: '您还未填写任何内容',
-                                commentEditorId: 'topCommentEditor'
+                                commentEditorId: 'subCommentEditor'
                             }
                             this.mutation_appointInput(payload)
                             return false
@@ -246,7 +227,7 @@
                                 id: id,
                                 showWarn: true,
                                 warnMsg: '昵称不能为空',
-                                commentEditorId: 'topCommentEditor'
+                                commentEditorId: 'subCommentEditor'
                             }
                             this.mutation_appointInput(payload)
                             return false
@@ -256,7 +237,7 @@
                                 id: id,
                                 showWarn: true,
                                 warnMsg: '昵称太长',
-                                commentEditorId: 'topCommentEditor'
+                                commentEditorId: 'subCommentEditor'
                             }
                             this.mutation_appointInput(payload_)
                             return false
@@ -268,7 +249,7 @@
                                 id: id,
                                 showWarn: true,
                                 warnMsg: '邮件不能为空',
-                                commentEditorId: 'topCommentEditor'
+                                commentEditorId: 'subCommentEditor'
                             }
                             this.mutation_appointInput(payload)
                             return false
@@ -278,7 +259,7 @@
                                 id: id,
                                 showWarn: true,
                                 warnMsg: '非法的邮件地址',
-                                commentEditorId: 'topCommentEditor'
+                                commentEditorId: 'subCommentEditor'
                             }
                             this.mutation_appointInput(payload_)
                             return false
@@ -293,7 +274,7 @@
                                 id: id,
                                 showWarn: true,
                                 warnMsg: '请填写正确格式的网址',
-                                commentEditorId: 'topCommentEditor'
+                                commentEditorId: 'subCommentEditor'
                             }
                             this.mutation_appointInput(payload)
                             return false
@@ -303,8 +284,7 @@
             },
             ...mapMutations({
                 mutation_appointInput: MUTATION_APPOINT_INPUT,
-                mutation_triggerIsLoading: MUTATION_TRIGGER_IS_LOADING,
-                mutation_appendToCommentEditor: MUTATION_APPEND_TO_COMMENT_EDITOR
+                mutation_triggerIsLoading: MUTATION_TRIGGER_IS_LOADING
             }),
             ...mapActions({
                 action_trySubmitComment: ACTION_TRY_SUBMIT_COMMENT
@@ -314,17 +294,15 @@
             Input,
             Title,
             TextArea,
-            TopCommentEditorWrapper,
+            SubCommentEditorWrapper,
             Name,
             Content,
             VisitorInfo,
             InputWrapper,
             SubmitButtonWrapper,
             SubmitButton,
-            SubmitTextBtn,
             LoadingWrapper,
-            Loading,
-            EmojiPicker,EmojiPickerFixer
+            Loading
         }
     }
 </script>
@@ -337,7 +315,6 @@
     .fade-enter,.fade-leave-to{
         opacity: 0;
     }
-
     .submit-btn-icon{
         transform: scale(1.5);
     }

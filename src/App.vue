@@ -1,10 +1,12 @@
 <template>
     <div id="app">
+
         <router-view name="header"/>
 
         <keep-alive>
             <router-view name="Home"/>
         </keep-alive>
+
 
         <router-view name="ArticlePage"/>
         <Notice/>

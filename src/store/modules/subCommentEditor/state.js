@@ -1,5 +1,6 @@
 export default {
-    referingComment: undefined,
+    referingComment: {},
+    referingHostCommentVM: undefined,
     loading: false,
     name: {
         value: '',

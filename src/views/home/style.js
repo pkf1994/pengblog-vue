@@ -64,6 +64,7 @@ export const ArticleDetail = styled.div`
     `
 
 export const Theme = styled.div`
+        margin-top: ${store.state.meta.heightOfHeader};
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -83,6 +84,7 @@ export const Theme = styled.div`
     `
 
 export const ArticleDetailFixer = styled.div`
+        margin-top: ${store.state.meta.heightOfHeader};
         width: 600px;
         max-width: 100%;
         

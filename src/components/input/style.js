@@ -5,29 +5,8 @@ const backgroundColor = '#F7F7F7'
 
 export const InputWrapper = styled.div`
         position: relative;
-        display: flex;
     `
 
-export const Inputer = styled('input',{fontColor: String,backgroundColor:String,fontSize:String,padding:String,showWarn:Boolean,disableFocusStyle:Boolean})`
-        flex-grow: 1;
-        color:${props => props.fontColor ? props.fontColor : 'black'};
-        position: relative;
-        background: ${props => props.backgroundColor ? props.backgroundColor : '#F7F7F7'};
-        font-size: ${props => props.fontSize ? props.fontSize : '1rem'};
-        outline: none;
-        padding: ${props => props.padding ? props.padding : (window.innerWidth < store.state.meta.maxMobileWidth ? '0.8rem' : '0.5rem')};
-        padding-left: 2rem;
-        border: solid 1px ${props => props.showWarn ? 'red' : backgroundColor};
-        border-radius: 0.4rem;
-        transition: all 0.2s ease;
-        ${props => props.disableFocusStyle ? '' : `
-         &:focus{
-            box-shadow: 1px 1px 2px #999999 inset;
-            border: solid 1px #E6E6E6;
-         }
-        `}
-    
-`
 
 export const IconFixer = styled.div`
         position: absolute;

@@ -1,11 +1,11 @@
 import styled from 'vue-styled-components'
-import {Button} from '../../../button/index'
+import {Button} from '../../../../../button/index'
 import store from '@/store'
 
-export const TopCommentEditorWrapper = styled.div`
+export const SubCommentEditorWrapper = styled.div`
         position: relative;
         background: white;
-        overflow: hidden;
+        border-top: solid 1px ${store.state.meta.metaBorderColor};
     `
 
 
@@ -28,25 +28,17 @@ export const Content = styled.div`
         position: relative;
     `
 
-export const EmojiPickerFixer = styled.div`
-        position: absolute;
-        right: 1rem;
-        bottom: 1rem;
-    `
-
-
 
 export const VisitorInfo = styled.div`
         margin-bottom: 1rem;    
         display:flex;
         flex-wrap: wrap;
+        justify-content: space-between;
     `
 
-export const Space = styled.div`
-        width: 2rem;
-    `
 
 export const InputWrapper = styled('div',{withMarginRight: Boolean})`
+        width: 47%;
         margin: 1rem 0;
         margin-bottom: 0;
         @media(max-width:${store.state.meta.maxMobileWidth}px){
@@ -60,39 +52,24 @@ export const InputWrapper = styled('div',{withMarginRight: Boolean})`
     `
 
 export const SubmitButtonWrapper = styled.div`
-        position: absolute;
-        right: 0;
-        top: 0.5rem;
-        width: auto;
-       
+       width: 47%;
+       margin-top: 1rem;
         @media(max-width:${store.state.meta.maxMobileWidth}px){
             position: static;
-            margin-bottom: 1rem;
+            margin-bottom: 0;
+            width: 100%;
         }
     `
 
 export const SubmitButton = styled(Button)`
          width: 100%;
+         padding: 0.5rem;
          @media(max-width:${store.state.meta.maxMobileWidth}px){
             padding: 1rem;
          }
-          @media(min-width:${store.state.meta.maxMobileWidth}px){
-            display: none;
-        }    
+       
     `
 
-export const SubmitTextBtn = styled.span`
-        color: #0066AA;
-        cursor: pointer;
-        text-decoration: underline;
-        &:hover{
-            color: black;
-            
-        }
-        @media(max-width:${store.state.meta.maxMobileWidth}px){
-            display: none;
-        }    
-    `
 
 export const LoadingWrapper = styled.div`
         position: absolute;

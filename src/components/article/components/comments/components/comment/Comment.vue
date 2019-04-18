@@ -43,15 +43,24 @@
                 </ReleaseTime>
                 &nbsp;|&nbsp;
 
-                <ReplyButton>
-                    <i class="fa fa-reply"/>&nbsp;
+                <ReplyButton v-if="!isBeenRefering" v-on:click="refer">
+                    <i class="fa fa-reply"/>
+                </ReplyButton>
+
+                <ReplyButton v-if="isBeenRefering" v-on:click="cancelRefer">
+                    <i class="fa fa-chevron-up"/>
                 </ReplyButton>
 
             </OperationRow>
 
+            <SubCommentEditorFixer :height="heightOfSubCommentEdior"
+                                   :isBeenRefering="isBeenRefering">
+                <SubCommentEditor ref="subCommentEditor"/>
+            </SubCommentEditorFixer>
+
             <transition-group name="slide-in">
-                <SubComment v-if="subCommentList.length > 0"
-                            v-for="comment in subCommentList"
+                <SubComment v-if="subCommentListMap[$data._this.comment.comment_id]"
+                            v-for="comment in subCommentListMap[$data._this.comment.comment_id]"
                             :comment="comment"
                             :key="comment.comment_id"/>
             </transition-group>
@@ -66,7 +75,6 @@
                              :moreDataGetter="() => {action_getSubCommentList($data._this)}"/>
                 </ForMoreWrapper>
             </transition>
-
 
         </MultiContent>
 
@@ -90,11 +98,14 @@
             Platform,
             ReleaseTime,
             ReplyButton,
-            ForMoreWrapper} from './style'
-    import {mapActions} from "vuex";
+            ForMoreWrapper,
+            SubCommentEditorFixer} from './style'
+    import {mapActions, mapMutations, mapState} from "vuex";
+    import SubCommentEditor from '../subCommentEditor/SubCommentEditor'
     import SubComment from '../subComment/SubComment.vue'
     import ForMore from '../../../../../forMore/ForMore.vue'
     import {ACTION_GET_SUB_COMMENT_LIST} from "../../../../../../store/modules/action_types";
+    import {MUTATION_APPOINT_REFERING_COMMENT} from "../../../../../../store/modules/mutation_types";
     export default {
 
         props: {
@@ -112,11 +123,14 @@
                 startIndex: 0,
                 nextPage: 1,
                 maxPage: 1,
-                subCommentList: []
+                heightOfSubCommentEdior: '0px'
             }
         },
 
         computed: {
+            isBeenRefering() {
+                return this.referingComment === this.comment
+            },
             featureString() {
                 return this.comment.comment_author.visitor_name.substring(0,2)
             },
@@ -125,6 +139,13 @@
             },
             isBanned() {
                 return this.comment.comment_ip ? this.comment.comment_ip.ip_isBanned : false
+            },
+            ...mapState({
+                referingComment: state => state.subCommentEditor.referingComment,
+                subCommentListMap: state => state.subComment.subCommentListMap
+            }),
+            subCommentList () {
+                return this.subCommentListMap[this.comment.comment_id]
             }
         },
 
@@ -136,6 +157,7 @@
 
         mounted() {
             this.computeHeightOfCommentContent()
+            this.recordHeightOfSubCommentEdior()
         },
 
         components: {
@@ -156,15 +178,36 @@
                 ReplyButton,
                 SubComment,
                 ForMore,
-                ForMoreWrapper
+                ForMoreWrapper,
+                SubCommentEditor,SubCommentEditorFixer
         },
 
         methods: {
             ...mapActions({
                 action_getSubCommentList: ACTION_GET_SUB_COMMENT_LIST
             }),
+            ...mapMutations({
+                mutation_appointReferingComment: MUTATION_APPOINT_REFERING_COMMENT
+            }),
 
             GetDateDiff:GetDateDiff,
+
+            recordHeightOfSubCommentEdior() {
+                this.heightOfSubCommentEdior = window.getComputedStyle(this.$refs.subCommentEditor.$el).height
+            },
+            cancelRefer() {
+                const payload = {
+                    comment: undefined
+                }
+                this.mutation_appointReferingComment(payload)
+            },
+
+            refer() {
+                const payload = {
+                    comment: this.comment
+                }
+                this.mutation_appointReferingComment(payload)
+            },
 
             triggerShowAll() {
                 this.showAll = true

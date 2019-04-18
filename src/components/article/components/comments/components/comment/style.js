@@ -88,11 +88,10 @@ export const Content = styled('div',{isBanned:Boolean})`
         font-size: 0.9rem;
         line-height: 1.5;
         padding: 0.8rem 1rem;
+        padding-right: 0;
         text-decoration: ${props => props.isBanned ? 'line-through' : 'none'};
         color: ${props => props.isBanned ? 'grey' : 'black'};
-        @media(min-width: ${store.state.meta.maxMobileWidth}px) {
-            padding-right: 0;
-        }    
+      
     `
 
 export const OperationRow = styled.div`
@@ -113,10 +112,23 @@ export const Platform = styled.span``
 
 export const ReleaseTime = styled.span``
 
-export const ReplyButton = styled.span``
+export const ReplyButton = styled.span`
+        cursor: pointer;
+        &:hover{
+            color: black
+        }
+    `
 
 export const ForMoreWrapper = styled.div`
         border-top: solid 1px ${store.state.meta.metaBorderColor};
         margin: 0 1rem;
         height: 60px;        
+    `
+
+export const SubCommentEditorFixer = styled('div',{height: String,isBeenRefering: Boolean})`
+        padding: 0 1rem;
+        padding-bottom: ${props => props.isBeenRefering ? '1rem' : '0px'};
+        transition: all .4s ease;
+        overflow: hidden;
+        height: ${props => props.isBeenRefering ? props.height : '0px'};
     `

@@ -23,3 +23,9 @@ export const MUTATION_TRIGGER_SHOW_NOTICE = 'mutation_triggerShowNotice'
 export const MUTATION_APPOINT_INPUT = 'mutation_appointInput'
 
 export const MUTATION_PUSH_PROGRASS_BAR_TO_END = 'mutation_pushPrograssBarToEnd'
+
+export const MUTATION_APPEND_TO_COMMENT_EDITOR = 'mutation_appendToCommentEditor'
+
+export const MUTATION_APPOINT_REFERING_COMMENT = 'mutation_appointReferingComment'
+
+export const MUTATION_RESOVLE_SUB_COMMENT_LIST_DATA = 'mutation_resolveSubCommentListData'

@@ -8,6 +8,7 @@ export const ArticlePageWrapper = styled.div`
     `
 
 export const ArticleDetailFixer = styled.div`
+        margin-top: ${store.state.meta.heightOfHeader};
         width: 600px;
         max-width: 100%;
         

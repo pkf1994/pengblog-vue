@@ -28,8 +28,6 @@ export const CheckWhetherNeedCaptcha = () => {
 
 export const RequestSubmitComment = (payload) => {
 
-    console.log(payload)
-
     return axios.post(Api.API_POST_SUBMIT_COMMENT,payload)
 
 }

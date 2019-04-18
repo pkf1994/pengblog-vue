@@ -6,7 +6,7 @@
                 :placeholder="placeholder"
                 :value="value"
                 :showWarn="showWarn"
-                :maxlenght="maxLength"
+                :maxlength=maxLength
                 :style="inputStyle"
                 v-on="inputListeners"/>
 
@@ -32,16 +32,13 @@
 </template>
 
 <script>
-    import {InputWrapper,Inputer,Icon,WarnPopover,PopoverArrow,IconFixer,TheLine,Color} from "./style";
+    import {InputWrapper,Icon,WarnPopover,PopoverArrow,IconFixer,TheLine,Color} from "./style";
     import {mapState} from "vuex";
 
     export default {
         data() {
             return {
-                isFocus: false,
-                inputStyle: {
-                    borderColor: this.showWarn ? 'red' : this.metaBorderColor
-                }
+                isFocus: false
             }
         },
 
@@ -58,6 +55,15 @@
         },
 
         computed: {
+            inputStyle() {
+                return {
+                    borderColor: this.showWarn ? 'red' : this.metaBorderColor,
+                    padding: window.innerWidth < this.maxMobileWidth ? '0.8rem' : '0.5rem'
+                }
+            },
+            ...mapState({
+                maxMobileWidth: state => state.meta.maxMobileWidth
+            }),
             inputListeners: function () {
                 let vm = this
                 // `Object.assign` 将所有的对象合并为一个新对象
@@ -82,6 +88,7 @@
                     }
                 )
             },
+
             ...mapState({
                 metaBorderColor: state => state.meta.metaBorderColor,
                 lineColor: state => state.meta.lineColor,
@@ -98,7 +105,6 @@
 
         components: {
             InputWrapper,
-            Inputer,
             Icon,
             WarnPopover,
             PopoverArrow,
@@ -121,13 +127,14 @@
     }
 
     .input{
-        flex-grow: 1;
+        box-sizing: border-box;
+        width: 100%;
         color: black;
         position: relative;
         background: #F7F7F7;
         font-size: 1rem;
         outline: none;
-        padding: 0.8rem;
+        padding: 0.5rem;
         padding-left: 2rem !important;
         border: solid 1px #F7F7F7;
         border-radius: 0.4rem;
@@ -163,4 +170,5 @@
     .isFocus::placeholder{
         opacity: 0;
     }
+
 </style>
