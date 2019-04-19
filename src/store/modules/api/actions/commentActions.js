@@ -5,12 +5,17 @@ import {
     MUTATION_RESOVLE_TOP_COMMENT_LIST,
     MUTATION_TRIGGER_IS_LOADING, MUTATION_TRIGGER_SHOW_MODAL,
     MUTATION_TRIGGER_SHOW_NOTICE,
-    MUTATION_RESOVLE_SUB_COMMENT_LIST_DATA
+    MUTATION_RESOVLE_SUB_COMMENT_LIST_DATA,
+    MUTATION_RESOVLE_FRESH_COMMENT_LIST_DATA
 } from "../../mutation_types";
 import {
     ACTION_CHECK_CAPTCHA,
-    ACTION_CHECK_WHETHER_NEED_CAPTCHA_TO_SUBMIT_COMMENT, ACTION_GET_SUB_COMMENT_LIST, ACTION_GET_TOP_COMMENT_LIST,
-    ACTION_SUBMIT_COMMENT, ACTION_TRY_SUBMIT_COMMENT
+    ACTION_CHECK_WHETHER_NEED_CAPTCHA_TO_SUBMIT_COMMENT,
+    ACTION_GET_SUB_COMMENT_LIST,
+    ACTION_GET_TOP_COMMENT_LIST,
+    ACTION_SUBMIT_COMMENT,
+    ACTION_TRY_SUBMIT_COMMENT,
+    ACTION_GET_FRESH_COMMENT_LIST
 } from "../../action_types";
 
 
@@ -266,6 +271,49 @@ export default {
             }
             context.commit(MUTATION_APPOINT_REFERING_COMMENT,payload______)
         }
+    },
+
+    //获取freshCommentList
+    async [ACTION_GET_FRESH_COMMENT_LIST](context) {
+
+        try{
+
+            //trigger loading 状态
+            const payload = {
+                loading: true,
+                id: 'freshComments'
+            }
+            context.commit(MUTATION_TRIGGER_IS_LOADING,payload)
+
+            const payload_ = {
+                startIndex: context.rootState.manage.freshComments.startIndex,
+                pageScale: context.rootState.manage.freshComments.pageScale
+            }
+
+            const res = await CommentRequest.RequestFreshCommentListData(payload_)
+
+            const payload__ = {
+                commentList: res.data.commentList,
+                maxPage: res.data.maxPage
+            }
+
+            context.commit(MUTATION_RESOVLE_FRESH_COMMENT_LIST_DATA,payload__)
+
+        }catch (err) {
+
+            console.log(err)
+
+            const payload__ = {
+                show: true,
+                noticeContent: err.response ? err.response.data : err
+            }
+
+            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload__)
+
+        }
+
+
+
     }
 
 }

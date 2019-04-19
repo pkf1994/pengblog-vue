@@ -1,5 +1,5 @@
 <template>
-    <ThemeJumbotron>
+    <ThemeJumbotron :minHeightOfJumbotron="minHeightOfJumbotron">
 
         <Inner>
             <ThemeImageWrapper>
@@ -21,12 +21,18 @@
     import {ThemeJumbotron,Inner,ThemeImageWrapper,ThemeImage,Gap,PoweredBy,VueLogo,Title} from './style'
     import {ThemeTitle} from './components'
     import vueLogo from '@/assets/svg/vue.svg'
+    import {mapState} from "vuex";
     export default {
         data() {
             return {
                 themeImage: 'https://pengblogimage-1257899590.cos.ap-guangzhou.myqcloud.com/theme.a5d5fc1c.png',
                 vueLogo
             }
+        },
+        computed: {
+            ...mapState({
+                minHeightOfJumbotron: state => 'calc(' + state.meta.heightOfWindow + 'px' + ' - ' + state.meta.heightOfHeader + ')'
+            })
         },
         components: {
             ThemeJumbotron,Inner,

@@ -1,18 +1,31 @@
 <template>
     <HeaderWrapper>
-        <RouterLink to="/">
-            <Logo/>
-        </RouterLink>
+
+        <Logo v-on:click.native="() => goTo('/')"/>
+
+        <NavList>
+            <Item>
+                <span class="iconfont" :style="{fontSize:'1.5rem'}">&#xe76a;</span>
+                索引
+            </Item>
+        </NavList>
     </HeaderWrapper>
 </template>
 
 <script>
-    import {HeaderWrapper} from "./style"
+    import {HeaderWrapper,NavList,Item} from "./style"
     import {Logo} from './components'
     export default {
+        methods: {
+            goTo(path) {
+                this.$router.push({path:path})
+            }
+        },
         components:{
             HeaderWrapper,
-            Logo
+            Logo,
+            NavList,
+            Item
         }
     }
 </script>

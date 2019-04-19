@@ -23,3 +23,11 @@ export const RequestArticle = (article_id) => {
     }
     return axios.get(Api.API_GET_ARTICLE_BY_ID, config)
 }
+
+export const RequestArticleFilingData = () => {
+    return axios.get(Api.API_GET_ARTICLE_FILING)
+}
+
+export const RequestArticleClassificationData = () => {
+    return axios.get(Api.API_GET_ARTICLE_LABEL)
+}

@@ -98,13 +98,15 @@ export default {
         LoadingArticleSummary,
         HomeWrapper,
         ArticleList,
-        ArticleDetail,Theme,
+        ArticleDetail,
+        Theme,
         Loading,
         ForMore,
         LoadingWrapper,
         ArticleDetailFixer,
         ForMoreWrapper,
-        ThemeJumbotron,Footer
+        ThemeJumbotron,
+        Footer
     }
 }
 </script>

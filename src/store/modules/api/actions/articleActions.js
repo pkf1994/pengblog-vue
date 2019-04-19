@@ -2,10 +2,17 @@ import {ArticleRequest} from '../request'
 import {
     MUTATION_PUSH_PROGRASS_BAR_TO_END,
     MUTATION_RECORD_CURRENT_ARTICLE_ID,
-    MUTATION_RESOVLE_ARTICLE, MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME,
-    MUTATION_TRIGGER_IS_LOADING, MUTATION_TRIGGER_SHOW_NOTICE
+    MUTATION_RESOVLE_ARTICLE,
+    MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME,
+    MUTATION_TRIGGER_IS_LOADING,
+    MUTATION_TRIGGER_SHOW_NOTICE,
+    MUTATION_RESOVLE_ARTICLE_FILING_DATA,
+    MUTATION_RESOVLE_ARTICLE_CLASSIFICATION_DATA
 } from "../../mutation_types";
-import {ACTION_GET_ARTICLE_DATA, ACTION_GET_ARTICLE_LIST_DATA} from "../../action_types";
+import {ACTION_GET_ARTICLE_DATA,
+    ACTION_GET_ARTICLE_LIST_DATA,
+    ACTION_GET_ARTICLE_FILING_DATA,
+    ACTION_GET_ARTICLE_CLASSIFICATION_DATA} from "../../action_types";
 
 
 export default {
@@ -111,6 +118,57 @@ export default {
         }
 
     },
+
+    //获取归档数据
+    async [ACTION_GET_ARTICLE_FILING_DATA](context,payload) {
+
+        try{
+
+            const res = await ArticleRequest.RequestArticleFilingData()
+
+            const payload = {
+                filingMap: res.data
+            }
+
+            context.commit(MUTATION_RESOVLE_ARTICLE_FILING_DATA,payload)
+
+        }catch (err) {
+            console.log(err)
+
+            const payload_ = {
+                show: true,
+                noticeContent: err.response ? err.response.data : err
+            }
+
+            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload_)
+        }
+    },
+
+    //获取文章分类数据
+    async [ACTION_GET_ARTICLE_CLASSIFICATION_DATA](context,payload) {
+
+        try{
+
+            const res = await ArticleRequest.RequestArticleClassificationData()
+
+            const payload = {
+                labelMap: res.data
+            }
+
+            context.commit(MUTATION_RESOVLE_ARTICLE_CLASSIFICATION_DATA,payload)
+
+        }catch (err) {
+            console.log(err)
+
+            const payload_ = {
+                show: true,
+                noticeContent: err.response ? err.response.data : err
+            }
+
+            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload_)
+        }
+
+    }
 
 
 }

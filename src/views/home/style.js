@@ -35,6 +35,7 @@ export const ArticleList = styled.div`
             position: static;
             width: 100%;
             overflow-y: auto;
+            margin-top: ${store.state.meta.heightOfHeader};
         }
     `
 

@@ -31,3 +31,13 @@ export const RequestSubmitComment = (payload) => {
     return axios.post(Api.API_POST_SUBMIT_COMMENT,payload)
 
 }
+
+export const RequestFreshCommentListData = (payload) => {
+
+    let config = {
+        params: payload
+    }
+
+    return axios.get(Api.API_GET_FRESH_COMMENT_LIST, config)
+
+}

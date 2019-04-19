@@ -9,6 +9,7 @@ import captchaStore from './captcha'
 import metaStore from './meta'
 import prograssBarStore from './prograssBar'
 import subCommentStore from './subComment'
+import manageStore from './manage'
 
 export {articleStore,
         apiStore,
@@ -20,4 +21,5 @@ export {articleStore,
         captchaStore,
         metaStore,
         prograssBarStore,
-        subCommentStore}
+        subCommentStore,
+        manageStore}

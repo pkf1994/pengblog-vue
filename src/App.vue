@@ -7,8 +7,9 @@
             <router-view name="Home"/>
         </keep-alive>
 
-
         <router-view name="ArticlePage"/>
+        <router-view name="ManagePage"/>
+
         <Notice/>
         <Modal/>
     </div>

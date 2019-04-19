@@ -1,9 +1,9 @@
 import styled from 'vue-styled-components'
 import store from '@/store'
 
-export const ThemeJumbotron = styled.div`
+export const ThemeJumbotron = styled('div',{minHeightOfJumbotron:String})`
         box-sizing: border-box;
-        min-height: calc(${window.innerHeight}px - ${store.state.meta.heightOfHeader});
+        min-height: ${props => props.minHeightOfJumbotron};
         width: 100%;
         display: flex;
         justify-content: center;
@@ -21,17 +21,29 @@ export const Inner = styled.div`
     `
 
 export const ThemeImageWrapper = styled.div`
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         width: 70%;
         padding-right: 2rem;
         margin-right: 2rem;
-        border-right: solid 1px grey; 
+        border-right: solid 1px ${store.state.meta.metaBorderColor}; 
+        @media(max-width:800px){
+            padding-right: 0;
+            margin-right: 0;
+            border-right: none; 
+        }
     `
 
 export const ThemeImage = styled.img`
         box-sizing: border-box;
-        width: 100%;
+        width: 80%;
+        object-fit: contain;
         margin-bottom: 1rem;
         padding: 0 1rem;
+        @media(max-width:800px){
+           width: 100%;
+        }
     `
 
 export const Gap = styled.div`
@@ -45,6 +57,9 @@ export const PoweredBy = styled.div`
         display: flex;
         flex-direction: column;
         align-items: center;
+        @media(max-width:800px){
+            display: none;
+        }
     `
 
 export const VueLogo = styled.img`

@@ -29,3 +29,13 @@ export const MUTATION_APPEND_TO_COMMENT_EDITOR = 'mutation_appendToCommentEditor
 export const MUTATION_APPOINT_REFERING_COMMENT = 'mutation_appointReferingComment'
 
 export const MUTATION_RESOVLE_SUB_COMMENT_LIST_DATA = 'mutation_resolveSubCommentListData'
+
+export const MUTATION_APPOINT_WINDOW_SIZE = 'mutation_appointWindowSize'
+
+export const MUTATION_APPOINT_SELECT_DATA = 'mutation_appointSelectData'
+
+export const MUTATION_RESOVLE_ARTICLE_FILING_DATA = 'mutation_resovleArticleFilingData'
+
+export const MUTATION_RESOVLE_ARTICLE_CLASSIFICATION_DATA = 'mutation_resovleArticleClassificationData'
+
+export const MUTATION_RESOVLE_FRESH_COMMENT_LIST_DATA = 'mutation_resovleFreshCommentListData'

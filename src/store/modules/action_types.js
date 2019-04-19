@@ -15,3 +15,9 @@ export const ACTION_CHECK_WHETHER_NEED_CAPTCHA_TO_SUBMIT_COMMENT = 'action_check
 export const ACTION_GET_CAPTCHA_IMAGE = 'action_getCaptchaImage'
 
 export const ACTION_CHECK_CAPTCHA = 'action_checkCaptcha'
+
+export const ACTION_GET_ARTICLE_FILING_DATA = 'action_getArticleFilingData'
+
+export const ACTION_GET_ARTICLE_CLASSIFICATION_DATA = 'action_getArticleClassificationData'
+
+export const ACTION_GET_FRESH_COMMENT_LIST = 'action_getFreshCommentList'

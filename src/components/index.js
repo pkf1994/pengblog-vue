@@ -9,5 +9,25 @@ import Captcha from './captcha/Captcha.vue'
 import ThemeJumbotron from './themeJumbotron/ThemeJumbotron.vue'
 import Footer from './footer/Footer.vue'
 import {Button} from './button'
+import SearchBar from './searchBar/SearchBar.vue'
+import Select from './select/Select.vue'
+import ArticleFiling from './articleFiling/ArticleFiling.vue'
+import ArticleClassification from './articleClassification/ArticleClassification.vue'
+import FreshComments from './freshComments/FreshComments.vue'
 
-export {Loading,ForMore,Modal,Notice,Input,TextArea,Button,Captcha,ThemeJumbotron,Footer,Article}
+export {Loading,
+        ForMore,
+        Modal,
+        Notice,
+        Input,
+        TextArea,
+        Button,
+        Captcha,
+        ThemeJumbotron,
+        Footer,
+        Article,
+        SearchBar,
+    Select,
+    ArticleFiling,
+    ArticleClassification,
+    FreshComments}

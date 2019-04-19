@@ -8,13 +8,18 @@ import './assets/iconfont/iconfont.css'
 import './registerServiceWorker'
 import './style.css'
 import '@/assets/style'
-import {MUTATION_TRIGGER_SHOW_NOTICE} from "./store/modules/mutation_types";
+import {MUTATION_APPOINT_WINDOW_SIZE,
+        MUTATION_TRIGGER_SHOW_NOTICE} from "./store/modules/mutation_types";
 
 
 
 Vue.config.productionTip = false
 
 Vue.prototype.notify = (payload) => {store.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload)}
+
+window.addEventListener('resize', () => {
+    store.commit(MUTATION_APPOINT_WINDOW_SIZE,{widthOfWindow: window.innerWidth,heightOfWindow: window.innerHeight})
+})
 
 new Vue({
   router,

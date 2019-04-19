@@ -4,16 +4,17 @@ Vue.use(Vuex)
 
 
 import {articleStore,
-    apiStore,
-    homeStore,
-    modalStore,
-    noticeStore,
-    topCommentEditorStore,
-    subCommentEditorStore,
-    captchaStore,
-    metaStore,
-    prograssBarStore,
-    subCommentStore} from './modules'
+        apiStore,
+        homeStore,
+        modalStore,
+        noticeStore,
+        topCommentEditorStore,
+        subCommentEditorStore,
+        captchaStore,
+        metaStore,
+        prograssBarStore,
+        subCommentStore,
+        manageStore} from './modules'
 
 
 export default new Vuex.Store ({
@@ -28,7 +29,8 @@ export default new Vuex.Store ({
         captcha: captchaStore,
         meta: metaStore,
         prograssBar: prograssBarStore,
-        subComment: subCommentStore
+        subComment: subCommentStore,
+        manage: manageStore
     }
 })
 

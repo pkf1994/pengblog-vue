@@ -97,20 +97,20 @@
         },
 
     beforeDestroy() {
-    this.mutation_resetStore({id: 'article'})
+        this.mutation_resetStore({id: 'article'})
     },
 
     created(){
-    this.action_GetArticleData({article_id: this.article_id})
+        this.action_GetArticleData({article_id: this.article_id})
     },
 
 
     methods: {
-    refresh() {
-    this.refreshIndex = false
-                        this.$nextTick(() => {
-                                               this.refreshIndex = true
-                                           })
+        refresh() {
+        this.refreshIndex = false
+        this.$nextTick(() => {
+                               this.refreshIndex = true
+                           })
     },
     ...mapActions({
         action_GetArticleData: ACTION_GET_ARTICLE_DATA,
