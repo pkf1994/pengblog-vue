@@ -3,12 +3,10 @@ import store from '@/store'
 
 export const FreshCommentsWrapper = styled.div`
         border-top: solid 1px ${store.state.meta.metaBorderColor};
-        padding-left: 2rem;
-        padding-right: 1rem;
-        padding-top: 1rem;
+        padding: 1rem 2rem;
+        padding-top: 0;
         flex-grow: 1;
         overflow-Y: scroll;
-        margin-right: 2rem;
        ${props => props.browser !== 'Safari' ? `
         &::-webkit-scrollbar{
             width:2px;
@@ -24,9 +22,13 @@ export const FreshCommentsWrapper = styled.div`
     `
 
 export const Title = styled.div`
+        z-index:2;
+        position: sticky;
+        top: 0;
         font-size: 1.2rem;
         font-weight: bold;
-        margin-bottom: 1rem;
+        padding: 1rem 0;
+        background: white;
     `
 
 export const ForMoreWrapper = styled.div`

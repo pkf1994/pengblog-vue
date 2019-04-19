@@ -12,6 +12,9 @@
 
             <ForMoreWrapper>
                 <ForMore :noMore="nextPage > maxPage"
+                         forMoreText="加载更多"
+                         noMoreText="it's all"
+                         fontSize="0.9rem"
                          :moreDataGetter="action_getFreshCommentList"
                          :loading="loading"/>
             </ForMoreWrapper>
