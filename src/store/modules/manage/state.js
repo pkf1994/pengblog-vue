@@ -1,8 +1,13 @@
 export default {
+    articleList: [],
+    pageScale: 6,
+    loading: false,
+    context: 'common',
     articleFiling: {
         filingMap: {},
         selectedYear: undefined,
-        selectedMonth: undefined
+        selectedMonth: undefined,
+        loading: false
     },
     articleClassification: {
         labelMap: [],

@@ -3,7 +3,9 @@ import store from '@/store'
 
 
 export const ArticleClassificationWrapper = styled.div`
+        position: relative;
         padding: 1rem 2rem;
+        padding-right: 0;
         border-top: solid 1px ${store.state.meta.metaBorderColor};
         @media(max-width:${store.state.meta.maxMobileWidth}px){
             padding: 1rem;
@@ -17,6 +19,7 @@ export const Title = styled.div`
     `
 
 export const Tags = styled.div`
+        padding-right: 2rem;
         display: flex;
         flex-wrap: wrap;
         max-height: 6.4rem;
@@ -69,3 +72,12 @@ export const TagItem = styled('div',{selected:Boolean})`
         
     `
 
+export const LoadingWrapper = styled.div`
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        background: white;
+        opacity: 0.7;
+    `

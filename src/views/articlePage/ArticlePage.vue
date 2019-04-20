@@ -24,14 +24,8 @@ export default {
     computed: {
         ...mapState({
             loading: state => state.home.loadingArticleDetail,
-            prograssBarManager: state => state.prograssBar
         })
     },
-
-    created() {
-        this.prograssBarManager.nanobarGoToMilePost()
-    },
-
 
     components: {
         ArticlePageWrapper,ArticleDetailFixer,LoadingWrapper,Loading,Article

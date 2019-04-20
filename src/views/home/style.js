@@ -10,8 +10,8 @@ export const ArticleList = styled.div`
         left: 0;
         width: 300px;
         border-right: solid 1px ${store.state.meta.metaBorderColor};
-        overflow-y: ${store.state.meta.browserEdit === 'Edge' ? 'auto' : 'overlay'};
-        ${store.state.meta.browserEdit !== 'Safari' && window.innerWidth > store.state.meta.maxMobileWidth && `
+        overflow-y: ${store.state.meta.browser === 'Edge' ? 'auto' : 'overlay'};
+        ${store.state.meta.browser !== 'Safari' &&  store.state.meta.widthOfWindow > store.state.meta.maxMobileWidth && `
         &::-webkit-scrollbar{
             width:2px;
             height:1px;
@@ -65,7 +65,6 @@ export const ArticleDetail = styled.div`
     `
 
 export const Theme = styled.div`
-        margin-top: ${store.state.meta.heightOfHeader};
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -85,7 +84,6 @@ export const Theme = styled.div`
     `
 
 export const ArticleDetailFixer = styled.div`
-        margin-top: ${store.state.meta.heightOfHeader};
         width: 600px;
         max-width: 100%;
         

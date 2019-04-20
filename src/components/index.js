@@ -14,6 +14,9 @@ import Select from './select/Select.vue'
 import ArticleFiling from './articleFiling/ArticleFiling.vue'
 import ArticleClassification from './articleClassification/ArticleClassification.vue'
 import FreshComments from './freshComments/FreshComments.vue'
+import Checkbox from './checkbox/Checkbox.vue'
+import ArticleIndexItem from './articleIndexItem/ArticleIndexItem.vue'
+import Pagination from './pagination/Pagination.vue'
 
 export {Loading,
         ForMore,
@@ -30,4 +33,7 @@ export {Loading,
     Select,
     ArticleFiling,
     ArticleClassification,
-    FreshComments}
+    FreshComments,
+    Checkbox,
+    ArticleIndexItem,
+    Pagination}

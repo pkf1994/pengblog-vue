@@ -5,8 +5,10 @@
 
         <NavList>
             <Item>
-                <span class="iconfont" :style="{fontSize:'1.5rem'}">&#xe76a;</span>
-                索引
+                <span class="iconfont"
+                      :style="{fontSize:'1.5rem'}"
+                      v-on:click="() => goTo('/manage')">&#xe76a;</span>
+                <span v-on:click="() => goTo('/manage')">索引</span>
             </Item>
         </NavList>
     </HeaderWrapper>

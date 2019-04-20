@@ -1,6 +1,11 @@
 import {
-    MUTATION_APPOINT_SELECT_DATA, MUTATION_RESOVLE_ARTICLE_CLASSIFICATION_DATA,
-    MUTATION_RESOVLE_ARTICLE_FILING_DATA, MUTATION_RESOVLE_FRESH_COMMENT_LIST_DATA, MUTATION_TRIGGER_IS_LOADING
+    MUTATION_APPOINT_MANAGE_PAGE_CONTEXT,
+    MUTATION_APPOINT_SELECT_DATA,
+    MUTATION_RESOVLE_ARTICLE_CLASSIFICATION_DATA,
+    MUTATION_RESOVLE_ARTICLE_FILING_DATA,
+    MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE,
+    MUTATION_RESOVLE_FRESH_COMMENT_LIST_DATA,
+    MUTATION_TRIGGER_IS_LOADING
 } from "../mutation_types";
 
 export default {
@@ -30,6 +35,22 @@ export default {
             state.freshComments.loading = payload.loading
         }
 
+        if(payload.id === 'articleClassification') {
+            state.articleClassification.loading = payload.loading
+        }
+
+        if(payload.id === 'managePage') {
+            state.loading = payload.loading
+        }
+
+    },
+
+    [MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE](state,payload) {
+        state.articleList = payload.articleList
+    },
+
+    [MUTATION_APPOINT_MANAGE_PAGE_CONTEXT](state,payload){
+        state.context = payload
     }
 }
 

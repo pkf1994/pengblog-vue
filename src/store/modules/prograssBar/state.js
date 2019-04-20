@@ -4,7 +4,7 @@ const Nanobar = require('nanobar');
 export default {
     nanobar: new Nanobar(),
 
-    nanobarTimer: undefined,
+    nanobarTimers: [],
 
     nanobarGoToMilePost(){
 
@@ -20,7 +20,7 @@ export default {
                 nanobar.go(i)
         }, 500)
 
-        this.nanobarTimer = prograssTimer
+        this.nanobarTimers.push(prograssTimer)
 
         return prograssTimer
     },
@@ -29,7 +29,7 @@ export default {
 
         let nanobar = this.nanobar
 
-        clearInterval(this.nanobarTimer)
+        clearInterval(this.nanobarTimers.pop())
 
         nanobar.go(100)
     }

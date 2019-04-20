@@ -26,7 +26,7 @@ export const SubmitButton = styled('button',{isFocus: Boolean})`
         transition: all 0.4s ease;
         transition-delay: 0.3s;
          &:hover{
-            background: hsl(209, 100%, 45%);
+            filter:brightness(80%;)
          }
           @media(max-width: ${store.state.meta.maxMobileWidth}px){
             right: 1rem;

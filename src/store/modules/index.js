@@ -10,6 +10,8 @@ import metaStore from './meta'
 import prograssBarStore from './prograssBar'
 import subCommentStore from './subComment'
 import manageStore from './manage'
+import paginationStore from './pagination'
+import searchBarStore from './searchBar'
 
 export {articleStore,
         apiStore,
@@ -22,4 +24,6 @@ export {articleStore,
         metaStore,
         prograssBarStore,
         subCommentStore,
-        manageStore}
+        manageStore,
+        paginationStore,
+        searchBarStore}

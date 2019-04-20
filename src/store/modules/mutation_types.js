@@ -22,6 +22,8 @@ export const MUTATION_TRIGGER_SHOW_NOTICE = 'mutation_triggerShowNotice'
 
 export const MUTATION_APPOINT_INPUT = 'mutation_appointInput'
 
+export const MUTATION_LAUNCH_PROGRASS_BAR = 'mutation_launchPrograssBar'
+
 export const MUTATION_PUSH_PROGRASS_BAR_TO_END = 'mutation_pushPrograssBarToEnd'
 
 export const MUTATION_APPEND_TO_COMMENT_EDITOR = 'mutation_appendToCommentEditor'
@@ -39,3 +41,13 @@ export const MUTATION_RESOVLE_ARTICLE_FILING_DATA = 'mutation_resovleArticleFili
 export const MUTATION_RESOVLE_ARTICLE_CLASSIFICATION_DATA = 'mutation_resovleArticleClassificationData'
 
 export const MUTATION_RESOVLE_FRESH_COMMENT_LIST_DATA = 'mutation_resovleFreshCommentListData'
+
+export const MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE = 'mutation_resovleArticleListDataToManagePage'
+
+export const MUTATION_APPOINT_PAGINATION = 'mutation_appointPagination'
+
+export const MUTATION_RESET_PAGINATION = 'mutation_resetPagination'
+
+export const MUTATION_APPOINT_MANAGE_PAGE_CONTEXT = 'mutation_appointManagePageContext'
+
+export const MUTATION_APPOINT_SEARCHBAR = 'mutation_appointSearchBar'

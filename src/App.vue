@@ -3,12 +3,16 @@
 
         <router-view name="header"/>
 
-        <keep-alive>
-            <router-view name="Home"/>
-        </keep-alive>
+        <MainArea>
+            <keep-alive>
+                <router-view name="Home"/>
+            </keep-alive>
 
-        <router-view name="ArticlePage"/>
-        <router-view name="ManagePage"/>
+            <router-view name="ArticlePage"/>
+            <router-view name="ManagePage"/>
+        </MainArea>
+
+
 
         <Notice/>
         <Modal/>
@@ -17,9 +21,14 @@
 
 <script>
   import {Modal,Notice} from './components'
+  import styled from 'vue-styled-components'
+  import store from '@/store'
+  const MainArea = styled.div`
+        margin-top: ${store.state.meta.heightOfHeader};
+    `
   export default {
         components: {
-            Modal,Notice
+            Modal,Notice,MainArea
         }
   }
 </script>

@@ -21,3 +21,7 @@ export const ACTION_GET_ARTICLE_FILING_DATA = 'action_getArticleFilingData'
 export const ACTION_GET_ARTICLE_CLASSIFICATION_DATA = 'action_getArticleClassificationData'
 
 export const ACTION_GET_FRESH_COMMENT_LIST = 'action_getFreshCommentList'
+
+export const ACTION_GET_ARTICLE_LIST_DATA_OF_MANAGE_PAGE = 'action_getArticleListDataOfManagePage'
+
+export const ACTION_GET_ARTICLE_LIST_BY_KEYWORD = 'action_getArticleListByKeyword'

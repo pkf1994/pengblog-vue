@@ -4,7 +4,9 @@
 
             <!--题图-->
             <ArticleTitleImage v-if="withTitleImage"
-                               :src="article.article_titleImageUrl"/>
+                               class="lazyload"
+                               :src="defaultImageSrc"
+                               :data-src="article.article_titleImageUrl"/>
 
             <ArticleMultiContent>
                 <!--文章标题-->

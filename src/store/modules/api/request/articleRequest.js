@@ -31,3 +31,16 @@ export const RequestArticleFilingData = () => {
 export const RequestArticleClassificationData = () => {
     return axios.get(Api.API_GET_ARTICLE_LABEL)
 }
+
+export const RequestArticleListDataBykeyword = (payload) => {
+
+    let config = {
+        params: {
+            startIndex: payload.startIndex,
+            pageScale: payload.pageScale,
+            searchString: payload.searchString
+        }
+    }
+
+    return axios.get(Api.API_GET_ARTICLE_LIST_BY_SEARCH, config)
+}

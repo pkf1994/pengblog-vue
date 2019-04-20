@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
 
-
 import {articleStore,
         apiStore,
         homeStore,
@@ -14,8 +13,9 @@ import {articleStore,
         metaStore,
         prograssBarStore,
         subCommentStore,
-        manageStore} from './modules'
-
+        manageStore,
+        paginationStore,
+        searchBarStore} from './modules'
 
 export default new Vuex.Store ({
     modules: {
@@ -30,7 +30,9 @@ export default new Vuex.Store ({
         meta: metaStore,
         prograssBar: prograssBarStore,
         subComment: subCommentStore,
-        manage: manageStore
+        manage: manageStore,
+        pagination: paginationStore,
+        searchBar: searchBarStore
     }
 })
 

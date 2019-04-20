@@ -69,7 +69,6 @@ export default {
 
     created() {
         this.actionGetArticleListOfHome()
-        this.prograssBarManager.nanobarGoToMilePost()
     },
 
     computed: {
@@ -82,7 +81,6 @@ export default {
             loadingArticleDetail: state => state.home.loadingArticleDetail,
             noMore: state => (state.home.nextPage === state.home.maxPage),
             loadingMore: state => state.home.loadingMore,
-            prograssBarManager: state => state.prograssBar
         })
     },
 
