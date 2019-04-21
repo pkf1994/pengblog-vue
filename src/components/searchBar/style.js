@@ -3,9 +3,9 @@ import store from '@/store'
 
 export const SearchBarWrapper = styled.div`
         position: relative;
-        padding: 1rem 2rem;
         background: white;
-        border-bottom: solid 1px ${store.state.meta.metaBorderColor};
+        flex-grow: 1;
+        transition: all .4s ease;
     `
 
 export const SubmitButton = styled('button',{isFocus: Boolean})`
@@ -14,9 +14,9 @@ export const SubmitButton = styled('button',{isFocus: Boolean})`
         outline: none;
         cursor: pointer;
         position: absolute;
-        right: 2rem;
+        right: 0;
         color: white;
-        height: calc(100% - 2rem);
+        height: 100%;
         width: ${props => props.isFocus ? '3rem' : '0'};
         background: ${props => props.isFocus ? store.state.meta.metaColor : 'gray'};
         border: none;
@@ -25,12 +25,10 @@ export const SubmitButton = styled('button',{isFocus: Boolean})`
         border-bottom-left-radius: 0;
         transition: all 0.4s ease;
         transition-delay: 0.3s;
+        overflow: hidden;
          &:hover{
             filter:brightness(80%);
          }
-          @media(max-width: ${store.state.meta.maxMobileWidth}px){
-            right: 1rem;
-        }
     `
 
 export const SearchTitle = styled.div`

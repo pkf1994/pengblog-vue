@@ -8,6 +8,9 @@ export const ArticleSummaryWrapper = styled.div`
         &:hover{
             background: #F7F7F7;
         }
+         @media(max-width: ${store.state.meta.maxMobileWidth}px){
+            padding: 1rem;
+        }
     `
 
 export const Title = styled.div`
@@ -32,7 +35,7 @@ const ContentProps = {
 }
 
 export const Content = styled('div',ContentProps)`
-        font-size: ${window.innerWidth < store.state.meta.maxMobileWidth ? '1rem' : '0.8rem'};
+        font-size: ${store.state.meta.widthOfWindow < store.state.meta.maxMobileWidth ? '1rem' : '0.8rem'};
         width: ${props => props.withPreviewImage ? '68%' : '100%'};
         line-height:1.5;
         cursor: pointer;

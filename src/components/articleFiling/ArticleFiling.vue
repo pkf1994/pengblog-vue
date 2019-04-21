@@ -1,7 +1,7 @@
 <template>
     <ArticleFilingWrapper>
 
-        <ArticleFilingTitle>归档</ArticleFilingTitle>
+        <ArticleFilingTitle v-if="withTitle">归档</ArticleFilingTitle>
 
         <ArticleFilinger>
             <DateSelector>
@@ -17,6 +17,10 @@
             </DateSelector>
             <SubmitButton year="year" v-on:click="articleFilingPostHandler">Go!</SubmitButton>
         </ArticleFilinger>
+
+        <LoadingWrapper v-if="loading">
+            <Loading/>
+        </LoadingWrapper>
     </ArticleFilingWrapper>
 </template>
 
@@ -26,21 +30,26 @@
         ArticleFilingTitle,
         ArticleFilinger,
         DateSelector,
-        SubmitButton} from './style'
+        SubmitButton,
+        LoadingWrapper} from './style'
     import Select from '../select/Select.vue'
+    import Loading from '../loading/Loading.vue'
     import {mapActions, mapMutations, mapState} from "vuex";
     import {MUTATION_APPOINT_SELECT_DATA} from "../../store/modules/mutation_types";
     import {ACTION_GET_ARTICLE_FILING_DATA} from "../../store/modules/action_types";
     export default {
         props: {
-            articleFilingPostHandler: Function
+            articleFilingPostHandler: Function,
+            withTitle: Boolean,
+            articleFilingId: String
         },
         computed: {
             ...mapState({
-                years: function(state){return this.generateYearArray(state.manage.articleFiling.filingMap)},
-                months: function(state){return this.generateMonthArray(state.manage.articleFiling.filingMap, state.manage.articleFiling.selectedYear)},
-                selectedYear: state => state.manage.articleFiling.selectedYear,
-                selectedMonth: state => state.manage.articleFiling.selectedMonth
+                years: function(state) {return this.generateYearArray(state[this.articleFilingId].articleFiling.filingMap)},
+                months: function(state) {return this.generateMonthArray(state[this.articleFilingId].articleFiling.filingMap, state[this.articleFilingId].articleFiling.selectedYear)},
+                selectedYear:  function(state) {return state[this.articleFilingId].articleFiling.selectedYear},
+                selectedMonth: function(state) {return state[this.articleFilingId].articleFiling.selectedMonth},
+                loading: function (state) {return state[this.articleFilingId].articleFiling.loading}
             })
         },
         created(){
@@ -59,14 +68,16 @@
             },
             selectedYearAppointer(item) {
                 const payload = {
-                    id: 'selectedYear',
+                    articleFilingId: this.articleFilingId,
+                    selectId: 'selectedYear',
                     value: item
                 }
                 this.mutation_appointSelectData(payload)
             },
             selectedMonthAppointer(item) {
                 const payload = {
-                    id: 'selectedMonth',
+                    articleFilingId: this.articleFilingId,
+                    selectId: 'selectedMonth',
                     value: item
                 }
                 this.mutation_appointSelectData(payload)
@@ -84,7 +95,9 @@
             ArticleFilinger,
             DateSelector,
             SubmitButton,
-            Select
+            Select,
+            LoadingWrapper,
+            Loading
         }
     }
 </script>

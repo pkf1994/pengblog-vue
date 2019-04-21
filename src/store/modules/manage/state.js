@@ -10,8 +10,8 @@ export default {
         loading: false
     },
     articleClassification: {
-        labelMap: [],
-        loading: true,
+        labelMap: ['...'],
+        loading: false,
         selectedLabel: undefined
     },
     freshComments: {

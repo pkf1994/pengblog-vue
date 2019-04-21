@@ -6,5 +6,16 @@ export default {
     startIndex: 0,
     loadingArticleDetail: false,
     loadingMore: false,
-    context: 'common'
+    context: 'common',
+    articleFiling: {
+        filingMap: {},
+        selectedYear: undefined,
+        selectedMonth: undefined,
+        loading: false
+    },
+    articleClassification: {
+        labelMap: ['...'],
+        loading: true,
+        selectedLabel: undefined
+    }
 }

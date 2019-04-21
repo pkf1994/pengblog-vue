@@ -4,10 +4,35 @@
 
     <!--侧边栏文章列表-->
     <ArticleList>
-      <SearchBarWrapper>
-        <SearchBar searchBarId="home"
-                   :searchBarPostHandler="searchBarPostHandler"/>
+
+      <SearchBarWrapper :showCentralController="showCentralController">
+
+        <SearchBarFixer :showCentralController="showCentralController">
+          <SearchBar searchBarId="home"
+                     :searchBarPostHandler="searchBarPostHandler"/>
+        </SearchBarFixer>
+
+        <MoreCondition :showCentralController="showCentralController">
+          <span class="iconfont" v-on:click="() => triggerShow(true)">&#xe609;</span>
+        </MoreCondition>
+
       </SearchBarWrapper>
+
+      <CentralControllerFixer :heightOfCentralController="heightOfCentralController"
+                              :showCentralController="showCentralController">
+        <CentralController ref="centralController">
+          <ArticleFiling articleFilingId="manage"
+                         :articleFilingPostHandler="articleFilingPostHandler"/>
+          <ArticleClassification articleClassificationId="manage"
+                                 :articleClassificationPostHandler="articleClassificationPostHandler"/>
+          <Retract>
+            <span class="iconfont" v-on:click="() => triggerShow(false)">&#xe627;</span>
+          </Retract>
+        </CentralController>
+
+      </CentralControllerFixer>
+
+
       <transition-group name="slide-up-fade">
         <ArticleSummary :article=article
                         v-for="article in articleList"
@@ -57,7 +82,7 @@
     import {mapActions, mapMutations, mapState} from 'vuex'
 import Article from '@/components/article/Article.vue'
 import ArticleSummary from '@/components/articleSummary/ArticleSummary.vue'
-import {Loading,ForMore,ThemeJumbotron,Footer,SearchBar} from '@/components'
+import {Loading,ForMore,ThemeJumbotron,Footer,SearchBar,ArticleFiling,ArticleClassification} from '@/components'
 import {
     HomeWrapper,
     ArticleList,
@@ -67,18 +92,35 @@ import {
     ArticleDetailFixer,
     Theme,
     ForMoreWrapper,
-    SearchBarWrapper} from './style'
+    SearchBarWrapper,
+    MoreCondition,
+    CentralController,
+    CentralControllerFixer,
+    Retract,
+    SearchBarFixer} from './style'
     import {
         ACTION_GET_ARTICLE_LIST_DATA,
-        ACTION_GET_ARTICLE_LIST_OF_HOME_BY_KEYWORD
+        ACTION_GET_ARTICLE_LIST_OF_HOME_BY_FILING,
+        ACTION_GET_ARTICLE_LIST_OF_HOME_BY_KEYWORD, ACTION_GET_ARTICLE_LIST_OF_HOME_BY_LABEL
     } from "../../store/modules/action_types";
     import {MUTATION_APPOINT_CONTEXT} from "../../store/modules/mutation_types";
 
 
 export default {
 
+    data() {
+        return {
+            heightOfCentralController: '0px',
+            showCentralController: false
+        }
+    },
+
     created() {
         this.getData()
+    },
+
+    mounted() {
+        this.recordHeightOfCentralController()
     },
 
     computed: {
@@ -99,7 +141,9 @@ export default {
     methods: {
         ...mapActions({
             action_getArticleListOfHome: ACTION_GET_ARTICLE_LIST_DATA,
-            action_getArticleListOfHomeByKeyword: ACTION_GET_ARTICLE_LIST_OF_HOME_BY_KEYWORD
+            action_getArticleListOfHomeByKeyword: ACTION_GET_ARTICLE_LIST_OF_HOME_BY_KEYWORD,
+            action_getArticleListOfHomeByFiling: ACTION_GET_ARTICLE_LIST_OF_HOME_BY_FILING,
+            action_getArticleListOfHomeByLabel: ACTION_GET_ARTICLE_LIST_OF_HOME_BY_LABEL
         }),
         ...mapMutations({
            mutation_appointContext: MUTATION_APPOINT_CONTEXT
@@ -112,6 +156,7 @@ export default {
                 case 'search':
                     this.action_getArticleListOfHomeByKeyword()
                     break
+
             }
         },
         searchBarPostHandler() {
@@ -121,6 +166,34 @@ export default {
             }
             this.mutation_appointContext(payload)
             this.action_getArticleListOfHomeByKeyword()
+        },
+        articleFilingPostHandler() {
+            const payload = {
+                id: 'home',
+                context: 'articleFiling'
+            }
+            this.mutation_appointContext(payload)
+            this.action_getArticleListOfHomeByFiling()
+        },
+        articleClassificationPostHandler() {
+            const payload = {
+                id: 'home',
+                context: 'articleClassification'
+            }
+            this.mutation_appointContext(payload)
+            this.action_getArticleListOfHomeByLabel()
+        },
+        recordHeightOfCentralController() {
+            const _this = this
+            setTimeout(() => {
+                _this.heightOfCentralController = window.getComputedStyle(_this.$refs.centralController.$el).height
+            },500)
+        },
+        triggerShow(flag) {
+            if(this.heightOfCentralController === '0px'){
+                return
+            }
+            this.showCentralController = flag
         }
     },
 
@@ -140,7 +213,14 @@ export default {
         ThemeJumbotron,
         Footer,
         SearchBar,
-        SearchBarWrapper
+        SearchBarWrapper,
+        MoreCondition,
+        ArticleFiling,
+        ArticleClassification,
+        CentralController,
+        CentralControllerFixer,
+        Retract,
+        SearchBarFixer
     }
 }
 </script>

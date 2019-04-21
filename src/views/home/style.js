@@ -40,9 +40,12 @@ export const ArticleList = styled.div`
     `
 
 export const LoadingArticleSummary = styled.div`
+        z-index: -1;
         position: absolute;
-        width: 100%;
-        height: 100%;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
         background: white;
     `
 
@@ -125,7 +128,60 @@ export const ForMoreWrapper = styled.div`
         background: #F0F0F0;
     `
 
-export const SearchBarWrapper = styled.div`
+export const SearchBarWrapper = styled('div',{showCentralController:Boolean})`
         position: sticky;
         top: 0;
+        padding: 1rem 2rem;
+        border-bottom: solid 1px ${store.state.meta.metaBorderColor};
+        @media(max-width:${store.state.meta.maxMobileWidth}px) {
+            padding: 1rem;
+        }
+    `
+
+export const SearchBarFixer = styled('div',{showCentralController:Boolean})`
+        width: ${props => props.showCentralController ? '100%' : 'calc(100% - 2rem)'};
+        transition: all .4s ease;
+
+    `
+
+export const MoreCondition = styled('div',{showCentralController:Boolean})`
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 2rem;
+        justify-content: flex-start;
+        align-items: center;
+        transition: all .4s ease;
+        opacity: ${props => props.showCentralController ? '0' : '1'};
+        cursor: pointer;
+        color: ${store.state.meta.metaGray};
+        display: none;
+        &:hover{
+            color: black;
+        }
+         @media(max-width:${store.state.meta.maxMobileWidth}px) {
+            display: flex;
+
+        }
+    `
+
+export const CentralController = styled.div`
+        border-bottom: solid 1px ${store.state.meta.metaBorderColor};
+         box-sizing: border-box;
+    `
+
+export const CentralControllerFixer = styled('div',{showCentralController: Boolean,heightOfCentralController:String})`
+        height: ${props => props.showCentralController ? props.heightOfCentralController : '0px'};
+        transition: all .4s ease;
+        overflow: ${props => props.showCentralController ? 'visible' : 'hidden'};
+        opacity: ${props => props.showCentralController ? '1' : '0'};
+    `
+
+export const Retract = styled.div`
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.3rem;
+        color: ${store.state.meta.metaGray};
     `

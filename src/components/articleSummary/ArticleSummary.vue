@@ -72,7 +72,7 @@
                 maxMobileWidth: state => state.meta.maxMobileWidth
             }),
             withPreviewImage(){
-                return (this.article.article_previewImageUrl !== null) && (this.article.article_previewImageUrl !== '')
+                return (this.article.article_previewImageUrl !== undefined) && (this.article.article_previewImageUrl !== '')
             },
             isActive(){
                 return this.article.article_id.toString() === this.currentArticleId && window.innerWidth > this.maxMobileWidth

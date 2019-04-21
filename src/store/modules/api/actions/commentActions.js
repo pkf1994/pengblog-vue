@@ -281,7 +281,7 @@ export default {
             //trigger loading 状态
             const payload = {
                 loading: true,
-                id: 'freshComments'
+                id: 'manage_freshComments'
             }
             context.commit(MUTATION_TRIGGER_IS_LOADING,payload)
 

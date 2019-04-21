@@ -14,6 +14,9 @@ export const HeaderWrapper = styled.div`
         justify-content: space-between;
         height: 4.5rem;
         border-bottom: solid 1px ${store.state.meta.metaBorderColor};
+        @media(max-width: ${store.state.meta.maxMobileWidth}px){
+            padding: 0 1rem;
+        }
     `
 
 export const NavList = styled.div``
@@ -40,5 +43,13 @@ export const GapLineVertical = styled.div`
         margin: 1rem;
         margin-right: 0;
         border-left: solid 1px #EEEEEE;
+    `
+
+export const Title = styled.div`
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        margin-left: 1rem;
+        color: ${store.state.meta.metaGray};
     `
 

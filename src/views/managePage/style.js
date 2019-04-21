@@ -62,3 +62,8 @@ export const LoadingWrapper = styled.div`
         background: white;
         opacity: 0.7;
     `
+
+export const SearchBarWrapper = styled.div`
+        padding: 1rem 2rem;
+        border-bottom: solid 1px ${store.state.meta.metaBorderColor};
+    `

@@ -4,14 +4,14 @@
         <Inner>
             <Logo v-on:click.native="() => goTo('/')"/>
             <GapLineVertical/>
-            <Item>索引</Item>
+            <Title>索引</Title>
         </Inner>
 
     </HeaderWrapper>
 </template>
 
 <script>
-    import {HeaderWrapper,NavList,Item,Inner,GapLineVertical} from "./style"
+    import {HeaderWrapper,NavList,Title,Inner,GapLineVertical} from "./style"
     import {Logo} from './components'
     export default {
         methods: {
@@ -23,7 +23,7 @@
             HeaderWrapper,
             Logo,
             NavList,
-            Item,
+            Title,
             Inner,
             GapLineVertical
         }

@@ -2,6 +2,7 @@ import styled from 'vue-styled-components'
 import store from '@/store'
 
 export const ArticleFilingWrapper = styled.div`
+        position: relative;
         padding: 1rem 2rem;
         @media(max-width:${store.state.meta.maxMobileWidth}px){
         }
@@ -48,8 +49,13 @@ export const SubmitButton = styled('button',{year: Boolean})`
         }
     `
 
-export const Option = styled.option`
-        color: blue;
-          outline: none;
-    
+
+export const LoadingWrapper = styled.div`
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        opacity: 0.5;
     `

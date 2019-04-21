@@ -1,7 +1,7 @@
 <template>
     <ArticleClassificationWrapper>
 
-        <Title>TAG</Title>
+        <Title v-if="withTitle">TAG</Title>
 
         <Tags :loading="loading">
             <TagItem v-for="item in labelMap"
@@ -29,13 +29,15 @@
 
     export default {
         props: {
-            articleClassificationPostHandler: Function
+            articleClassificationPostHandler: Function,
+            withTitle: Boolean,
+            articleClassificationId: String
         },
         computed: {
             ...mapState({
-                labelMap: state => state.manage.articleClassification.labelMap,
-                selectedLabel: state => state.manage.articleClassification.selectedLabel,
-                loading: state => state.manage.articleClassification.loading
+                labelMap: function(state){return state[this.articleClassificationId].articleClassification.labelMap},
+                selectedLabel: function(state){return state[this.articleClassificationId].articleClassification.selectedLabel},
+                loading: function(state){return state[this.articleClassificationId].articleClassification.loading}
             })
         },
         created() {
@@ -49,7 +51,11 @@
                 mutation_appointSelectedLabel: MUTATION_APPOINT_SELECTED_LABEL
             }),
             clickHandler(label){
-                this.mutation_appointSelectedLabel(label)
+                const payload = {
+                    articleClassificationId: this.articleClassificationId,
+                    value: label
+                }
+                this.mutation_appointSelectedLabel(payload)
                 this.articleClassificationPostHandler()
             }
         },

@@ -4,12 +4,19 @@
 
     <CentralController>
 
-      <SearchBar searchBarId="managePage"
-                 :searchBarPostHandler="searchBarPostHandler"/>
+      <SearchBarWrapper>
+        <SearchBar searchBarId="managePage"
+                   :searchBarPostHandler="searchBarPostHandler"/>
+      </SearchBarWrapper>
 
-      <ArticleFiling :articleFilingPostHandler="articleFilingPostHandler"/>
 
-      <ArticleClassification :articleClassificationPostHandler="articleClassificationPostHandler"/>
+      <ArticleFiling :withTitle=true
+                     articleFilingId="manage"
+                     :articleFilingPostHandler="articleFilingPostHandler"/>
+
+      <ArticleClassification :withTitle=true
+                             articleClassificationId="manage"
+                             :articleClassificationPostHandler="articleClassificationPostHandler"/>
       <!--<ArticleClassification/>
 
       <FreshComments/>-->
@@ -56,7 +63,8 @@ import {
     ArticleListWrapper,
     ArticleListFixer,
     PaginationFixer,
-    LoadingWrapper} from './style'
+    LoadingWrapper,
+    SearchBarWrapper} from './style'
 import {
     SearchBar,
     ArticleFiling,
@@ -170,7 +178,8 @@ export default {
         Pagination,
         PaginationFixer,
         LoadingWrapper,
-        Loading
+        Loading,
+        SearchBarWrapper
     }
 }
 </script>

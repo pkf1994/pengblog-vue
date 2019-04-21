@@ -11,7 +11,9 @@ import {
 
 export default {
     [MUTATION_APPOINT_SELECT_DATA](state,payload) {
-        state.articleFiling[payload.id] = payload.value
+        if(payload.articleFilingId === 'manage'){
+            state.articleFiling[payload.selectId] = payload.value
+        }
     },
 
     [MUTATION_RESOVLE_ARTICLE_FILING_DATA](state,payload) {
@@ -32,16 +34,20 @@ export default {
 
     [MUTATION_TRIGGER_IS_LOADING](state,payload) {
 
-        if(payload.id === 'freshComments') {
+        if(payload.id === 'manage_freshComments') {
             state.freshComments.loading = payload.loading
         }
 
-        if(payload.id === 'articleClassification') {
+        if(payload.id === 'manage_articleClassification') {
             state.articleClassification.loading = payload.loading
         }
 
         if(payload.id === 'managePage') {
             state.loading = payload.loading
+        }
+
+        if(payload.id === 'manage_articleFiling') {
+            state.articleFiling.loading = payload.loading
         }
 
     },
@@ -58,7 +64,9 @@ export default {
     },
 
     [MUTATION_APPOINT_SELECTED_LABEL](state,payload){
-        state.articleClassification.selectedLabel = payload
+        if(payload.articleClassificationId === 'manage'){
+            state.articleClassification.selectedLabel = payload.value
+        }
     },
 
     [MUTATION_RESET_CENTRAL_CONTROLLER](state,payload){

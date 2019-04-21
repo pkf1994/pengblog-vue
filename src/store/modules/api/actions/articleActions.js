@@ -19,7 +19,9 @@ import {
     ACTION_GET_ARTICLE_LIST_BY_KEYWORD,
     ACTION_GET_ARTICLE_LIST_BY_FILING,
     ACTION_GET_ARTICLE_LIST_BY_CLASSIFICATION,
-    ACTION_GET_ARTICLE_LIST_OF_HOME_BY_KEYWORD
+    ACTION_GET_ARTICLE_LIST_OF_HOME_BY_KEYWORD,
+    ACTION_GET_ARTICLE_LIST_OF_HOME_BY_FILING,
+    ACTION_GET_ARTICLE_LIST_OF_HOME_BY_LABEL
 } from "../../action_types";
 
 
@@ -186,17 +188,29 @@ export default {
     },
 
     //获取归档数据
-    async [ACTION_GET_ARTICLE_FILING_DATA](context,payload) {
+    async [ACTION_GET_ARTICLE_FILING_DATA](context) {
 
         try{
 
+            const payload = {
+                id: 'manage_articleFiling',
+                loading: true
+            }
+            context.commit(MUTATION_TRIGGER_IS_LOADING,payload)
+
             const res = await ArticleRequest.RequestArticleFilingData()
 
-            const payload = {
+            const payload_ = {
                 filingMap: res.data
             }
 
-            context.commit(MUTATION_RESOVLE_ARTICLE_FILING_DATA,payload)
+            context.commit(MUTATION_RESOVLE_ARTICLE_FILING_DATA,payload_)
+
+            const payload__ = {
+                id: 'manage_articleFiling',
+                loading: false
+            }
+            context.commit(MUTATION_TRIGGER_IS_LOADING,payload__)
 
         }catch (err) {
             console.log(err)
@@ -216,7 +230,7 @@ export default {
         try{
 
             const payload_ = {
-                id: 'articleClassification',
+                id: 'manage_articleClassification',
                 loading: true
             }
             context.commit(MUTATION_TRIGGER_IS_LOADING,payload_)
@@ -230,7 +244,7 @@ export default {
             context.commit(MUTATION_RESOVLE_ARTICLE_CLASSIFICATION_DATA,payload__)
 
             const payload___ = {
-                id: 'articleClassification',
+                id: 'manage_articleClassification',
                 loading: false
             }
             context.commit(MUTATION_TRIGGER_IS_LOADING,payload___)
@@ -449,12 +463,99 @@ export default {
             console.log(err)
 
             context.commit(MUTATION_TRIGGER_SHOW_NOTICE,({
+                noticeContent: 'ACTION_GET_ARTICLE_LIST_OF_HOME_BY_KEYWORD ERR:' + (err.response ? err.response.data : err),
+                show: true
+            }))
+
+        }
+    },
+
+    async [ACTION_GET_ARTICLE_LIST_OF_HOME_BY_FILING](context){
+
+        context.commit(MUTATION_LAUNCH_PROGRASS_BAR)
+
+        //trigger forMore组件为loading状态
+        const payload = {
+            id: 'home_forMore',
+            loading: true
+        }
+
+        context.commit(MUTATION_TRIGGER_IS_LOADING,payload)
+
+        try{
+
+            const payload_ = {
+                selectedYear: context.rootState.manage.articleFiling.selectedYear,
+                selectedMonth: context.rootState.manage.articleFiling.selectedMonth,
+                startIndex: context.rootState.home.startIndex,
+                pageScale: context.rootState.home.pageScale
+            }
+
+            const res = await ArticleRequest.RequestArticleListDataByFiling(payload_)
+
+            const payload__ = {
+                articleList: res.data.articleList,
+                maxPage: res.data.maxPage
+            }
+
+            context.commit(MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME,payload__)
+
+            context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
+
+        }catch(err){
+
+            console.log(err)
+
+            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,({
                 noticeContent: '获取文章列表数据失败,err:' + (err.response ? err.response.data : err),
                 show: true
             }))
 
         }
-    }
+    },
+
+    async [ACTION_GET_ARTICLE_LIST_OF_HOME_BY_LABEL](context){
+
+        context.commit(MUTATION_LAUNCH_PROGRASS_BAR)
+
+        //trigger forMore组件为loading状态
+        const payload = {
+            id: 'home_forMore',
+            loading: true
+        }
+
+        context.commit(MUTATION_TRIGGER_IS_LOADING,payload)
+
+        try{
+
+            const payload_ = {
+                article_label: context.rootState.manage.articleClassification.selectedLabel,
+                startIndex: context.rootState.home.startIndex,
+                pageScale: context.rootState.home.pageScale
+            }
+
+            const res = await ArticleRequest.RequestArticleListDataByLabel(payload_)
+
+            const payload__ = {
+                articleList: res.data.articleList,
+                maxPage: res.data.maxPage
+            }
+
+            context.commit(MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME,payload__)
+
+            context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
+
+        }catch(err){
+
+            console.log(err)
+
+            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,({
+                noticeContent: '获取文章列表数据失败,err:' + (err.response ? err.response.data : err),
+                show: true
+            }))
+
+        }
+    },
 
 }
 
