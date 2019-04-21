@@ -32,10 +32,7 @@ export const ArticleList = styled.div`
         }
         
         @media(max-width:${store.state.meta.maxMobileWidth}px) {
-            position: static;
             width: 100%;
-            overflow-y: auto;
-            margin-top: ${store.state.meta.heightOfHeader};
         }
     `
 
@@ -138,6 +135,7 @@ export const SearchBarWrapper = styled('div',{showCentralController:Boolean})`
         @media(max-width:${store.state.meta.maxMobileWidth}px) {
             padding: 1rem;
         }
+        ${store.state.meta.browser === 'Edge' ? 'z-index: 2;' : ''}
     `
 
 export const SearchBarFixer = styled('div',{showCentralController:Boolean})`
