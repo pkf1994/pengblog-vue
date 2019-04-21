@@ -129,6 +129,8 @@ export const ForMoreWrapper = styled.div`
     `
 
 export const SearchBarWrapper = styled('div',{showCentralController:Boolean})`
+        z-index: 2;
+        background: white;
         position: sticky;
         top: 0;
         padding: 1rem 2rem;
@@ -139,9 +141,10 @@ export const SearchBarWrapper = styled('div',{showCentralController:Boolean})`
     `
 
 export const SearchBarFixer = styled('div',{showCentralController:Boolean})`
-        width: ${props => props.showCentralController ? '100%' : 'calc(100% - 2rem)'};
         transition: all .4s ease;
-
+        @media(max-width:${store.state.meta.maxMobileWidth}px) {
+            width: ${props => props.showCentralController ? '100%' : 'calc(100% - 2rem)'};
+        }
     `
 
 export const MoreCondition = styled('div',{showCentralController:Boolean})`
