@@ -124,3 +124,8 @@ export const ForMoreWrapper = styled.div`
         height: 100px;
         background: #F0F0F0;
     `
+
+export const SearchBarWrapper = styled.div`
+        position: sticky;
+        top: 0;
+    `

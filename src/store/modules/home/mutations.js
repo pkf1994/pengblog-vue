@@ -1,4 +1,7 @@
-import {MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME, MUTATION_TRIGGER_IS_LOADING} from "../mutation_types";
+import {
+    MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME,
+    MUTATION_TRIGGER_IS_LOADING,
+    MUTATION_APPOINT_CONTEXT} from "../mutation_types";
 
 export default {
     [MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME](state,payload){
@@ -23,4 +26,18 @@ export default {
             state.loadingMore = payload.loading
         }
     },
+
+    [MUTATION_APPOINT_CONTEXT](state,payload) {
+        if(payload.id === 'home'){
+
+            if(payload !== state.context){
+                state.startIndex = 0
+                state.nextPage = 1
+                state.articleList = []
+            }
+
+            state.context = payload.context
+        }
+
+    }
 }

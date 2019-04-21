@@ -1,6 +1,7 @@
 import {
-    MUTATION_APPOINT_MANAGE_PAGE_CONTEXT,
-    MUTATION_APPOINT_SELECT_DATA, MUTATION_APPOINT_SELECTED_LABEL,
+    MUTATION_APPOINT_CONTEXT,
+
+    MUTATION_APPOINT_SELECT_DATA, MUTATION_APPOINT_SELECTED_LABEL, MUTATION_RESET_CENTRAL_CONTROLLER,
     MUTATION_RESOVLE_ARTICLE_CLASSIFICATION_DATA,
     MUTATION_RESOVLE_ARTICLE_FILING_DATA,
     MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE,
@@ -49,12 +50,51 @@ export default {
         state.articleList = payload.articleList
     },
 
-    [MUTATION_APPOINT_MANAGE_PAGE_CONTEXT](state,payload){
-        state.context = payload
+    [MUTATION_APPOINT_CONTEXT](state,payload){
+        if(payload.id === 'managePage'){
+            state.context = payload.context
+        }
+
     },
 
     [MUTATION_APPOINT_SELECTED_LABEL](state,payload){
         state.articleClassification.selectedLabel = payload
+    },
+
+    [MUTATION_RESET_CENTRAL_CONTROLLER](state,payload){
+        if(payload !== 'articleFiling'){
+            state.articleFiling.selectedYear = undefined
+            state.articleFiling.selectedMonth = undefined
+        }
+        if(payload !== 'articleClassification'){
+            state.articleClassification.selectedLabel = undefined
+        }
+    }
+}
+
+const resetState = {
+    articleList: [],
+    pageScale: 6,
+    loading: false,
+    context: 'common',
+    articleFiling: {
+        filingMap: {},
+        selectedYear: undefined,
+        selectedMonth: undefined,
+        loading: false
+    },
+    articleClassification: {
+        labelMap: [],
+        loading: true,
+        selectedLabel: undefined
+    },
+    freshComments: {
+        commentList: [],
+        startIndex: 0,
+        nextPage: 1,
+        maxPage: 1,
+        pageScale: 5,
+        loading: false
     }
 }
 

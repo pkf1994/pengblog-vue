@@ -4,16 +4,20 @@
 
     <!--侧边栏文章列表-->
     <ArticleList>
+      <SearchBarWrapper>
+        <SearchBar searchBarId="home"
+                   :searchBarPostHandler="searchBarPostHandler"/>
+      </SearchBarWrapper>
       <transition-group name="slide-up-fade">
         <ArticleSummary :article=article
                         v-for="article in articleList"
                         :key="article.article_id"/>
       </transition-group>
 
-      <ForMoreWrapper v-if="articleList.length!==0">
+      <ForMoreWrapper v-if="articleList.length!==0 && maxPage > 1">
         <ForMore :noMore="noMore"
                  :loading="loadingMore"
-                 :moreDataGetter="actionGetArticleListOfHome"/>
+                 :moreDataGetter="getData"/>
       </ForMoreWrapper>
 
       <!--loading文章列表-->
@@ -45,30 +49,36 @@
       </LoadingWrapper>
 
 
-
   </HomeWrapper>
 
 </template>
 
 <script>
-    import {mapActions, mapState} from 'vuex'
+    import {mapActions, mapMutations, mapState} from 'vuex'
 import Article from '@/components/article/Article.vue'
 import ArticleSummary from '@/components/articleSummary/ArticleSummary.vue'
-import {Loading,ForMore,ThemeJumbotron,Footer} from '@/components'
-import {HomeWrapper,
-        ArticleList,
-        LoadingArticleSummary,
-        ArticleDetail,
-        LoadingWrapper,
-        ArticleDetailFixer,Theme,
-        ForMoreWrapper} from './style'
-import {ACTION_GET_ARTICLE_LIST_DATA} from "../../store/modules/action_types";
+import {Loading,ForMore,ThemeJumbotron,Footer,SearchBar} from '@/components'
+import {
+    HomeWrapper,
+    ArticleList,
+    LoadingArticleSummary,
+    ArticleDetail,
+    LoadingWrapper,
+    ArticleDetailFixer,
+    Theme,
+    ForMoreWrapper,
+    SearchBarWrapper} from './style'
+    import {
+        ACTION_GET_ARTICLE_LIST_DATA,
+        ACTION_GET_ARTICLE_LIST_OF_HOME_BY_KEYWORD
+    } from "../../store/modules/action_types";
+    import {MUTATION_APPOINT_CONTEXT} from "../../store/modules/mutation_types";
 
 
 export default {
 
     created() {
-        this.actionGetArticleListOfHome()
+        this.getData()
     },
 
     computed: {
@@ -81,13 +91,37 @@ export default {
             loadingArticleDetail: state => state.home.loadingArticleDetail,
             noMore: state => (state.home.nextPage === state.home.maxPage),
             loadingMore: state => state.home.loadingMore,
+            context: state => state.home.context,
+            maxPage: state => state.home.maxPage
         })
     },
 
     methods: {
         ...mapActions({
-            actionGetArticleListOfHome: ACTION_GET_ARTICLE_LIST_DATA
-        })
+            action_getArticleListOfHome: ACTION_GET_ARTICLE_LIST_DATA,
+            action_getArticleListOfHomeByKeyword: ACTION_GET_ARTICLE_LIST_OF_HOME_BY_KEYWORD
+        }),
+        ...mapMutations({
+           mutation_appointContext: MUTATION_APPOINT_CONTEXT
+        }),
+        getData() {
+            switch (this.context) {
+                case 'common':
+                    this.action_getArticleListOfHome()
+                    break
+                case 'search':
+                    this.action_getArticleListOfHomeByKeyword()
+                    break
+            }
+        },
+        searchBarPostHandler() {
+            const payload = {
+                id: 'home',
+                context: 'search'
+            }
+            this.mutation_appointContext(payload)
+            this.action_getArticleListOfHomeByKeyword()
+        }
     },
 
     components: {
@@ -104,7 +138,9 @@ export default {
         ArticleDetailFixer,
         ForMoreWrapper,
         ThemeJumbotron,
-        Footer
+        Footer,
+        SearchBar,
+        SearchBarWrapper
     }
 }
 </script>

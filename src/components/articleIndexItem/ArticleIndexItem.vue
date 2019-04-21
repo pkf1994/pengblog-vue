@@ -27,7 +27,7 @@
 
             <ArticleTitle>
 
-                <ArticleTitleInner>
+                <ArticleTitleInner v-on:click="() => goTo('/article/' + article.article_id)">
                     {{article.article_title}}
                 </ArticleTitleInner>
 
@@ -75,7 +75,10 @@
             withHeader: Boolean
         },
         methods: {
-            DateFormat
+            DateFormat,
+            goTo(path) {
+                this.$router.push({path: path})
+            }
         },
         components: {
             ArticleItemWrapper,

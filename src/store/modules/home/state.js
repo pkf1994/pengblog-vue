@@ -5,5 +5,6 @@ export default {
     maxPage: 1,
     startIndex: 0,
     loadingArticleDetail: false,
-    loadingMore: false
+    loadingMore: false,
+    context: 'common'
 }

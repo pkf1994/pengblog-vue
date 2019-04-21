@@ -34,14 +34,13 @@ export const SubmitButton = styled('button',{year: Boolean})`
         outline: none;
         cursor: ${props => props.year ? 'pointer' : 'default'};
         color: white;
-        background: gray;
-        border: solid 1px gray;
+        background: ${store.state.meta.metaColor};
+        border: solid 1px ${store.state.meta.metaColor};
         border-radius: 0.4rem;
         transition: all 0.4s ease;
         ${props => props.year ? ` 
         &:hover{
-            background: ${store.state.meta.metaColor};
-            border: 1px solid ${store.state.meta.metaColor};
+            filter: brightness(80%);
         }` : ''};
         @media(max-width:${store.state.meta.maxMobileWidth}px){
             font-size: 1rem;

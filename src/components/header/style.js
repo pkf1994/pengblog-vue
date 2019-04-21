@@ -29,3 +29,16 @@ export const Item = styled.div`
             color: black;
         }
     `
+
+export const Inner = styled.div`
+        display: flex;
+    `
+
+export const GapLineVertical = styled.div`
+        width: 2px;
+        padding: 1rem 0;
+        margin: 1rem;
+        margin-right: 0;
+        border-left: solid 1px #EEEEEE;
+    `
+

@@ -71,7 +71,10 @@ import {
         ACTION_GET_ARTICLE_LIST_BY_KEYWORD,
         ACTION_GET_ARTICLE_LIST_DATA_OF_MANAGE_PAGE
     } from "../../store/modules/action_types";
-import {MUTATION_RESET_PAGINATION,MUTATION_APPOINT_MANAGE_PAGE_CONTEXT} from "../../store/modules/mutation_types";
+    import {
+        MUTATION_RESET_PAGINATION,
+        MUTATION_RESET_CENTRAL_CONTROLLER, MUTATION_APPOINT_CONTEXT
+    } from "../../store/modules/mutation_types";
 
 export default {
     computed: {
@@ -99,21 +102,33 @@ export default {
         }),
         ...mapMutations({
             mutation_resetPagination: MUTATION_RESET_PAGINATION,
-            mutation_appointManagePageContext: MUTATION_APPOINT_MANAGE_PAGE_CONTEXT
+            mutation_appointContext: MUTATION_APPOINT_CONTEXT,
+            mutation_resetCentralController: MUTATION_RESET_CENTRAL_CONTROLLER
         }),
         searchBarPostHandler() {
             if(this.context === 'search'){
                 this.mutation_resetPagination('managePage')
             }else{
-                this.mutation_appointManagePageContext('search')
+                this.mutation_resetCentralController('search')
+                const payload = {
+                    id: 'managePage',
+                    context: 'search'
+                }
+                this.mutation_appointContext(payload)
                 this.mutation_resetPagination('managePage')
+
             }
         },
         articleFilingPostHandler() {
             if(this.context === 'articleFiling'){
                 this.mutation_resetPagination('managePage')
             }else{
-                this.mutation_appointManagePageContext('articleFiling')
+                this.mutation_resetCentralController('articleFiling')
+                const payload = {
+                    id: 'managePage',
+                    context: 'articleFiling'
+                }
+                this.mutation_appointContext(payload)
                 this.mutation_resetPagination('managePage')
             }
         },
@@ -121,7 +136,12 @@ export default {
             if(this.context === 'articleClassification'){
                 this.mutation_resetPagination('managePage')
             }else{
-                this.mutation_appointManagePageContext('articleClassification')
+                this.mutation_resetCentralController('articleClassification')
+                const payload = {
+                    id: 'managePage',
+                    context: 'articleClassification'
+                }
+                this.mutation_appointContext(payload)
                 this.mutation_resetPagination('managePage')
             }
         },

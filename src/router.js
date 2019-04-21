@@ -7,8 +7,10 @@ Vue.use(Router)
 const Article = () => import('./components/article/Article.vue')
 const Home = () => import('./views/home/Home.vue')
 const CommonHeader = () => import('./components/header/CommonHeader.vue')
+const ManagePageHeader = () => import('./components/header/ManagePageHeader.vue')
 const ArticlePage = () => import('./views/articlePage/ArticlePage.vue')
 const ManagePage = () => import('./views/managePage/ManagePage.vue')
+
 
 let router =  new Router({
     mode: 'history',
@@ -38,7 +40,7 @@ let router =  new Router({
             name: 'managePage',
             components: {
                 ManagePage: ManagePage,
-                header: CommonHeader
+                header: ManagePageHeader
             }
         },
         {

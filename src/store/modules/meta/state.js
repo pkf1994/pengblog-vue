@@ -3,6 +3,7 @@ export default {
     widthOfWindow: window.innerWidth,
     heightOfWindow: window.innerHeight,
     metaColor: '#4fc08d',
+    metaBackgroundColor: 'rgba(79, 192, 141, 0.2)',
     metaGray: '#A2A2A2',
     metaBorderColor: '#F0F0F0',
     maxMobileWidth: 767,

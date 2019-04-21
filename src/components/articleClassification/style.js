@@ -56,10 +56,10 @@ export const TagItem = styled('div',{selected:Boolean})`
         margin-right: 0.3rem;
         margin-bottom: 0.3rem;
         font-size: 0.8rem;
-        border: solid 1px grey;
+        border: solid 1px ${store.state.meta.metaGray};
         border-radius: 0.4rem;
         cursor: pointer;
-        background: ${props => props.selected ? '#F7F7F7' : 'white'};
+        background: ${props => props.selected ? '#EEEEEE' : 'white'};
         &:hover{
             background: #F7F7F7;
         }

@@ -29,3 +29,5 @@ export const ACTION_GET_ARTICLE_LIST_BY_KEYWORD = 'action_getArticleListByKeywor
 export const ACTION_GET_ARTICLE_LIST_BY_FILING = 'action_getArticleListByFiling'
 
 export const ACTION_GET_ARTICLE_LIST_BY_CLASSIFICATION = 'action_getArticleListByClassification'
+
+export const ACTION_GET_ARTICLE_LIST_OF_HOME_BY_KEYWORD = 'action_getArticleListOfHomeByKeyword'

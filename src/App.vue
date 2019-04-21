@@ -9,7 +9,10 @@
             </keep-alive>
 
             <router-view name="ArticlePage"/>
-            <router-view name="ManagePage"/>
+
+            <keep-alive>
+                <router-view name="ManagePage"/>
+            </keep-alive>
         </MainArea>
 
 

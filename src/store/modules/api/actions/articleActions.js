@@ -16,7 +16,10 @@ import {
     ACTION_GET_ARTICLE_FILING_DATA,
     ACTION_GET_ARTICLE_CLASSIFICATION_DATA,
     ACTION_GET_ARTICLE_LIST_DATA_OF_MANAGE_PAGE,
-    ACTION_GET_ARTICLE_LIST_BY_KEYWORD, ACTION_GET_ARTICLE_LIST_BY_FILING, ACTION_GET_ARTICLE_LIST_BY_CLASSIFICATION
+    ACTION_GET_ARTICLE_LIST_BY_KEYWORD,
+    ACTION_GET_ARTICLE_LIST_BY_FILING,
+    ACTION_GET_ARTICLE_LIST_BY_CLASSIFICATION,
+    ACTION_GET_ARTICLE_LIST_OF_HOME_BY_KEYWORD
 } from "../../action_types";
 
 
@@ -375,8 +378,6 @@ export default {
                 pageScale: context.rootState.pagination.managePage.pageScale
             }
 
-            console.log(payload__)
-
             const res = await ArticleRequest.RequestArticleListDataByLabel(payload__)
 
             const payload___ = {
@@ -410,6 +411,49 @@ export default {
             context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload______)
         }
 
+    },
+
+    async [ACTION_GET_ARTICLE_LIST_OF_HOME_BY_KEYWORD](context){
+
+        context.commit(MUTATION_LAUNCH_PROGRASS_BAR)
+
+        //trigger forMore组件为loading状态
+        const payload = {
+            id: 'home_forMore',
+            loading: true
+        }
+
+        context.commit(MUTATION_TRIGGER_IS_LOADING,payload)
+
+        try{
+
+            const payload_ = {
+                searchString: context.rootState.searchBar.home.value,
+                startIndex: context.rootState.home.startIndex,
+                pageScale: context.rootState.home.pageScale
+            }
+
+            const res = await ArticleRequest.RequestArticleListDataBykeyword(payload_)
+
+            const payload__ = {
+                articleList: res.data.articleList,
+                maxPage: res.data.maxPage
+            }
+
+            context.commit(MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME,payload__)
+
+            context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
+
+        }catch(err){
+
+            console.log(err)
+
+            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,({
+                noticeContent: '获取文章列表数据失败,err:' + (err.response ? err.response.data : err),
+                show: true
+            }))
+
+        }
     }
 
 }
