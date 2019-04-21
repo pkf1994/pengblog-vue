@@ -44,3 +44,29 @@ export const RequestArticleListDataBykeyword = (payload) => {
 
     return axios.get(Api.API_GET_ARTICLE_LIST_BY_SEARCH, config)
 }
+
+export const RequestArticleListDataByFiling = (payload) => {
+
+    let config = {
+        params: {
+            startIndex: payload.startIndex,
+            pageScale: payload.pageScale,
+            selectedYear: payload.selectedYear,
+            selectedMonth: payload.selectedMonth
+        }
+    }
+
+    return axios.get(Api.API_GET_ARTICLE_LIST_BY_FILING, config)
+}
+
+export const RequestArticleListDataByLabel = (payload) => {
+    let config = {
+        params: {
+            startIndex: payload.startIndex,
+            pageScale: payload.pageScale,
+            article_label: payload.article_label
+        }
+    }
+
+    return axios.get(Api.API_GET_ARTICLE_LIST_BY_LABEL, config)
+}

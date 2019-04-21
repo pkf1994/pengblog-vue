@@ -51,3 +51,5 @@ export const MUTATION_RESET_PAGINATION = 'mutation_resetPagination'
 export const MUTATION_APPOINT_MANAGE_PAGE_CONTEXT = 'mutation_appointManagePageContext'
 
 export const MUTATION_APPOINT_SEARCHBAR = 'mutation_appointSearchBar'
+
+export const MUTATION_APPOINT_SELECTED_LABEL = 'mutation_appointSelectedLabel'

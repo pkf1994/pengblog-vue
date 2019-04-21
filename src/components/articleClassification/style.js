@@ -18,11 +18,12 @@ export const Title = styled.div`
         margin-bottom: 1rem;
     `
 
-export const Tags = styled.div`
+export const Tags = styled('div',{loading:Boolean})`
         padding-right: 2rem;
         display: flex;
         flex-wrap: wrap;
-        max-height: 6.4rem;
+        max-height: ${props => props.loading ? '0px' : '6.4rem'};
+        transition: all .4s ease;
         overflow-Y: scroll;
          ${props => props.browser !== 'Safari' ? `
 

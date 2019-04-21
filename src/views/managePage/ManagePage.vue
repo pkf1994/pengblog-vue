@@ -7,9 +7,9 @@
       <SearchBar searchBarId="managePage"
                  :searchBarPostHandler="searchBarPostHandler"/>
 
-      <ArticleFiling/>
+      <ArticleFiling :articleFilingPostHandler="articleFilingPostHandler"/>
 
-      <ArticleClassification/>
+      <ArticleClassification :articleClassificationPostHandler="articleClassificationPostHandler"/>
       <!--<ArticleClassification/>
 
       <FreshComments/>-->
@@ -66,6 +66,8 @@ import {
     Pagination,
     Loading} from '@/components'
     import {
+        ACTION_GET_ARTICLE_LIST_BY_CLASSIFICATION,
+        ACTION_GET_ARTICLE_LIST_BY_FILING,
         ACTION_GET_ARTICLE_LIST_BY_KEYWORD,
         ACTION_GET_ARTICLE_LIST_DATA_OF_MANAGE_PAGE
     } from "../../store/modules/action_types";
@@ -91,7 +93,9 @@ export default {
     methods: {
         ...mapActions({
             action_getArticleListDataOfManagePage: ACTION_GET_ARTICLE_LIST_DATA_OF_MANAGE_PAGE,
-            action_getArticleListDataByKeyword: ACTION_GET_ARTICLE_LIST_BY_KEYWORD
+            action_getArticleListDataByKeyword: ACTION_GET_ARTICLE_LIST_BY_KEYWORD,
+            action_getArticleListDataByFiling: ACTION_GET_ARTICLE_LIST_BY_FILING,
+            action_getArticleListDataByClassification: ACTION_GET_ARTICLE_LIST_BY_CLASSIFICATION
         }),
         ...mapMutations({
             mutation_resetPagination: MUTATION_RESET_PAGINATION,
@@ -105,11 +109,31 @@ export default {
                 this.mutation_resetPagination('managePage')
             }
         },
+        articleFilingPostHandler() {
+            if(this.context === 'articleFiling'){
+                this.mutation_resetPagination('managePage')
+            }else{
+                this.mutation_appointManagePageContext('articleFiling')
+                this.mutation_resetPagination('managePage')
+            }
+        },
+        articleClassificationPostHandler() {
+            if(this.context === 'articleClassification'){
+                this.mutation_resetPagination('managePage')
+            }else{
+                this.mutation_appointManagePageContext('articleClassification')
+                this.mutation_resetPagination('managePage')
+            }
+        },
         getArticleListData() {
             if(this.context === 'common'){
                 this.action_getArticleListDataOfManagePage()
             }else if(this.context === 'search'){
                 this.action_getArticleListDataByKeyword()
+            }else if(this.context === 'articleFiling'){
+                this.action_getArticleListDataByFiling()
+            }else if(this.context === 'articleClassification'){
+                this.action_getArticleListDataByClassification()
             }
         }
     },

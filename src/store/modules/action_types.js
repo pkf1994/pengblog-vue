@@ -25,3 +25,7 @@ export const ACTION_GET_FRESH_COMMENT_LIST = 'action_getFreshCommentList'
 export const ACTION_GET_ARTICLE_LIST_DATA_OF_MANAGE_PAGE = 'action_getArticleListDataOfManagePage'
 
 export const ACTION_GET_ARTICLE_LIST_BY_KEYWORD = 'action_getArticleListByKeyword'
+
+export const ACTION_GET_ARTICLE_LIST_BY_FILING = 'action_getArticleListByFiling'
+
+export const ACTION_GET_ARTICLE_LIST_BY_CLASSIFICATION = 'action_getArticleListByClassification'

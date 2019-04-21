@@ -15,7 +15,7 @@
                         width="3.2rem"/>&nbsp;月&nbsp;
 
             </DateSelector>
-            <SubmitButton year="year">Go!</SubmitButton>
+            <SubmitButton year="year" v-on:click="articleFilingPostHandler">Go!</SubmitButton>
         </ArticleFilinger>
     </ArticleFilingWrapper>
 </template>
@@ -32,10 +32,8 @@
     import {MUTATION_APPOINT_SELECT_DATA} from "../../store/modules/mutation_types";
     import {ACTION_GET_ARTICLE_FILING_DATA} from "../../store/modules/action_types";
     export default {
-        data() {
-            return {
-
-            }
+        props: {
+            articleFilingPostHandler: Function
         },
         computed: {
             ...mapState({

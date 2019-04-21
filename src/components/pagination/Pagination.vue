@@ -5,7 +5,7 @@
             <i class="fa fa-angle-double-left"/>
         </GoToFirstPageIcon>
 
-        <GoToLastIcon v-on:click="() => jumpToThePage(currentPage - 1)">
+        <GoToLastIcon v-on:click="prev()">
             <i class="fa fa-angle-left"/>
         </GoToLastIcon>
 
@@ -31,7 +31,7 @@
         </ThereAreMore>
 
 
-        <GoToNextIcon v-on:click="() => jumpToThePage(currentPage + 1)">
+        <GoToNextIcon v-on:click="next()">
             <i class="fa fa-angle-right"/>
         </GoToNextIcon>
 
@@ -102,6 +102,16 @@
                     currentPage: currentPage
                 }
                 this.mutation_appointPagination(payload)
+            },
+            next(){
+                if(this.currentPage + 1 <= this.maxPage){
+                    this.jumpToThePage(this.currentPage + 1)
+                }
+            },
+            prev(){
+                if(this.currentPage - 1 > 0){
+                    this.jumpToThePage(this.currentPage - 1)
+                }
             }
         },
         components: {

@@ -3,9 +3,10 @@
 
         <Title>TAG</Title>
 
-        <Tags>
+        <Tags :loading="loading">
             <TagItem v-for="item in labelMap"
                      class="slide-up-fade"
+                     v-on:click="() => clickHandler(item.article_label)"
                      :key="item.article_label"
                      :selected="item.article_label===selectedLabel">
                 {{item.article_label}}({{item.number}})
@@ -24,8 +25,12 @@
     import {mapActions, mapMutations, mapState} from "vuex";
     import {Loading} from '@/components'
     import {ACTION_GET_ARTICLE_CLASSIFICATION_DATA} from "../../store/modules/action_types";
+    import {MUTATION_APPOINT_SELECTED_LABEL} from "../../store/modules/mutation_types";
 
     export default {
+        props: {
+            articleClassificationPostHandler: Function
+        },
         computed: {
             ...mapState({
                 labelMap: state => state.manage.articleClassification.labelMap,
@@ -33,18 +38,20 @@
                 loading: state => state.manage.articleClassification.loading
             })
         },
-        watch: {
-            loading(){
-
-            }
-        },
         created() {
             this.action_getArticleClassificationData()
         },
         methods: {
             ...mapActions({
                 action_getArticleClassificationData: ACTION_GET_ARTICLE_CLASSIFICATION_DATA
-            })
+            }),
+            ...mapMutations({
+                mutation_appointSelectedLabel: MUTATION_APPOINT_SELECTED_LABEL
+            }),
+            clickHandler(label){
+                this.mutation_appointSelectedLabel(label)
+                this.articleClassificationPostHandler()
+            }
         },
         components: {
             ArticleClassificationWrapper,Title,Tags,TagItem,Loading,LoadingWrapper

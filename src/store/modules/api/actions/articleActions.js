@@ -10,12 +10,14 @@ import {
     MUTATION_RESOVLE_ARTICLE_CLASSIFICATION_DATA,
     MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE, MUTATION_APPOINT_PAGINATION, MUTATION_LAUNCH_PROGRASS_BAR
 } from "../../mutation_types";
-import {ACTION_GET_ARTICLE_DATA,
+import {
+    ACTION_GET_ARTICLE_DATA,
     ACTION_GET_ARTICLE_LIST_DATA,
     ACTION_GET_ARTICLE_FILING_DATA,
     ACTION_GET_ARTICLE_CLASSIFICATION_DATA,
     ACTION_GET_ARTICLE_LIST_DATA_OF_MANAGE_PAGE,
-    ACTION_GET_ARTICLE_LIST_BY_KEYWORD} from "../../action_types";
+    ACTION_GET_ARTICLE_LIST_BY_KEYWORD, ACTION_GET_ARTICLE_LIST_BY_FILING, ACTION_GET_ARTICLE_LIST_BY_CLASSIFICATION
+} from "../../action_types";
 
 
 export default {
@@ -276,16 +278,136 @@ export default {
             }
             context.commit(MUTATION_APPOINT_PAGINATION,payload____)
 
-            const payload = {
+            const payload_____ = {
                 id: 'managePage',
                 loading: false
             }
-            context.commit(MUTATION_TRIGGER_IS_LOADING,payload)
+            context.commit(MUTATION_TRIGGER_IS_LOADING,payload_____)
 
             context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
 
         }catch (err) {
+            console.log(err)
 
+            const payload______ = {
+                show: true,
+                noticeContent: 'ACTION_GET_ARTICLE_LIST_BY_KEYWORD ERR: ' + (err.response ? err.response.data : err)
+            }
+
+            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload______)
+        }
+
+    },
+
+    //根据归档搜索文章
+    async [ACTION_GET_ARTICLE_LIST_BY_FILING](context,payload) {
+
+        try{
+
+            context.commit(MUTATION_LAUNCH_PROGRASS_BAR)
+
+            const payload_ = {
+                id: 'managePage',
+                loading: true
+            }
+            context.commit(MUTATION_TRIGGER_IS_LOADING,payload_)
+
+            const payload__ = {
+                selectedYear: context.rootState.manage.articleFiling.selectedYear,
+                selectedMonth: context.rootState.manage.articleFiling.selectedMonth,
+                startIndex: context.rootState.pagination.managePage.startIndex,
+                pageScale: context.rootState.pagination.managePage.pageScale
+            }
+
+            console.log(payload__)
+
+            const res = await ArticleRequest.RequestArticleListDataByFiling(payload__)
+
+            const payload___ = {
+                articleList: res.data.articleList,
+                maxPage: res.data.maxPage
+            }
+            context.commit(MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE,payload___)
+
+            const payload____ = {
+                paginationId: 'managePage',
+                maxPage: res.data.maxPage
+            }
+            context.commit(MUTATION_APPOINT_PAGINATION,payload____)
+
+            const payload_____ = {
+                id: 'managePage',
+                loading: false
+            }
+            context.commit(MUTATION_TRIGGER_IS_LOADING,payload_____)
+
+            context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
+
+        }catch (err) {
+            console.log(err)
+
+            const payload______ = {
+                show: true,
+                noticeContent: 'ACTION_GET_ARTICLE_LIST_BY_KEYWORD ERR: ' + (err.response ? err.response.data : err)
+            }
+
+            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload______)
+        }
+
+    },
+
+    //根据label搜索文章
+    async [ACTION_GET_ARTICLE_LIST_BY_CLASSIFICATION](context,payload) {
+
+        try{
+
+            context.commit(MUTATION_LAUNCH_PROGRASS_BAR)
+
+            const payload_ = {
+                id: 'managePage',
+                loading: true
+            }
+            context.commit(MUTATION_TRIGGER_IS_LOADING,payload_)
+
+            const payload__ = {
+                article_label: context.rootState.manage.articleClassification.selectedLabel,
+                startIndex: context.rootState.pagination.managePage.startIndex,
+                pageScale: context.rootState.pagination.managePage.pageScale
+            }
+
+            console.log(payload__)
+
+            const res = await ArticleRequest.RequestArticleListDataByLabel(payload__)
+
+            const payload___ = {
+                articleList: res.data.articleList,
+                maxPage: res.data.maxPage
+            }
+            context.commit(MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE,payload___)
+
+            const payload____ = {
+                paginationId: 'managePage',
+                maxPage: res.data.maxPage
+            }
+            context.commit(MUTATION_APPOINT_PAGINATION,payload____)
+
+            const payload_____ = {
+                id: 'managePage',
+                loading: false
+            }
+            context.commit(MUTATION_TRIGGER_IS_LOADING,payload_____)
+
+            context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
+
+        }catch (err) {
+            console.log(err)
+
+            const payload______ = {
+                show: true,
+                noticeContent: 'ACTION_GET_ARTICLE_LIST_BY_KEYWORD ERR: ' + (err.response ? err.response.data : err)
+            }
+
+            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload______)
         }
 
     }

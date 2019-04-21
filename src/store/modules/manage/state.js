@@ -11,6 +11,7 @@ export default {
     },
     articleClassification: {
         labelMap: [],
+        loading: true,
         selectedLabel: undefined
     },
     freshComments: {
