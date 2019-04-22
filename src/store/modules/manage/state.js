@@ -10,7 +10,7 @@ export default {
         loading: false
     },
     articleClassification: {
-        labelMap: ['...'],
+        labelMap: [{article_label:'...',number: 0}],
         loading: false,
         selectedLabel: undefined
     },

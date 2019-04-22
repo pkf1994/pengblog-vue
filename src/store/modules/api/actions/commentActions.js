@@ -2,11 +2,11 @@ import {CommentRequest} from '../request'
 import {
     MUTATION_APPEND_COMMENT_JUST_SUBMIT,
     MUTATION_APPOINT_CAPTCHA, MUTATION_APPOINT_REFERING_COMMENT,
-    MUTATION_RESOVLE_TOP_COMMENT_LIST,
+    MUTATION_RESOLVE_TOP_COMMENT_LIST,
     MUTATION_TRIGGER_IS_LOADING, MUTATION_TRIGGER_SHOW_MODAL,
     MUTATION_TRIGGER_SHOW_NOTICE,
-    MUTATION_RESOVLE_SUB_COMMENT_LIST_DATA,
-    MUTATION_RESOVLE_FRESH_COMMENT_LIST_DATA
+    MUTATION_RESOLVE_SUB_COMMENT_LIST_DATA,
+    MUTATION_RESOLVE_FRESH_COMMENT_LIST_DATA, MUTATION_PUSH_PROGRASS_BAR_TO_END
 } from "../../mutation_types";
 import {
     ACTION_CHECK_CAPTCHA,
@@ -55,7 +55,7 @@ export default {
                 maxPage: res.data.maxPage
             }
 
-            context.commit(MUTATION_RESOVLE_TOP_COMMENT_LIST,payload___)
+            context.commit(MUTATION_RESOLVE_TOP_COMMENT_LIST,payload___)
 
             //关闭loading状态
             const payload____ = {
@@ -68,6 +68,11 @@ export default {
         }catch(err){
 
             console.log(err)
+
+            if(err.message === 'Cancel') {
+                context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
+                return
+            }
 
             context.commit(MUTATION_TRIGGER_SHOW_NOTICE,({
                 noticeContent: '获取评论数据失败',
@@ -102,7 +107,7 @@ export default {
                 subCommentList: res.data.subCommentList
             }
 
-            context.commit(MUTATION_RESOVLE_SUB_COMMENT_LIST_DATA,payload__)
+            context.commit(MUTATION_RESOLVE_SUB_COMMENT_LIST_DATA,payload__)
 
         }catch (err) {
 
@@ -297,7 +302,7 @@ export default {
                 maxPage: res.data.maxPage
             }
 
-            context.commit(MUTATION_RESOVLE_FRESH_COMMENT_LIST_DATA,payload__)
+            context.commit(MUTATION_RESOLVE_FRESH_COMMENT_LIST_DATA,payload__)
 
         }catch (err) {
 

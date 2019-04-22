@@ -35,3 +35,7 @@ export const ACTION_GET_ARTICLE_LIST_OF_HOME_BY_KEYWORD = 'action_getArticleList
 export const ACTION_GET_ARTICLE_LIST_OF_HOME_BY_FILING = 'action_getArticleListOfHomeByFiling'
 
 export const ACTION_GET_ARTICLE_LIST_OF_HOME_BY_LABEL = 'action_getArticleListOfHomeByLabel'
+
+export const ACTION_UPLOAD_IMAGE = 'action_uploadImage'
+
+export const ACTION_SAVE_ARTICLE = 'action_saveArticle'

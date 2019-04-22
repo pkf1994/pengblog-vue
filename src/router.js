@@ -8,11 +8,15 @@ const Article = () => import('./components/article/Article.vue')
 const Home = () => import('./views/home/Home.vue')
 const CommonHeader = () => import('./components/header/CommonHeader.vue')
 const ManagePageHeader = () => import('./components/header/ManagePageHeader.vue')
+const ArticleEditPageHeader = () => import('./components/header/ArticleEditPageHeader.vue')
 const ArticlePage = () => import('./views/articlePage/ArticlePage.vue')
 const ManagePage = () => import('./views/managePage/ManagePage.vue')
+const ArticleEditPage = () => import('./views/articleEditPage/ArticleEditPage.vue')
+
 
 
 let router =  new Router({
+
     mode: 'history',
     base: process.env.BASE_URL,
     routes: [
@@ -51,6 +55,14 @@ let router =  new Router({
                 header: CommonHeader
             },
             props: {ArticlePage:true}
+        },
+        {
+            path: '/edit',
+            name: 'articleEdit',
+            components: {
+                ArticleEditPage: ArticleEditPage,
+                header: ArticleEditPageHeader
+            }
         }
     ],
     scrollBehavior (to, from, savedPosition) {

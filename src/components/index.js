@@ -17,6 +17,8 @@ import FreshComments from './freshComments/FreshComments.vue'
 import Checkbox from './checkbox/Checkbox.vue'
 import ArticleIndexItem from './articleIndexItem/ArticleIndexItem.vue'
 import Pagination from './pagination/Pagination.vue'
+import TitleImageEditor from './titleImageEditor/TitleImageEditor.vue'
+import ArticleEditor from './articleEditor/ArticleEditor.vue'
 
 export {Loading,
         ForMore,
@@ -36,4 +38,6 @@ export {Loading,
         FreshComments,
         Checkbox,
         ArticleIndexItem,
-        Pagination}
+        Pagination,
+        TitleImageEditor,
+        ArticleEditor}

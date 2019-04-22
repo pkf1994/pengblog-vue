@@ -19,7 +19,9 @@ export const HeaderWrapper = styled.div`
         }
     `
 
-export const NavList = styled.div``
+export const NavList = styled.div`
+        display: flex;
+    `
 
 export const Item = styled.div`
         font-size: 1.2rem;

@@ -1,8 +1,10 @@
-import {MUTATION_APPEND_COMMENT_JUST_SUBMIT, MUTATION_RESOVLE_SUB_COMMENT_LIST_DATA} from "../mutation_types";
+import {
+    MUTATION_APPEND_COMMENT_JUST_SUBMIT,
+    MUTATION_RESOLVE_SUB_COMMENT_LIST_DATA} from "../mutation_types";
 import {uniqueCommentList} from "../article/mutations";
 
 export default {
-    [MUTATION_RESOVLE_SUB_COMMENT_LIST_DATA](state,payload) {
+    [MUTATION_RESOLVE_SUB_COMMENT_LIST_DATA](state,payload) {
 
         state.subCommentListMap[payload.hostCommentId] = uniqueCommentList(state.subCommentListMap[payload.hostCommentId] ? state.subCommentListMap[payload.hostCommentId].concat(payload.subCommentList) : payload.subCommentList)
 

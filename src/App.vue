@@ -13,6 +13,10 @@
             <keep-alive>
                 <router-view name="ManagePage"/>
             </keep-alive>
+
+            <keep-alive>
+                <router-view name="ArticleEditPage"/>
+            </keep-alive>
         </MainArea>
 
 

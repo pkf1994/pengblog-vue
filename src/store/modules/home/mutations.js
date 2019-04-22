@@ -1,10 +1,12 @@
 import {
-    MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME,
+    MUTATION_RESOLVE_ARTICLE_LIST_DATA_TO_HOME,
     MUTATION_TRIGGER_IS_LOADING,
-    MUTATION_APPOINT_CONTEXT} from "../mutation_types";
+    MUTATION_APPOINT_CONTEXT, MUTATION_RESET
+} from "../mutation_types";
 
 export default {
-    [MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME](state,payload){
+
+    [MUTATION_RESOLVE_ARTICLE_LIST_DATA_TO_HOME](state,payload){
 
         state.articleList = state.articleList.concat(payload.articleList)
 
@@ -39,5 +41,13 @@ export default {
             state.context = payload.context
         }
 
+    },
+
+    [MUTATION_RESET](state,payload) {
+        if(payload.id === 'home') {
+            state.startIndex = 0
+            state.nextPage = 1
+            state.articleList = []
+        }
     }
 }

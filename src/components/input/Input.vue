@@ -1,13 +1,14 @@
 <template>
     <InputWrapper>
 
-        <input  :class="[ex ? 'input-ex' : 'input', {isFocus: isFocus}]"
+        <input  :id="elId"
+                :class="[ex ? 'input-ex' : 'input', {isFocus: isFocus},{focusActive:!disableFocusStyle}]"
                 :type="type"
                 :placeholder="placeholder"
                 :value="value"
                 :showWarn="showWarn"
                 :maxlength=maxLength
-                :style="inputStyle"
+                :style="Object.assign(style,inputStyle)"
                 v-on="inputListeners"/>
 
         <IconFixer>
@@ -43,6 +44,7 @@
         },
 
         props: {
+            elId: String,
             maxLength: Number,
             type: String,
             placeholder: String,
@@ -51,18 +53,37 @@
             iconClassName: String,
             showWarn: Boolean,
             warnMsg: String,
+            inputStyle: Object,
+            disableFocusStyle: Boolean,
+            borderColor: String,
+            fontColor: {
+                type: String,
+                default: 'black'
+            },
+            fontSize: {
+                type: String,
+                default: '1rem'
+            },
+            backgroundColor: {
+                type: String,
+                default: '#F7F7F7'
+            },
             ex: false,
         },
 
         computed: {
-            inputStyle() {
+            style() {
                 return {
-                    borderColor: this.showWarn ? 'red' : this.metaBorderColor,
-                    padding: window.innerWidth < this.maxMobileWidth ? '0.8rem' : '0.5rem'
+                    borderColor: this.showWarn ? 'red' : (this.borderColor ? this.borderColor :this.metaBorderColor),
+                    padding: this.widthOfWidth < this.maxMobileWidth ? '0.8rem' : '0.5rem',
+                    fontSize: this.fontSize,
+                    background: this.backgroundColor,
+                    color: this.fontColor
                 }
             },
             ...mapState({
-                maxMobileWidth: state => state.meta.maxMobileWidth
+                maxMobileWidth: state => state.meta.maxMobileWidth,
+                widthOfWidth: state => state.meta.widthOfWindow
             }),
             inputListeners: function () {
                 let vm = this
@@ -131,15 +152,15 @@
         width: 100%;
         color: black;
         position: relative;
-        background: #F7F7F7;
         font-size: 1rem;
         outline: none;
         padding: 0.5rem;
         padding-left: 2rem !important;
         border: solid 1px #F7F7F7;
         border-radius: 0.4rem;
+        transition: all .4s ease;
     }
-    .input:focus{
+    .focusActive:focus{
          box-shadow: 1px 1px 2px #999999 inset;
          border: solid 1px #E6E6E6;
      }
@@ -167,8 +188,13 @@
          -webkit-transition: color 99999s ease-out, background-color 99999s ease-out;
     }
 
+    .input::placeholder{
+        transition: all .4s ease;
+    }
+
     .isFocus::placeholder{
         opacity: 0;
+        transition: all .4s ease;
     }
 
 </style>

@@ -13,6 +13,9 @@ export const ArticleTitleImage = styled.img`
 
 export const ArticleMultiContent = styled.div`
         padding: 0 2rem;
+        @media(max-width:${store.state.meta.maxMobileWidth}px){
+            padding: 0 1rem;
+        }
     `
 
 export const ArticleTitle = styled.div`

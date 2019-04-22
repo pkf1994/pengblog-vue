@@ -7,3 +7,21 @@ blockquote{
     font-size: 100%;
     background-color: #f1f1f1;
 }
+
+.w-e-text{
+    min-height:300px;
+}
+
+.w-e-text::-webkit-scrollbar {
+    display: none;
+}
+
+.w-e-panel-container{
+    position: fixed !important;
+    top: 200px !important;
+    z-index: 2;
+}
+
+.w-e-text-container{
+    position: static !important;
+}

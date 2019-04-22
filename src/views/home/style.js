@@ -155,12 +155,9 @@ export const MoreCondition = styled('div',{showCentralController:Boolean})`
         align-items: center;
         transition: all .4s ease;
         opacity: ${props => props.showCentralController ? '0' : '1'};
-        cursor: pointer;
         color: ${store.state.meta.metaGray};
         display: none;
-        &:hover{
-            color: black;
-        }
+        
          @media(max-width:${store.state.meta.maxMobileWidth}px) {
             display: flex;
 
@@ -183,6 +180,6 @@ export const Retract = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 0.3rem;
+        padding: 0.5rem;
         color: ${store.state.meta.metaGray};
     `

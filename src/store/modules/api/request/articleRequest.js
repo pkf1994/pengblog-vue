@@ -1,5 +1,7 @@
 import axios from 'axios'
 import * as Api from './apiConstant'
+import {AXIOS_SOURCE_REQUEST_ARTICLE} from "../source_types";
+import {getToken} from "./imageRequest";
 
 export function RequestArticleList(payload) {
 
@@ -13,10 +15,10 @@ export function RequestArticleList(payload) {
 
 export const RequestArticle = (article_id) => {
 
-    window.RequestArticleAxiosSource = axios.CancelToken.source();
+    window[AXIOS_SOURCE_REQUEST_ARTICLE] = axios.CancelToken.source();
 
     let config = {
-        cancelToken: window.RequestArticleAxiosSource.token,
+        cancelToken: window[AXIOS_SOURCE_REQUEST_ARTICLE].token,
         params: {
             article_id: article_id
         }
@@ -69,4 +71,17 @@ export const RequestArticleListDataByLabel = (payload) => {
     }
 
     return axios.get(Api.API_GET_ARTICLE_LIST_BY_LABEL, config)
+}
+
+export const SaveArticle = (payload) => {
+
+    let token = getToken()
+
+    let config = {
+        headers:{
+            Authorization: token
+        }
+    }
+
+    return axios.post(Api.API_SAVE_ARTICLE,payload,config)
 }

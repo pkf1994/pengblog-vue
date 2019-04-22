@@ -35,13 +35,16 @@
         computed: {
             ...mapState({
                 metaBorderColor: state => state.meta.metaBorderColor,
+                widthOfWindow: state => state.meta.widthOfWindow,
+                maxMobileWidth: state => state.meta.maxMobileWidth,
                 value(state){
                      return state.searchBar[this.searchBarId].value
                 }
             }),
             inputStyle() {
                 return {
-                    borderColor: this.metaBorderColor
+                    borderColor: this.metaBorderColor,
+                    padding: this.widthOfWindow < this.maxMobileWidth ? '0.8rem' : '0.5rem'
                 }
             }
         },

@@ -12,6 +12,7 @@ import subCommentStore from './subComment'
 import manageStore from './manage'
 import paginationStore from './pagination'
 import searchBarStore from './searchBar'
+import articleEditStore from './articleEdit'
 
 export {articleStore,
         apiStore,
@@ -26,4 +27,5 @@ export {articleStore,
         subCommentStore,
         manageStore,
         paginationStore,
-        searchBarStore}
+        searchBarStore,
+        articleEditStore}

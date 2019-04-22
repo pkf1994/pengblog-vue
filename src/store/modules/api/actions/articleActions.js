@@ -2,13 +2,16 @@ import {ArticleRequest} from '../request'
 import {
     MUTATION_PUSH_PROGRASS_BAR_TO_END,
     MUTATION_RECORD_CURRENT_ARTICLE_ID,
-    MUTATION_RESOVLE_ARTICLE,
-    MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME,
+    MUTATION_RESOLVE_ARTICLE,
+    MUTATION_RESOLVE_ARTICLE_LIST_DATA_TO_HOME,
     MUTATION_TRIGGER_IS_LOADING,
     MUTATION_TRIGGER_SHOW_NOTICE,
-    MUTATION_RESOVLE_ARTICLE_FILING_DATA,
-    MUTATION_RESOVLE_ARTICLE_CLASSIFICATION_DATA,
-    MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE, MUTATION_APPOINT_PAGINATION, MUTATION_LAUNCH_PROGRASS_BAR
+    MUTATION_RESOLVE_ARTICLE_FILING_DATA,
+    MUTATION_RESOLVE_ARTICLE_CLASSIFICATION_DATA,
+    MUTATION_RESOLVE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE,
+    MUTATION_APPOINT_PAGINATION,
+    MUTATION_LAUNCH_PROGRASS_BAR,
+    MUTATION_APPOINT_EDITING_ARTICLE, MUTATION_APPOINT_CONTEXT, MUTATION_RESET
 } from "../../mutation_types";
 import {
     ACTION_GET_ARTICLE_DATA,
@@ -21,8 +24,9 @@ import {
     ACTION_GET_ARTICLE_LIST_BY_CLASSIFICATION,
     ACTION_GET_ARTICLE_LIST_OF_HOME_BY_KEYWORD,
     ACTION_GET_ARTICLE_LIST_OF_HOME_BY_FILING,
-    ACTION_GET_ARTICLE_LIST_OF_HOME_BY_LABEL
+    ACTION_GET_ARTICLE_LIST_OF_HOME_BY_LABEL, ACTION_SAVE_ARTICLE
 } from "../../action_types";
+import {AXIOS_SOURCE_REQUEST_ARTICLE} from "../source_types";
 
 
 export default {
@@ -52,21 +56,21 @@ export default {
         context.commit(MUTATION_RECORD_CURRENT_ARTICLE_ID, payload__)
 
         //如果此时存在未完成的同类请求，取消它
-        if(window.RequestArticleAxiosSource){
-            window.RequestArticleAxiosSource.cancel('Cancel')
+        if(window[AXIOS_SOURCE_REQUEST_ARTICLE]){
+            window[AXIOS_SOURCE_REQUEST_ARTICLE].cancel('Cancel')
         }
 
         try{
 
             const res = await ArticleRequest.RequestArticle(payload.article_id)
 
-            window.RequestArticleAxiosSource = undefined
+            window[AXIOS_SOURCE_REQUEST_ARTICLE] = undefined
 
             const payload___ = {
                 article: res.data
             }
 
-            context.commit(MUTATION_RESOVLE_ARTICLE,payload___)
+            context.commit(MUTATION_RESOLVE_ARTICLE,payload___)
 
             //关闭loading状态
             const payload____ = {
@@ -80,10 +84,19 @@ export default {
 
         }catch(err){
 
+            console.log(err)
+
+            if(err.message === 'Cancel') {
+                context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
+                return
+            }
+
             context.commit(MUTATION_TRIGGER_SHOW_NOTICE,({
                 noticeContent: '获取文章数据失败, err:' + (err.response ? err.response.data : err),
                 show: true
             }))
+
+
 
         }
 
@@ -116,7 +129,7 @@ export default {
                 maxPage: res.data.maxPage
             }
 
-            context.commit(MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME,payload__)
+            context.commit(MUTATION_RESOLVE_ARTICLE_LIST_DATA_TO_HOME,payload__)
 
             context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
 
@@ -158,7 +171,7 @@ export default {
                 articleList: res.data.articleList,
                 maxPage: res.data.maxPage
             }
-            context.commit(MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE,payload__)
+            context.commit(MUTATION_RESOLVE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE,payload__)
 
             const payload___ = {
                 paginationId: 'managePage',
@@ -204,7 +217,7 @@ export default {
                 filingMap: res.data
             }
 
-            context.commit(MUTATION_RESOVLE_ARTICLE_FILING_DATA,payload_)
+            context.commit(MUTATION_RESOLVE_ARTICLE_FILING_DATA,payload_)
 
             const payload__ = {
                 id: 'manage_articleFiling',
@@ -241,7 +254,7 @@ export default {
                 labelMap: res.data
             }
 
-            context.commit(MUTATION_RESOVLE_ARTICLE_CLASSIFICATION_DATA,payload__)
+            context.commit(MUTATION_RESOLVE_ARTICLE_CLASSIFICATION_DATA,payload__)
 
             const payload___ = {
                 id: 'manage_articleClassification',
@@ -287,7 +300,7 @@ export default {
                 articleList: res.data.articleList,
                 maxPage: res.data.maxPage
             }
-            context.commit(MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE,payload___)
+            context.commit(MUTATION_RESOLVE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE,payload___)
 
             const payload____ = {
                 paginationId: 'managePage',
@@ -344,7 +357,7 @@ export default {
                 articleList: res.data.articleList,
                 maxPage: res.data.maxPage
             }
-            context.commit(MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE,payload___)
+            context.commit(MUTATION_RESOLVE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE,payload___)
 
             const payload____ = {
                 paginationId: 'managePage',
@@ -398,7 +411,7 @@ export default {
                 articleList: res.data.articleList,
                 maxPage: res.data.maxPage
             }
-            context.commit(MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE,payload___)
+            context.commit(MUTATION_RESOLVE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE,payload___)
 
             const payload____ = {
                 paginationId: 'managePage',
@@ -454,7 +467,7 @@ export default {
                 maxPage: res.data.maxPage
             }
 
-            context.commit(MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME,payload__)
+            context.commit(MUTATION_RESOLVE_ARTICLE_LIST_DATA_TO_HOME,payload__)
 
             context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
 
@@ -498,7 +511,7 @@ export default {
                 maxPage: res.data.maxPage
             }
 
-            context.commit(MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME,payload__)
+            context.commit(MUTATION_RESOLVE_ARTICLE_LIST_DATA_TO_HOME,payload__)
 
             context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
 
@@ -541,7 +554,7 @@ export default {
                 maxPage: res.data.maxPage
             }
 
-            context.commit(MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME,payload__)
+            context.commit(MUTATION_RESOLVE_ARTICLE_LIST_DATA_TO_HOME,payload__)
 
             context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
 
@@ -557,6 +570,92 @@ export default {
         }
     },
 
+    //提交文章
+    async [ACTION_SAVE_ARTICLE](context,payload) {
+
+        try{
+
+            if(payload.article_type === 'article'){
+                const payload = {
+                    id: 'articleEdit_saveArticle',
+                    loading: true
+                }
+                context.commit(MUTATION_TRIGGER_IS_LOADING,payload)
+            }
+
+            if(payload.article_type === 'draft'){
+                const payload = {
+                    id: 'articleEdit_saveDraft',
+                    loading: true
+                }
+                context.commit(MUTATION_TRIGGER_IS_LOADING,payload)
+            }
+
+            let articleData = {
+                article_id: context.rootState.articleEdit.id,
+                article_title: context.rootState.articleEdit.title,
+                article_author: context.rootState.articleEdit.author,
+                article_label: context.rootState.articleEdit.label,
+                article_content: context.rootState.articleEdit.content,
+                article_type: payload.article_type,
+                article_titleImageUrl: context.rootState.articleEdit.titleImageUrl,
+            }
+
+            const res = await ArticleRequest.SaveArticle(articleData)
+
+            //记录id
+            const payload_ = {
+                key:'id',
+                value: res.data
+            }
+
+            context.commit(MUTATION_APPOINT_EDITING_ARTICLE,payload_)
+
+            if(payload.article_type === 'article'){
+
+                //trigger loading
+                const payload__ = {
+                    id: 'articleEdit_saveArticle',
+                    loading: false
+                }
+                context.commit(MUTATION_TRIGGER_IS_LOADING,payload__)
+
+                //重置home
+                const payload___ = {
+                    id:'home'
+                }
+                context.commit(MUTATION_RESET,payload___)
+                context.dispatch(ACTION_GET_ARTICLE_LIST_DATA)
+
+                //通知窗口提示提交成功
+                const payload____ = {
+                    show: true,
+                    noticeContent: '提交文章成功，即将跳转。'
+                }
+                context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload____)
+
+            }
+
+            if(payload.article_type === 'draft'){
+                const payload = {
+                    id: 'articleEdit_saveDraft',
+                    loading: false
+                }
+                context.commit(MUTATION_TRIGGER_IS_LOADING,payload)
+            }
+
+        }catch (err) {
+            console.log(err)
+
+            const payload_____ = {
+                show:true,
+                noticeContent: 'ACTION_SAVE_ARTICLE ERR: ' + (err.response ? err.response.data: err)
+            }
+
+            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload_____)
+        }
+
+    }
 }
 
 

@@ -1,14 +1,16 @@
 import {
     MUTATION_APPEND_COMMENT_JUST_SUBMIT,
-    MUTATION_RECORD_CURRENT_ARTICLE_ID, MUTATION_RESET_PAGINATION_INDEX_OF_TOP_COMMENT_LIST,
+    MUTATION_RECORD_CURRENT_ARTICLE_ID,
+    MUTATION_RESET_PAGINATION_INDEX_OF_TOP_COMMENT_LIST,
     MUTATION_RESET_STORE,
-    MUTATION_RESOVLE_ARTICLE,
-    MUTATION_RESOVLE_TOP_COMMENT_LIST, MUTATION_TRIGGER_IS_LOADING
+    MUTATION_RESOLVE_ARTICLE,
+    MUTATION_RESOLVE_TOP_COMMENT_LIST,
+    MUTATION_TRIGGER_IS_LOADING
 } from "../mutation_types";
 
 export default {
 
-    [MUTATION_RESOVLE_ARTICLE](state,payload){
+    [MUTATION_RESOLVE_ARTICLE](state,payload){
 
         payload.article.article_content = generateArticleContentWithLazyloadImage(payload.article.article_content,'https://pengblogimage-1257899590.cos.ap-guangzhou.myqcloud.com/default.png')
 
@@ -20,7 +22,7 @@ export default {
 
     },
 
-    [MUTATION_RESOVLE_TOP_COMMENT_LIST](state,payload){
+    [MUTATION_RESOLVE_TOP_COMMENT_LIST](state,payload){
 
         state.commentList = uniqueCommentList(state.commentList.concat(payload.commentList))
 

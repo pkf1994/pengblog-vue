@@ -1,10 +1,10 @@
 export const MUTATION_RESET_STORE = 'mutation_resetStore'
 
-export const MUTATION_RESOVLE_ARTICLE = 'mutation_resolveArticle'
+export const MUTATION_RESOLVE_ARTICLE = 'mutation_resolveArticle'
 
-export const MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_HOME = 'mutation_resolveArticleListDataToHome'
+export const MUTATION_RESOLVE_ARTICLE_LIST_DATA_TO_HOME = 'mutation_resolveArticleListDataToHome'
 
-export const MUTATION_RESOVLE_TOP_COMMENT_LIST = 'mutation_resolveTopCommentList'
+export const MUTATION_RESOLVE_TOP_COMMENT_LIST = 'mutation_resolveTopCommentList'
 
 export const MUTATION_TRIGGER_IS_LOADING = 'mutation_triggerIsLoading'
 
@@ -30,19 +30,19 @@ export const MUTATION_APPEND_TO_COMMENT_EDITOR = 'mutation_appendToCommentEditor
 
 export const MUTATION_APPOINT_REFERING_COMMENT = 'mutation_appointReferingComment'
 
-export const MUTATION_RESOVLE_SUB_COMMENT_LIST_DATA = 'mutation_resolveSubCommentListData'
+export const MUTATION_RESOLVE_SUB_COMMENT_LIST_DATA = 'mutation_resolveSubCommentListData'
 
 export const MUTATION_APPOINT_WINDOW_SIZE = 'mutation_appointWindowSize'
 
 export const MUTATION_APPOINT_SELECT_DATA = 'mutation_appointSelectData'
 
-export const MUTATION_RESOVLE_ARTICLE_FILING_DATA = 'mutation_resovleArticleFilingData'
+export const MUTATION_RESOLVE_ARTICLE_FILING_DATA = 'mutation_resolveArticleFilingData'
 
-export const MUTATION_RESOVLE_ARTICLE_CLASSIFICATION_DATA = 'mutation_resovleArticleClassificationData'
+export const MUTATION_RESOLVE_ARTICLE_CLASSIFICATION_DATA = 'mutation_resolveArticleClassificationData'
 
-export const MUTATION_RESOVLE_FRESH_COMMENT_LIST_DATA = 'mutation_resovleFreshCommentListData'
+export const MUTATION_RESOLVE_FRESH_COMMENT_LIST_DATA = 'mutation_resolveFreshCommentListData'
 
-export const MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE = 'mutation_resovleArticleListDataToManagePage'
+export const MUTATION_RESOLVE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE = 'mutation_resolveArticleListDataToManagePage'
 
 export const MUTATION_APPOINT_PAGINATION = 'mutation_appointPagination'
 
@@ -55,3 +55,7 @@ export const MUTATION_APPOINT_SELECTED_LABEL = 'mutation_appointSelectedLabel'
 export const MUTATION_RESET_CENTRAL_CONTROLLER = 'mutation_resetCentralController'
 
 export const MUTATION_APPOINT_CONTEXT = 'mutation_appointContext'
+
+export const MUTATION_APPOINT_EDITING_ARTICLE = 'mutation_appointEditingArticle'
+
+export const MUTATION_RESET = 'mutation_reset'

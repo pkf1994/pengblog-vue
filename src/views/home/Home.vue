@@ -13,7 +13,9 @@
         </SearchBarFixer>
 
         <MoreCondition :showCentralController="showCentralController">
-          <span class="iconfont" v-on:click="() => triggerShow(true)">&#xe609;</span>
+          <div class="iconfont"
+               :showCentralController="showCentralController"
+                v-on:click="() => triggerShow(true)">&#xe609;</div>
         </MoreCondition>
 
       </SearchBarWrapper>
@@ -136,6 +138,10 @@ export default {
             context: state => state.home.context,
             maxPage: state => state.home.maxPage
         })
+    },
+
+    watch: {
+
     },
 
     methods: {

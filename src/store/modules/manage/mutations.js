@@ -1,11 +1,12 @@
 import {
     MUTATION_APPOINT_CONTEXT,
-
-    MUTATION_APPOINT_SELECT_DATA, MUTATION_APPOINT_SELECTED_LABEL, MUTATION_RESET_CENTRAL_CONTROLLER,
-    MUTATION_RESOVLE_ARTICLE_CLASSIFICATION_DATA,
-    MUTATION_RESOVLE_ARTICLE_FILING_DATA,
-    MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE,
-    MUTATION_RESOVLE_FRESH_COMMENT_LIST_DATA,
+    MUTATION_APPOINT_SELECT_DATA,
+    MUTATION_APPOINT_SELECTED_LABEL,
+    MUTATION_RESET_CENTRAL_CONTROLLER,
+    MUTATION_RESOLVE_ARTICLE_CLASSIFICATION_DATA,
+    MUTATION_RESOLVE_ARTICLE_FILING_DATA,
+    MUTATION_RESOLVE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE,
+    MUTATION_RESOLVE_FRESH_COMMENT_LIST_DATA,
     MUTATION_TRIGGER_IS_LOADING
 } from "../mutation_types";
 
@@ -16,15 +17,15 @@ export default {
         }
     },
 
-    [MUTATION_RESOVLE_ARTICLE_FILING_DATA](state,payload) {
+    [MUTATION_RESOLVE_ARTICLE_FILING_DATA](state,payload) {
         state.articleFiling.filingMap = payload.filingMap
     },
 
-    [MUTATION_RESOVLE_ARTICLE_CLASSIFICATION_DATA](state,payload) {
+    [MUTATION_RESOLVE_ARTICLE_CLASSIFICATION_DATA](state,payload) {
         state.articleClassification.labelMap = payload.labelMap
     },
 
-    [MUTATION_RESOVLE_FRESH_COMMENT_LIST_DATA](state,payload) {
+    [MUTATION_RESOLVE_FRESH_COMMENT_LIST_DATA](state,payload) {
         state.freshComments.startIndex = state.freshComments.startIndex + state.freshComments.pageScale
         state.freshComments.nextPage = state.freshComments.nextPage + 1
         state.freshComments.commentList = state.freshComments.commentList.concat(payload.commentList)
@@ -52,7 +53,7 @@ export default {
 
     },
 
-    [MUTATION_RESOVLE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE](state,payload) {
+    [MUTATION_RESOLVE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE](state,payload) {
         state.articleList = payload.articleList
     },
 
