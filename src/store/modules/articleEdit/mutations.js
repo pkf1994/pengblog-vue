@@ -11,6 +11,15 @@ export default {
         }
 
         state[payload.key] = payload.value
+
+        if(checkItemLength(state.title, 0, 50)
+            && checkItemLength(state.author, 1, 15)
+            && checkItemLength(state.label, 1, 10)
+            && checkItemLength(state.content, 20, 20000)){
+            state.submitableAsArticle = true
+            return
+        }
+        state.submitableAsArticle = false
     },
 
     [MUTATION_TRIGGER_IS_LOADING](state,payload) {
@@ -31,6 +40,7 @@ export default {
         state.label = payload.article_label
         state.author = payload.article_author
         state.content = payload.article_content
+        state.titleImageEditor.titleImageUrl = payload.article_titleImageUrl
         state.resolveDraftFlag = true
         state.draftCache = {
             id:payload.article_id,
@@ -39,7 +49,14 @@ export default {
             author:payload.article_author,
             content:payload.article_content,
         }
+        state.editor.cmd.do('insertHTML',  payload.article_content)
     }
 }
 
+const checkItemLength = (item, leftPoint, rightPoint) => {
+    if(!item){
+        return false
+    }
+    return item.length > leftPoint && item.length <= rightPoint
+}
 

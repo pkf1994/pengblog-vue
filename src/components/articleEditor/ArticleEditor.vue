@@ -110,6 +110,12 @@
 
                 articleEditor.create()
 
+                const payload = {
+                    key:'editor',
+                    value: articleEditor
+                }
+
+                this.mutation_appointEditingArticle(payload)
             }
         },
         components: {

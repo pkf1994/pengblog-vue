@@ -57,6 +57,10 @@
                 if(!newOne) {
                     this.heightOfTitleImageEdit = '240px'
                 }
+                const _this = this
+                setTimeout(() => {
+                    _this.recordHeightOfTitleImageEdit()
+                },500)
             }
         },
         methods: {
@@ -69,17 +73,16 @@
                     id: 'titleImageEditor',
                     img: event.target.files[0]
                 }
-                await this.action_uploadImage(payload)
-                const _this = this
-                setTimeout(() => {
-                    _this.recordHeightOfTitleImageEdit()
-                },500)
+                this.action_uploadImage(payload)
             },
             recordHeightOfTitleImageEdit() {
-                if(!this.titleImageUrl){
-                    return
-                }
-                this.heightOfTitleImageEdit = window.getComputedStyle(this.$refs.titleImageFrame.$el).height
+
+                const _this = this
+
+                this.$refs.titleImageFrame.$el.addEventListener('load', () => {
+                    _this.heightOfTitleImageEdit = window.getComputedStyle(_this.$refs.titleImageFrame.$el).height
+                })
+
             },
             deleteTitleImage() {
                 const payload = {

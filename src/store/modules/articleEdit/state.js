@@ -10,5 +10,8 @@ export default {
     content: undefined,
     resolveDraftFlag: false,
     draftCache: {},
-    savingDraft: false
+    savingDraft: false,
+    savingArticle: false,
+    submitableAsArticle: false,
+    editor: undefined
 }

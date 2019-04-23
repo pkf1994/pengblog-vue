@@ -97,6 +97,22 @@
         created() {
             this.initData()
         },
+        watch: {
+            label(newOne,oldOne){
+                if(oldOne === undefined) {
+                    this.$nextTick(() => {
+                        this.dispatchKeyupForMetaInput('labelInput')
+                    })
+                }
+            },
+            author(newOne,oldOne){
+                if(oldOne === undefined) {
+                    this.$nextTick(() => {
+                        this.dispatchKeyupForMetaInput('authorInput')
+                    })
+                }
+            }
+        },
         methods: {
             ...mapActions({
                 action_getDraft: ACTION_GET_DRAFT,
@@ -130,6 +146,12 @@
             },
             initData() {
                 this.action_getDraft()
+            },
+            dispatchKeyupForMetaInput(id) {
+                let el = document.getElementById(id)
+                let e = document.createEvent('UIEvent')
+                e.initUIEvent("keyup", true, true, window, 1)
+                el && el.dispatchEvent(e)
             }
         },
         components: {

@@ -599,7 +599,7 @@ export default {
                 article_label: context.rootState.articleEdit.label,
                 article_content: context.rootState.articleEdit.content,
                 article_type: payload.article_type,
-                article_titleImageUrl: context.rootState.articleEdit.titleImageUrl,
+                article_titleImageUrl: context.rootState.articleEdit.titleImageEditor.titleImageUrl,
             }
 
             const res = await ArticleRequest.SaveArticle(articleData)
@@ -710,6 +710,7 @@ export default {
                 context.dispatch(ACTION_SAVE_ARTICLE,payload_)
 
             },1000,{page:'articleEditPage'})
+
 
 
         }catch (err) {

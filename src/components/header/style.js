@@ -23,16 +23,19 @@ export const NavList = styled.div`
         display: flex;
     `
 
-export const Item = styled.div`
+export const Item = styled('div',{disabled:Boolean})`
         font-size: 1.2rem;
         display: flex;
         align-items: center;
         margin-left: 1rem;
-        cursor: pointer;
         color: ${store.state.meta.metaGray};
-        &:hover{
-            color: black;
-        }
+        ${props => props.disabled ? '' : `
+            cursor: pointer;
+            &:hover{
+                color: black;
+            }
+        `}
+        
     `
 
 export const Inner = styled.div`
