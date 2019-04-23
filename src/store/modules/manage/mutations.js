@@ -1,7 +1,7 @@
 import {
     MUTATION_APPOINT_CONTEXT,
     MUTATION_APPOINT_SELECT_DATA,
-    MUTATION_APPOINT_SELECTED_LABEL,
+    MUTATION_APPOINT_SELECTED_LABEL, MUTATION_RECORD_ARTICLE_JUST_DELETED,
     MUTATION_RESET_CENTRAL_CONTROLLER,
     MUTATION_RESOLVE_ARTICLE_CLASSIFICATION_DATA,
     MUTATION_RESOLVE_ARTICLE_FILING_DATA,
@@ -78,6 +78,10 @@ export default {
         if(payload !== 'articleClassification'){
             state.articleClassification.selectedLabel = undefined
         }
+    },
+
+    [MUTATION_RECORD_ARTICLE_JUST_DELETED](state,payload) {
+        state.articleListDeleted.push(payload)
     }
 }
 

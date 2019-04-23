@@ -40,7 +40,7 @@
     export default {
         data() {
             return {
-                heightOfTitleImageEdit: '240px'
+                heightOfTitleImageEdit: '200px'
             }
         },
         computed: {
@@ -55,7 +55,7 @@
         watch: {
             titleImageUrl(newOne,oldOne) {
                 if(!newOne) {
-                    this.heightOfTitleImageEdit = '240px'
+                    this.heightOfTitleImageEdit = '200px'
                 }
                 const _this = this
                 setTimeout(() => {

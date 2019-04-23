@@ -22,11 +22,10 @@
                       :style="{fontSize:'1.4rem'}">&#xe600;</span>发布
             </span>
 
-            <span v-if="savingArticle">
+            <SavingArticle v-if="savingArticle">
                 <img :src=loadingSpin alt="Loading icon" :style="{transform:'scale(0.7)'}"/>
-                <span class="iconfont"
-                      :style="{fontSize:'1.4rem'}">&#xe600;</span>发布中...
-            </span>
+                发布中...
+            </SavingArticle>
 
         </Item>
 
@@ -41,11 +40,13 @@
         Inner,
         Item,
         GapLineVertical,
-        ArticleEditInfo} from "./style"
+        ArticleEditInfo,
+        SavingArticle} from "./style"
     import {Logo} from './components'
-    import {mapActions, mapState} from "vuex";
+    import {mapActions, mapMutations, mapState} from "vuex";
     import {ACTION_SAVE_ARTICLE} from "../../store/modules/action_types";
     import loadingSpin from '@/assets/svg/loading-spin.svg'
+    import {MUTATION_RESET, MUTATION_TRIGGER_IS_LOADING} from "../../store/modules/mutation_types";
     export default {
         data() {
             return {
@@ -71,6 +72,10 @@
             ...mapActions({
                 action_saveArticle: ACTION_SAVE_ARTICLE
             }),
+            ...mapMutations({
+                mutation_reset: MUTATION_RESET,
+                mutation_triggerIsLoading: MUTATION_TRIGGER_IS_LOADING
+            }),
             goTo(path) {
                 this.$router.push({path:path})
             },
@@ -84,6 +89,16 @@
 
                 setTimeout(() => {
                     _this.$router.push({path:'/'})
+                    const payload_ = {
+                        id: 'articleEditPage'
+                    }
+                    _this.mutation_reset(payload_)
+
+                    const payload__ = {
+                        loading: false,
+                        id: 'articleEdit_savingArticle'
+                    }
+                    _this.mutation_triggerIsLoading(payload__)
                 },2000)
             }
         },
@@ -95,7 +110,8 @@
             Inner,
             Item,
             GapLineVertical,
-            ArticleEditInfo
+            ArticleEditInfo,
+            SavingArticle
         }
     }
 </script>

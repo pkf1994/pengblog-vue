@@ -1,5 +1,5 @@
 import {
-    MUTATION_APPOINT_EDITING_ARTICLE, MUTATION_RESOLVE_DRAFT, MUTATION_TRIGGER_IS_LOADING
+    MUTATION_APPOINT_EDITING_ARTICLE, MUTATION_RESET, MUTATION_RESOLVE_DRAFT, MUTATION_TRIGGER_IS_LOADING
 } from "../mutation_types";
 
 export default {
@@ -26,10 +26,10 @@ export default {
         if(payload.id === 'titleImageEditor') {
             state.titleImageEditor.loading = payload.loading
         }
-        if(payload.id === 'articleEdit_saveDraft') {
+        if(payload.id === 'articleEdit_savingDraft') {
             state.savingDraft = payload.loading
         }
-        if(payload.id === 'articleEdit_saveArticle') {
+        if(payload.id === 'articleEdit_savingArticle') {
             state.savingArticle = payload.loading
         }
     },
@@ -41,15 +41,22 @@ export default {
         state.author = payload.article_author
         state.content = payload.article_content
         state.titleImageEditor.titleImageUrl = payload.article_titleImageUrl
-        state.resolveDraftFlag = true
-        state.draftCache = {
-            id:payload.article_id,
-            title:payload.article_title,
-            label:payload.article_label,
-            author:payload.article_author,
-            content:payload.article_content,
-        }
+        state.titleCache = payload.article_title
         state.editor.cmd.do('insertHTML',  payload.article_content)
+        state.resolveDraftFlag = true
+    },
+
+    [MUTATION_RESET](state,payload) {
+
+        if(payload.id === 'articleEditPage') {
+            state.id = undefined
+            state.title = undefined
+            state.label = undefined
+            state.author = undefined
+            state.content = undefined
+            state.titleImageEditor.titleImageUrl = undefined
+        }
+
     }
 }
 

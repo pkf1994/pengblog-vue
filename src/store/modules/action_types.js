@@ -43,3 +43,7 @@ export const ACTION_SAVE_ARTICLE = 'action_saveArticle'
 export const ACTION_GET_DRAFT = 'action_getDraft'
 
 export const ACTION_APPOINT_EDITING_ARTICLE = 'action_appointEditingArticle'
+
+export const ACTION_DELETE_COMMENT = 'action_deleteComment'
+
+export const ACTION_DELETE_ARTICLE = 'action_deleteArticle'

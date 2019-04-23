@@ -1,5 +1,6 @@
 export default {
     articleList: [],
+    articleListDeleted: [],
     pageScale: 6,
     loading: false,
     context: 'common',

@@ -4,5 +4,6 @@ export default {
     context: 'context',
     postHandler: () => {},
     commentEditorVM: undefined,
-    commentEditorId: undefined
+    commentEditorId: undefined,
+    deletingArticleId: undefined
 }

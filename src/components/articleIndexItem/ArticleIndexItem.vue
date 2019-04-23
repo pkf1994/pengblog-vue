@@ -20,7 +20,9 @@
             </ArticleReleaseTime>
         </Header>
 
-        <Body>
+        <Body  v-on:mouseenter.native="() => triggerIsBeingHover(true)"
+               v-on:mouseleave.native="() => triggerIsBeingHover(false)"
+               :hasBeenDeleted="hasBeenDeleted">
             <!--<CheckBoxWrapper>
                 <CheckBox/>
             </CheckBoxWrapper>-->
@@ -31,9 +33,9 @@
                     {{article.article_title}}
                 </ArticleTitleInner>
 
-                <!--<DeleteButton>
-                    <i class="fa fa-trash-o"/>
-                </DeleteButton>-->
+                <DeleteButton v-if="beingHover" v-on:click="tryToDelete">
+                    <i :style="{cursor:'pointer'}" class="fa fa-trash-o"/>
+                </DeleteButton>
 
 
             </ArticleTitle>
@@ -69,15 +71,55 @@
         ArticleReleaseTime} from './style'
     import Checkbox from '../checkbox/Checkbox.vue'
     import {DateFormat} from '@/exJs/dateFormatUtil'
+    import {ACTION_DELETE_ARTICLE} from "../../store/modules/action_types";
+    import {mapActions, mapMutations, mapState} from "vuex";
+    import {MUTATION_TRIGGER_SHOW_MODAL} from "../../store/modules/mutation_types";
     export default {
+        data() {
+            return {
+                beingHover: false
+            }
+        },
         props: {
             article: Object,
             withHeader: Boolean
         },
+        computed: {
+            ...mapState({
+                hasBeenDeleted(state){
+                    let articleListDeleted = state.manage.articleListDeleted
+
+                    return articleListDeleted.some((item) => {
+                        return item === this.article.article_id
+                    })
+                }
+            })
+        },
         methods: {
+            ...mapMutations({
+                mutation_triggerShowModal: MUTATION_TRIGGER_SHOW_MODAL
+            }),
             DateFormat,
             goTo(path) {
                 this.$router.push({path: path})
+            },
+            triggerIsBeingHover(flag) {
+                this.beingHover = flag
+            },
+            tryToDelete() {
+                if(this.hasBeenDeleted) {
+                    return
+                }
+                const payload = {
+                    context: 'deleteArticle',
+                    show: true,
+                    meta: {
+                        key: 'deletingArticleId',
+                        value: this.article.article_id
+                    },
+                    modalContent: '将删除文章: “' + this.article.article_title + '”, 请确认。'
+                }
+                this.mutation_triggerShowModal(payload)
             }
         },
         components: {

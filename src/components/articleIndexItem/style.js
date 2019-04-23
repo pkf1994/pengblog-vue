@@ -7,7 +7,7 @@ export const Header = styled.div`
         border-bottom: solid 2px ${store.state.meta.metaBorderColor};
     `
 
-export const Body = styled('div',{selected: Boolean,deleted: Boolean})`
+export const Body = styled('div',{selected: Boolean,deleted: Boolean,hasBeenDeleted:Boolean})`
         position: relative;
         padding-left: ${props => props.selected ? '1rem' : '0'};
         display: flex;
@@ -17,6 +17,7 @@ export const Body = styled('div',{selected: Boolean,deleted: Boolean})`
         margin-bottom: 0;
         background: white;
         transition: all 0.4s ease;
+        text-decoration: ${props => props.hasBeenDeleted ? 'line-through' : 'none'};
         ${props => props.deleted ? 'text-decoration:line-through' : ''};
         ${store.state.meta.browser === 'Safari' ? '' : `
             &:hover{

@@ -9,7 +9,7 @@ export default {
     author: undefined,
     content: undefined,
     resolveDraftFlag: false,
-    draftCache: {},
+    titleCache: undefined,
     savingDraft: false,
     savingArticle: false,
     submitableAsArticle: false,

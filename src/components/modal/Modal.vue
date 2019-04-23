@@ -15,6 +15,8 @@
 
                 <ContactMeModalItem v-if="context === 'contactMe'"/>
 
+                <DeleteArticleModalItem v-if="context === 'deleteArticle'"/>
+
                 <CloseButton class="iconfont"
                              :loading="loading"
                              v-on:click="close">&#xe70b;</CloseButton>
@@ -32,7 +34,8 @@
             CloseButton} from './style'
     import {ShareToWechatModalItem,
             CaptchaModalItem,
-            ContactMeModalItem} from './modalItems'
+            ContactMeModalItem,
+            DeleteArticleModalItem} from './modalItems'
     import {mapMutations, mapState} from "vuex";
     import {MUTATION_TRIGGER_SHOW_MODAL} from "../../store/modules/mutation_types";
 
@@ -64,7 +67,8 @@
             CloseButton,
             ShareToWechatModalItem,
             CaptchaModalItem,
-            ContactMeModalItem
+            ContactMeModalItem,
+            DeleteArticleModalItem
         }
     }
 </script>

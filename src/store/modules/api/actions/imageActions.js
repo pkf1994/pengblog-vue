@@ -4,7 +4,7 @@ import {
     MUTATION_TRIGGER_SHOW_NOTICE
 } from "../../mutation_types";
 
-import {ACTION_APPOINT_EDITING_ARTICLE, ACTION_UPLOAD_IMAGE} from "../../action_types";
+import {ACTION_APPOINT_EDITING_ARTICLE, ACTION_DELETE_COMMENT, ACTION_UPLOAD_IMAGE} from "../../action_types";
 
 
 export default {
@@ -46,7 +46,19 @@ export default {
            context(MUTATION_TRIGGER_SHOW_NOTICE,payload___)
        }
 
-   }
+   },
+
+    async [ACTION_DELETE_COMMENT](context,payload) {
+
+       try{
+
+
+
+       }catch (err) {
+
+       }
+
+    }
 
 }
 

@@ -6,7 +6,8 @@ export default {
         state.show = payload.show
         payload.context && (state.context = payload.context)
         payload.postHandler && (state.postHandler = payload.postHandler)
-
+        payload.modalContent && (state.modalContent = payload.modalContent)
+        payload.meta && (state[payload.meta.key] = payload.meta.value)
     },
 
     [MUTATION_TRIGGER_IS_LOADING](state,payload){

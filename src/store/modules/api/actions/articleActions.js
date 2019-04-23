@@ -11,7 +11,11 @@ import {
     MUTATION_RESOLVE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE,
     MUTATION_APPOINT_PAGINATION,
     MUTATION_LAUNCH_PROGRASS_BAR,
-    MUTATION_APPOINT_EDITING_ARTICLE, MUTATION_APPOINT_CONTEXT, MUTATION_RESET, MUTATION_RESOLVE_DRAFT
+    MUTATION_APPOINT_EDITING_ARTICLE,
+    MUTATION_APPOINT_CONTEXT,
+    MUTATION_RESET,
+    MUTATION_RESOLVE_DRAFT,
+    MUTATION_RECORD_ARTICLE_JUST_DELETED, MUTATION_RESET_PAGINATION, MUTATION_TRIGGER_SHOW_MODAL
 } from "../../mutation_types";
 import {
     ACTION_GET_ARTICLE_DATA,
@@ -24,7 +28,11 @@ import {
     ACTION_GET_ARTICLE_LIST_BY_CLASSIFICATION,
     ACTION_GET_ARTICLE_LIST_OF_HOME_BY_KEYWORD,
     ACTION_GET_ARTICLE_LIST_OF_HOME_BY_FILING,
-    ACTION_GET_ARTICLE_LIST_OF_HOME_BY_LABEL, ACTION_SAVE_ARTICLE, ACTION_GET_DRAFT, ACTION_APPOINT_EDITING_ARTICLE
+    ACTION_GET_ARTICLE_LIST_OF_HOME_BY_LABEL,
+    ACTION_SAVE_ARTICLE,
+    ACTION_GET_DRAFT,
+    ACTION_APPOINT_EDITING_ARTICLE,
+    ACTION_DELETE_ARTICLE
 } from "../../action_types";
 import {AXIOS_SOURCE_REQUEST_ARTICLE} from "../source_types";
 import {throttleByDelay} from "../../../../exJs/throttle";
@@ -578,15 +586,17 @@ export default {
 
             if(payload.article_type === 'article'){
                 const payload_ = {
-                    id: 'articleEdit_saveArticle',
+                    id: 'articleEdit_savingArticle',
                     loading: true
                 }
                 context.commit(MUTATION_TRIGGER_IS_LOADING,payload_)
+
+                context.commit(MUTATION_LAUNCH_PROGRASS_BAR)
             }
 
             if(payload.article_type === 'draft'){
                 const payload__ = {
-                    id: 'articleEdit_saveDraft',
+                    id: 'articleEdit_savingDraft',
                     loading: true
                 }
                 context.commit(MUTATION_TRIGGER_IS_LOADING,payload__)
@@ -614,13 +624,6 @@ export default {
 
             if(payload.article_type === 'article'){
 
-                //trigger loading
-                const payload____ = {
-                    id: 'articleEdit_saveArticle',
-                    loading: false
-                }
-                context.commit(MUTATION_TRIGGER_IS_LOADING,payload____)
-
                 //重置home
                 const payload_____ = {
                     id:'home'
@@ -629,31 +632,33 @@ export default {
                 context.dispatch(ACTION_GET_ARTICLE_LIST_DATA)
 
                 //通知窗口提示提交成功
-                const payload______ = {
+                const payload_______ = {
                     show: true,
                     noticeContent: '提交文章成功，即将跳转。'
                 }
-                context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload______)
+                context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload_______)
+
+                context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
 
             }
 
             if(payload.article_type === 'draft'){
-                const payload_______ = {
-                    id: 'articleEdit_saveDraft',
+                const payload________ = {
+                    id: 'articleEdit_savingDraft',
                     loading: false
                 }
-                context.commit(MUTATION_TRIGGER_IS_LOADING,payload_______)
+                context.commit(MUTATION_TRIGGER_IS_LOADING,payload________)
             }
 
         }catch (err) {
             console.log(err)
 
-            const payload________ = {
+            const payload_________ = {
                 show:true,
                 noticeContent: 'ACTION_SAVE_ARTICLE ERR: ' + (err.response ? err.response.data: err)
             }
 
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload________)
+            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload_________)
         }
 
     },
@@ -661,6 +666,8 @@ export default {
     async [ACTION_GET_DRAFT](context,payload) {
 
         try{
+
+            context.commit(MUTATION_LAUNCH_PROGRASS_BAR)
 
             const payload_ = {
                 id: 'articleEditPage',
@@ -677,6 +684,8 @@ export default {
                 loading: false
             }
             context.commit(MUTATION_TRIGGER_IS_LOADING,payload__)
+
+            context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
 
         }catch (err) {
 
@@ -702,6 +711,10 @@ export default {
 
             context.commit(MUTATION_APPOINT_EDITING_ARTICLE,payload)
 
+            if(payload.key === 'title' && payload.value === context.rootState.articleEdit.titleCache) {
+                return
+            }
+
             throttleByDelay(() => {
                 const payload_ = {
                     article_type: 'draft',
@@ -715,6 +728,45 @@ export default {
 
         }catch (err) {
 
+            console.log(err)
+
+            const payload___ = {
+                show:true,
+                noticeContent: 'ACTION_APPOINT_EDITING_ARTICLE ERR: ' + (err.response ? err.response.data : err)
+            }
+            context.commit(payload___)
+        }
+
+    },
+
+    async [ACTION_DELETE_ARTICLE](context,payload) {
+
+        try{
+
+            await ArticleRequest.RequestDeleteArticle(payload.article_id)
+
+            context.commit(MUTATION_RECORD_ARTICLE_JUST_DELETED,payload.article_id)
+
+            setTimeout(() => {
+                context.commit(MUTATION_RESET_PAGINATION,'managePage')
+            },1000)
+
+        }catch (err) {
+
+            const payload__ = {
+                show: false
+            }
+
+            context.commit(MUTATION_TRIGGER_SHOW_MODAL,payload__)
+
+            console.log(err)
+
+            const payload___ = {
+                show: true,
+                noticeContent: 'DELETE ARTICLE FAIL: ' + (err.response ? err.response.data : err)
+            }
+
+            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload___)
         }
 
     }

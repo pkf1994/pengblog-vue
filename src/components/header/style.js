@@ -28,7 +28,7 @@ export const Item = styled('div',{disabled:Boolean})`
         display: flex;
         align-items: center;
         margin-left: 1rem;
-        color: ${store.state.meta.metaGray};
+        color: ${props => props.disabled ? '#F7F7F7' :store.state.meta.metaGray};
         ${props => props.disabled ? '' : `
             cursor: pointer;
             &:hover{
@@ -64,3 +64,8 @@ export const ArticleEditInfo = styled(Title)`
         font-weight: normal;
     `
 
+export const SavingArticle = styled.div`
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    `

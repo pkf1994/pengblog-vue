@@ -96,3 +96,20 @@ export const RequestDraftData = () => {
     }
     return axios.get(Api.API_GET_DRAFT,config)
 }
+
+export const RequestDeleteArticle = (payload) => {
+
+    let token = getToken()
+
+    let config = {
+        params: {
+            article_id: payload
+        },
+        headers: {
+            Authorization: token
+        }
+    }
+
+    return axios.get(Api.API_DELETE_ARTICLE, config)
+}
+

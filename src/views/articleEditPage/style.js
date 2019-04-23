@@ -58,3 +58,13 @@ export const Cover = styled.div`
 export const ArticleEditorWrapper = styled.div`
         margin-bottom: 10rem;
     `
+
+export const LoadingWrapper = styled.div`
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        background: white;
+        opacity: 0.5;
+    `
