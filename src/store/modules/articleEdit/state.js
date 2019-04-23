@@ -1,8 +1,14 @@
 export default {
     id: undefined,
-    titleImageUrl: undefined,
+    titleImageEditor: {
+        loading: false,
+        titleImageUrl: undefined
+    },
     title: undefined,
     label: undefined,
     author: undefined,
-    content: undefined
+    content: undefined,
+    resolveDraftFlag: false,
+    draftCache: {},
+    savingDraft: false
 }

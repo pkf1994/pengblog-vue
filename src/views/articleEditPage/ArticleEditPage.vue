@@ -76,9 +76,10 @@
         ArticleEditorWrapper} from './style'
     import {TitleImageEditor,Input,ArticleEditor} from '@/components'
     import {MUTATION_APPOINT_EDITING_ARTICLE} from "../../store/modules/mutation_types";
-    import {mapMutations, mapState} from "vuex";
+    import {mapActions, mapMutations, mapState} from "vuex";
     import {AutoTextarea} from "../../exJs/autoTextarea";
     import {AutoInput} from "../../exJs/autoInput";
+    import {ACTION_APPOINT_EDITING_ARTICLE, ACTION_GET_DRAFT} from "../../store/modules/action_types";
 
     export default {
         mounted() {
@@ -90,19 +91,23 @@
                 title: state => state.articleEdit.title,
                 label: state => state.articleEdit.label,
                 author: state => state.articleEdit.author,
-                lengthOfTitle: state => state.articleEdit.title.length
+                lengthOfTitle: state => state.articleEdit.title ? state.articleEdit.title.length : 0
             })
         },
+        created() {
+            this.initData()
+        },
         methods: {
-            ...mapMutations({
-               mutation_appointEditingArticle: MUTATION_APPOINT_EDITING_ARTICLE
+            ...mapActions({
+                action_getDraft: ACTION_GET_DRAFT,
+                action_appointEditingArticle: ACTION_APPOINT_EDITING_ARTICLE
             }),
             appointEditingArticle(key,value) {
                 const payload = {
                     key: key,
                     value: value
                 }
-                this.mutation_appointEditingArticle(payload)
+                this.action_appointEditingArticle(payload)
             },
             keydownHandler(event) {
                 if(event.keyCode === 13){
@@ -122,6 +127,9 @@
                 let authorInput = document.getElementById('authorInput')
                 AutoInput(labelInput,22)
                 AutoInput(authorInput,22)
+            },
+            initData() {
+                this.action_getDraft()
             }
         },
         components: {

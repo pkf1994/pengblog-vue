@@ -39,3 +39,7 @@ export const ACTION_GET_ARTICLE_LIST_OF_HOME_BY_LABEL = 'action_getArticleListOf
 export const ACTION_UPLOAD_IMAGE = 'action_uploadImage'
 
 export const ACTION_SAVE_ARTICLE = 'action_saveArticle'
+
+export const ACTION_GET_DRAFT = 'action_getDraft'
+
+export const ACTION_APPOINT_EDITING_ARTICLE = 'action_appointEditingArticle'

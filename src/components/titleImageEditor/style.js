@@ -68,3 +68,13 @@ export const DeleteBtn = styled.div`
         align-items: center;
         cursor: pointer;
     `
+
+export const loadingWrapper = styled.div`
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        background: white;
+        opacity: 0.5;
+    `

@@ -85,3 +85,14 @@ export const SaveArticle = (payload) => {
 
     return axios.post(Api.API_SAVE_ARTICLE,payload,config)
 }
+
+export const RequestDraftData = () => {
+    let token = getToken()
+
+    let config = {
+        headers:{
+            Authorization: token
+        }
+    }
+    return axios.get(Api.API_GET_DRAFT,config)
+}

@@ -5,6 +5,7 @@
             <Logo v-on:click.native="() => goTo('/')"/>
             <GapLineVertical/>
             <Title>索引</Title>
+
         </Inner>
 
     </HeaderWrapper>

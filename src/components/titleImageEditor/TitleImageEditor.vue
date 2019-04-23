@@ -6,16 +6,20 @@
                        type="file" accept=".jpeg, .jpg, .png"/>
 
             <ButtonIcon>
-                <i class="fa fa-camera fa-2x" />
+                <i v-if="!loading" class="fa fa-camera fa-2x" />
             </ButtonIcon>
         </Label>
 
         <TitleImageFrame :src="titleImageUrl"
                          ref="titleImageFrame"/>
 
-        <DeleteBtn title="删除" v-if="titleImageUrl !== ''" v-on:click="deleteTitleImage">
+        <DeleteBtn title="删除" v-if="titleImageUrl!==undefined" v-on:click="deleteTitleImage">
             <span class="iconfont" :style="{fontSize:'1.4rem'}">&#xe60c;</span>
         </DeleteBtn>
+
+        <loadingWrapper v-if="loading">
+            <Loading/>
+        </loadingWrapper>
     </TitleImageEditorWrapper>
 </template>
 
@@ -26,9 +30,11 @@
         FileInput,
         ButtonIcon,
         TitleImageFrame,
-        DeleteBtn} from "./style";
+        DeleteBtn,
+        loadingWrapper} from "./style";
+    import {Loading} from '@/components'
     import {mapActions, mapMutations, mapState} from "vuex";
-    import {ACTION_UPLOAD_IMAGE} from "../../store/modules/action_types";
+    import {ACTION_APPOINT_EDITING_ARTICLE, ACTION_UPLOAD_IMAGE} from "../../store/modules/action_types";
     import {MUTATION_APPOINT_EDITING_ARTICLE} from "../../store/modules/mutation_types";
 
     export default {
@@ -39,7 +45,8 @@
         },
         computed: {
             ...mapState({
-                titleImageUrl: state => state.articleEdit.titleImageUrl
+                titleImageUrl: state => state.articleEdit.titleImageEditor.titleImageUrl,
+                loading: state => state.articleEdit.titleImageEditor.loading
             })
         },
         mounted() {
@@ -54,13 +61,15 @@
         },
         methods: {
             ...mapActions({
-                action_uploadImage: ACTION_UPLOAD_IMAGE
-            }),
-            ...mapMutations({
-               mutation_appointEditingArticle: MUTATION_APPOINT_EDITING_ARTICLE
+                action_uploadImage: ACTION_UPLOAD_IMAGE,
+                action_appointEditingArticle: ACTION_APPOINT_EDITING_ARTICLE
             }),
             async changeHandler(event){
-                await this.action_uploadImage(event.target.files[0])
+                const payload = {
+                    id: 'titleImageEditor',
+                    img: event.target.files[0]
+                }
+                await this.action_uploadImage(payload)
                 const _this = this
                 setTimeout(() => {
                     _this.recordHeightOfTitleImageEdit()
@@ -77,7 +86,7 @@
                     key: 'titleImageUrl',
                     value: undefined
                 }
-                this.mutation_appointEditingArticle(payload)
+                this.action_appointEditingArticle(payload)
             }
         },
         components: {
@@ -86,7 +95,9 @@
             FileInput,
             ButtonIcon,
             TitleImageFrame,
-            DeleteBtn
+            DeleteBtn,
+            loadingWrapper,
+            Loading
         }
     }
 </script>

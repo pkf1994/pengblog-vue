@@ -49,9 +49,15 @@ export const GapLineVertical = styled.div`
 
 export const Title = styled.div`
         font-size: 1.2rem;
+        font-weight: bold;
         display: flex;
         align-items: center;
         margin-left: 1rem;
         color: ${store.state.meta.metaGray};
+    `
+
+export const ArticleEditInfo = styled(Title)`
+        font-size: 1rem;
+        font-weight: normal;
     `
 
