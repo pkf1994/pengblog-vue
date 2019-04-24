@@ -1,5 +1,5 @@
 import {
-    MUTATION_APPEND_COMMENT_JUST_SUBMIT,
+    MUTATION_APPEND_COMMENT_JUST_SUBMIT, MUTATION_RECORD_COMMENT_JUST_DELETE,
     MUTATION_RECORD_CURRENT_ARTICLE_ID,
     MUTATION_RESET_PAGINATION_INDEX_OF_TOP_COMMENT_LIST,
     MUTATION_RESET_STORE,
@@ -30,6 +30,8 @@ export default {
 
         state.countOfAllComment = payload.countOfAllComment
 
+        state.count = payload.count
+
         state.startIndex = state.startIndex + state.pageScale
 
         state.nextPage = state.nextPage + 1
@@ -49,6 +51,7 @@ export default {
         state.maxPage = resetState.maxPage
 
         state.commentList = resetState.commentList
+
     },
 
     [MUTATION_TRIGGER_IS_LOADING](state,payload) {
@@ -71,7 +74,28 @@ export default {
             }
 
         }
-    }
+    },
+
+    [MUTATION_RECORD_COMMENT_JUST_DELETE](state,payload) {
+
+        if(state.commentList.some((item) => {
+            return item.comment_id === payload
+        })){
+            state.count = state.count - 1
+
+            if(Math.ceil(state.count/state.pageScale) < state.maxPage) {
+                state.maxPage = Math.ceil(state.count/state.pageScale)
+            }
+        }
+
+        state.commentList.forEach((item,index) => {
+            if(item.comment_id === payload) {
+                state.commentList.splice(index,1)
+                state.startIndex = state.startIndex - 1
+            }
+        })
+    },
+
 }
 
 const generateArticleContentWithLazyloadImage = (htmlStr,defaultImageSrc) => {

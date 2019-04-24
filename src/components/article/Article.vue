@@ -111,8 +111,8 @@
         refresh() {
         this.refreshIndex = false
         this.$nextTick(() => {
-                               this.refreshIndex = true
-                           })
+           this.refreshIndex = true
+       })
     },
     ...mapActions({
         action_GetArticleData: ACTION_GET_ARTICLE_DATA,

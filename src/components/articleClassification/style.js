@@ -4,7 +4,11 @@ import store from '@/store'
 
 export const ArticleClassificationWrapper = styled.div`
         position: relative;
-        margin: 1rem 2rem;
+        ${store.state.meta.widthOfWindow < store.state.meta.maxMobileWidth ? `
+            margin: 1rem 2rem;
+        ` : `
+            padding: 1rem 2rem;
+        `}
         padding-right: 0;
         border-top: solid 1px ${store.state.meta.metaBorderColor};
         @media(max-width:${store.state.meta.maxMobileWidth}px){

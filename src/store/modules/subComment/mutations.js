@@ -1,6 +1,7 @@
 import {
-    MUTATION_APPEND_COMMENT_JUST_SUBMIT,
-    MUTATION_RESOLVE_SUB_COMMENT_LIST_DATA} from "../mutation_types";
+    MUTATION_APPEND_COMMENT_JUST_SUBMIT, MUTATION_RECORD_COMMENT_JUST_DELETE,
+    MUTATION_RESOLVE_SUB_COMMENT_LIST_DATA
+} from "../mutation_types";
 import {uniqueCommentList} from "../article/mutations";
 
 export default {
@@ -16,7 +17,18 @@ export default {
 
         state.subCommentListMap[payload.comment_referComment].splice(insertIndex + 1, 0, payload.comment)
 
-    }
+    },
 
+    [MUTATION_RECORD_COMMENT_JUST_DELETE](state,payload) {
+
+        for(var key in state.subCommentListMap){
+            state.subCommentListMap[key].forEach((item,index) => {
+                if(item.comment_id === payload) {
+                    state.subCommentListMap[key].splice(index,1)
+                }
+            })
+        }
+
+    }
 
 }

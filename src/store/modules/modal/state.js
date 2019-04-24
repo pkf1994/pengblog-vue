@@ -3,6 +3,7 @@ export default {
     show: false,
     context: 'context',
     postHandler: () => {},
+    cancelHandler: () => {},
     commentEditorVM: undefined,
     commentEditorId: undefined,
     deletingArticleId: undefined

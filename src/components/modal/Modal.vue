@@ -17,6 +17,8 @@
 
                 <DeleteArticleModalItem v-if="context === 'deleteArticle'"/>
 
+                <DeleteArticleListModalItem v-if="context === 'deleteArticleList'"/>
+
                 <CloseButton class="iconfont"
                              :loading="loading"
                              v-on:click="close">&#xe70b;</CloseButton>
@@ -35,7 +37,8 @@
     import {ShareToWechatModalItem,
             CaptchaModalItem,
             ContactMeModalItem,
-            DeleteArticleModalItem} from './modalItems'
+            DeleteArticleModalItem,
+            DeleteArticleListModalItem} from './modalItems'
     import {mapMutations, mapState} from "vuex";
     import {MUTATION_TRIGGER_SHOW_MODAL} from "../../store/modules/mutation_types";
 
@@ -68,7 +71,8 @@
             ShareToWechatModalItem,
             CaptchaModalItem,
             ContactMeModalItem,
-            DeleteArticleModalItem
+            DeleteArticleModalItem,
+            DeleteArticleListModalItem
         }
     }
 </script>

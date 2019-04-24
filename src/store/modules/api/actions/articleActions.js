@@ -32,7 +32,7 @@ import {
     ACTION_SAVE_ARTICLE,
     ACTION_GET_DRAFT,
     ACTION_APPOINT_EDITING_ARTICLE,
-    ACTION_DELETE_ARTICLE
+    ACTION_DELETE_ARTICLE, ACTION_DELETE_ARTICLE_LIST
 } from "../../action_types";
 import {AXIOS_SOURCE_REQUEST_ARTICLE} from "../source_types";
 import {throttleByDelay} from "../../../../exJs/throttle";
@@ -769,7 +769,42 @@ export default {
             context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload___)
         }
 
+    },
+
+    async [ACTION_DELETE_ARTICLE_LIST](context) {
+
+        try{
+
+            const payload = context.rootState.manage.articleListSelected
+
+            await ArticleRequest.RequestDeleteArticleList(payload)
+
+            payload.forEach((item) => {
+                context.commit(MUTATION_RECORD_ARTICLE_JUST_DELETED,item)
+            })
+
+            setTimeout(() => {
+                context.commit(MUTATION_RESET_PAGINATION,'managePage')
+            },1000)
+        }catch (err) {
+
+            const payload___ = {
+                show: false
+            }
+
+            context.commit(MUTATION_TRIGGER_SHOW_MODAL,payload___)
+
+            console.log(err)
+
+            const payload____ = {
+                show: true,
+                noticeContent: 'DELETE ARTICLE FAIL: ' + (err.response ? err.response.data : err)
+            }
+
+            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload____)
+        }
     }
+
 }
 
 

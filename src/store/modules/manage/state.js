@@ -1,6 +1,8 @@
 export default {
     articleList: [],
     articleListDeleted: [],
+    articleListSelected: [],
+    multiSelecting: false,
     pageScale: 6,
     loading: false,
     context: 'common',

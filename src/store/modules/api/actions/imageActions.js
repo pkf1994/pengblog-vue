@@ -46,19 +46,7 @@ export default {
            context(MUTATION_TRIGGER_SHOW_NOTICE,payload___)
        }
 
-   },
-
-    async [ACTION_DELETE_COMMENT](context,payload) {
-
-       try{
-
-
-
-       }catch (err) {
-
-       }
-
-    }
+   }
 
 }
 

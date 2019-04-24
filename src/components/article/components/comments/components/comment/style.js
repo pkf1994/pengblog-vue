@@ -119,6 +119,16 @@ export const ReplyButton = styled.span`
         }
     `
 
+export const DeleteButton = styled.span`
+    `
+
+export const DeleteButtonIcon = styled.i`
+        cursor: pointer;
+        &:hover{
+            color: black
+        }
+    `
+
 export const ForMoreWrapper = styled.div`
         border-top: solid 1px ${store.state.meta.metaBorderColor};
         margin: 0 1rem;
@@ -131,4 +141,14 @@ export const SubCommentEditorFixer = styled('div',{height: String,isBeenRefering
         transition: all .4s ease;
         overflow: hidden;
         height: ${props => props.isBeenRefering ? props.height : '0px'};
+    `
+
+export const loadingWrapper = styled.div`
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        background: #F7F7F7;
+        opacity: 0.5;
     `

@@ -2,11 +2,11 @@
     <CheckBoxWrapper>
 
         <CheckBoxButton v-if="selected"
-                        v-on:click="() => selecter(false)"
+                        v-on:click="cancelHandler"
                         class="fa fa-check-square-o" />
 
         <CheckBoxButton v-if="!selected"
-                        v-on:click="() => selecter(true)"
+                        v-on:click="selectHandler"
                         class="fa fa-square-o"/>
 
     </CheckBoxWrapper>
@@ -18,11 +18,16 @@
     export default {
         props: {
             selected: Boolean,
-            selecter: Function
+            selectHandler: Function,
+            cancelHandler: Function
+        },
+        methods: {
+
         },
         components: {
             CheckBoxWrapper,CheckBoxButton
-        }
+        },
+
     }
 </script>
 

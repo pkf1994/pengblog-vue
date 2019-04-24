@@ -63,3 +63,10 @@ export const MUTATION_RESET = 'mutation_reset'
 export const MUTATION_RESOLVE_DRAFT = 'mutation_resolveDraft'
 
 export const MUTATION_RECORD_ARTICLE_JUST_DELETED = 'mutation_recordArticleJustDeleted'
+
+export const MUTATION_APPOINT_ARTICLE_LIST_SELECTED  = 'mutation_appointArticleListSelected'
+
+export const MUTATION_TRIGGER_MULTI_SELECTING = 'mutation_triggerMultiSelecting'
+
+export const MUTATION_RECORD_COMMENT_JUST_DELETE = 'mutation_recordCommentJustDelete'
+

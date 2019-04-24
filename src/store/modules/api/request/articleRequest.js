@@ -113,3 +113,21 @@ export const RequestDeleteArticle = (payload) => {
     return axios.get(Api.API_DELETE_ARTICLE, config)
 }
 
+export const RequestDeleteArticleList = (payload) => {
+
+    let token = getToken()
+
+    let deleteArticleListData = {
+        articleIdListString: JSON.stringify(payload)
+    }
+
+    let config = {
+        headers: {
+            Authorization: token
+        }
+    }
+
+    return axios.post(Api.API_DELETE_ARTICLE_LIST, deleteArticleListData, config)
+
+}
+

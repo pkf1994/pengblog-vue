@@ -6,7 +6,7 @@ import {
     MUTATION_TRIGGER_IS_LOADING, MUTATION_TRIGGER_SHOW_MODAL,
     MUTATION_TRIGGER_SHOW_NOTICE,
     MUTATION_RESOLVE_SUB_COMMENT_LIST_DATA,
-    MUTATION_RESOLVE_FRESH_COMMENT_LIST_DATA, MUTATION_PUSH_PROGRASS_BAR_TO_END
+    MUTATION_RESOLVE_FRESH_COMMENT_LIST_DATA, MUTATION_PUSH_PROGRASS_BAR_TO_END, MUTATION_RECORD_COMMENT_JUST_DELETE
 } from "../../mutation_types";
 import {
     ACTION_CHECK_CAPTCHA,
@@ -15,7 +15,7 @@ import {
     ACTION_GET_TOP_COMMENT_LIST,
     ACTION_SUBMIT_COMMENT,
     ACTION_TRY_SUBMIT_COMMENT,
-    ACTION_GET_FRESH_COMMENT_LIST
+    ACTION_GET_FRESH_COMMENT_LIST, ACTION_DELETE_COMMENT
 } from "../../action_types";
 
 
@@ -51,7 +51,8 @@ export default {
 
             const payload___ = {
                 commentList: res.data.commentList,
-                countOfAllComment: res.data.countOfComment,
+                count: res.data.count,
+                countOfAllComment: res.data.countOfAllComment,
                 maxPage: res.data.maxPage
             }
 
@@ -128,6 +129,7 @@ export default {
     async [ACTION_TRY_SUBMIT_COMMENT](context, payload) {
 
         context.dispatch(ACTION_CHECK_WHETHER_NEED_CAPTCHA_TO_SUBMIT_COMMENT,payload)
+
     },
 
     //查看提交评论时是否需要验证
@@ -153,11 +155,31 @@ export default {
 
 
                         try{
+
+                            //打开modal的loading状态
+                            const payload___ = {
+                                id: 'modal',
+                                loading: true
+                            }
+                            context.commit(MUTATION_TRIGGER_IS_LOADING,payload___)
+
                             //进行验证
                             const payload__ = {
                                 captchaHost: 'modal'
                             }
                             await context.dispatch(ACTION_CHECK_CAPTCHA,payload__)
+
+                            const payload____ = {
+                                id: 'modal',
+                                loading: false
+                            }
+                            context.commit(MUTATION_TRIGGER_IS_LOADING,payload____)
+
+                            //关闭modal
+                            const payload_____ = {
+                                show: false
+                            }
+                            context.commit(MUTATION_TRIGGER_SHOW_MODAL,payload_____)
 
                         }catch(err) {
                             console.log(err)
@@ -171,13 +193,6 @@ export default {
                             }
                             return
                         }
-
-                        //验证通过，打开modal的loading状态
-                        const payload___ = {
-                            id: 'modal',
-                            loading: true
-                        }
-                        context.commit(MUTATION_TRIGGER_IS_LOADING,payload___)
 
                         const payload____ = {
                             commentEditorId: payload.commentEditorId
@@ -237,19 +252,6 @@ export default {
         }
 
         const res = await CommentRequest.RequestSubmitComment(payload_)
-
-        //关闭modal
-        const payload__ = {
-            show: false
-        }
-        context.commit(MUTATION_TRIGGER_SHOW_MODAL,payload__)
-
-
-        const payload___ = {
-            id: 'modal',
-            loading: false
-        }
-        context.commit(MUTATION_TRIGGER_IS_LOADING,payload___)
 
         const commentJustSubmit = constructComment(payload_,res.data.commentIdJustSubmit)
 
@@ -316,8 +318,29 @@ export default {
             context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload__)
 
         }
+    },
+
+    async [ACTION_DELETE_COMMENT](context,payload) {
 
 
+        try{
+
+            await CommentRequest.RequestDeleteComment(payload)
+
+            context.commit(MUTATION_RECORD_COMMENT_JUST_DELETE,payload)
+
+        }catch (err) {
+
+            console.log(err)
+
+            const payload_ = {
+                show:true,
+                noticeContent: 'ACTION_DELETE_COMMENT ERR: ' + (err.response ? err.response.data : err)
+            }
+
+            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload_)
+
+        }
 
     }
 

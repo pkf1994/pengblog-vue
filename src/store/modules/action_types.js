@@ -47,3 +47,6 @@ export const ACTION_APPOINT_EDITING_ARTICLE = 'action_appointEditingArticle'
 export const ACTION_DELETE_COMMENT = 'action_deleteComment'
 
 export const ACTION_DELETE_ARTICLE = 'action_deleteArticle'
+
+export const ACTION_DELETE_ARTICLE_LIST = 'action_deleteArticleList'
+

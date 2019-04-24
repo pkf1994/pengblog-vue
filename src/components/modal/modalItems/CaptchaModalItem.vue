@@ -51,7 +51,8 @@
                 captchaValue: state => state.captcha.modal.captchaValue,
                 commentEditorVM: state => state.modal.commentEditorVM,
                 commentEditorId: state => state.modal.commentEditorId,
-                postHandler: state => state.modal.postHandler
+                postHandler: state => state.modal.postHandler,
+                cancelHandler: state => state.modal.cancelHandler
             })
         },
         methods: {
@@ -83,6 +84,8 @@
                     show: false
                 }
                 this.mutation_triggerShowModal(payload)
+
+               this.cancelHandler()
             },
             ...mapMutations({
                 mutation_triggerShowModal: MUTATION_TRIGGER_SHOW_MODAL,

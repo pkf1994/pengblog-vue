@@ -2,7 +2,7 @@
     <InputWrapper>
 
         <input  :id="elId"
-                :class="[ex ? 'input-ex' : 'input', {isFocus: isFocus},{focusActive:!disableFocusStyle}]"
+                :class="[ex ? 'input-ex' : 'input', {isFocus: isFocus},{focusActive:(!disableFocusStyle && !ex)}]"
                 :type="type"
                 :placeholder="placeholder"
                 :value="value"
@@ -64,10 +64,7 @@
                 type: String,
                 default: '1rem'
             },
-            backgroundColor: {
-                type: String,
-                default: '#F7F7F7'
-            },
+            backgroundColor: String,
             ex: false,
         },
 
@@ -77,7 +74,7 @@
                     borderColor: this.showWarn ? 'red' : (this.borderColor ? this.borderColor :this.metaBorderColor),
                     padding: this.widthOfWidth < this.maxMobileWidth ? '0.8rem' : '0.5rem',
                     fontSize: this.fontSize,
-                    background: this.backgroundColor,
+                    background: this.backgroundColor ? this.backgroundColor : (this.ex ? 'white' : '#F7F7F7'),
                     color: this.fontColor
                 }
             },
@@ -189,6 +186,7 @@
     }
 
     .input::placeholder{
+        opacity: 0.4;
         transition: all .4s ease;
     }
 

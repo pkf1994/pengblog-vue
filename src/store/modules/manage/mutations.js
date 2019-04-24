@@ -1,5 +1,5 @@
 import {
-    MUTATION_APPOINT_CONTEXT,
+    MUTATION_APPOINT_CONTEXT, MUTATION_APPOINT_ARTICLE_LIST_SELECTED,
     MUTATION_APPOINT_SELECT_DATA,
     MUTATION_APPOINT_SELECTED_LABEL, MUTATION_RECORD_ARTICLE_JUST_DELETED,
     MUTATION_RESET_CENTRAL_CONTROLLER,
@@ -7,7 +7,7 @@ import {
     MUTATION_RESOLVE_ARTICLE_FILING_DATA,
     MUTATION_RESOLVE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE,
     MUTATION_RESOLVE_FRESH_COMMENT_LIST_DATA,
-    MUTATION_TRIGGER_IS_LOADING
+    MUTATION_TRIGGER_IS_LOADING, MUTATION_TRIGGER_MULTI_SELECTING
 } from "../mutation_types";
 
 export default {
@@ -82,6 +82,22 @@ export default {
 
     [MUTATION_RECORD_ARTICLE_JUST_DELETED](state,payload) {
         state.articleListDeleted.push(payload)
+    },
+
+    [MUTATION_APPOINT_ARTICLE_LIST_SELECTED](state,payload) {
+        if(payload.select) {
+            state.articleListSelected.push(payload.article_id)
+        }
+        if(!payload.select) {
+            const index = state.articleListSelected.indexOf(payload.article_id)
+            if(index > -1) {
+                state.articleListSelected.splice(index,1)
+            }
+        }
+    },
+
+    [MUTATION_TRIGGER_MULTI_SELECTING](state,payload) {
+        state.multiSelecting = payload
     }
 }
 

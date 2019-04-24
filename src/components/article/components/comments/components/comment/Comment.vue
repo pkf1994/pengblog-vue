@@ -51,6 +51,12 @@
                     <i class="fa fa-chevron-up"/>
                 </ReplyButton>
 
+                <DeleteButton>
+                    &nbsp;|&nbsp;
+                    <DeleteButtonIcon v-on:click="deleteComment"
+                                      class="fa fa-trash-o"/>
+                </DeleteButton>
+
             </OperationRow>
 
             <SubCommentEditorFixer :height="heightOfSubCommentEdior"
@@ -78,6 +84,10 @@
 
         </MultiContent>
 
+        <loadingWrapper v-if="loading">
+            <Loading/>
+        </loadingWrapper>
+
     </CommentWrapper>
 </template>
 
@@ -89,7 +99,8 @@
             AvatarWrapper,
             Avatar,
             Name,
-            Gap,GapH,
+            Gap,
+            GapH,
             MultiContent,
             ContentWrapper,
             Content,
@@ -98,13 +109,17 @@
             Platform,
             ReleaseTime,
             ReplyButton,
+            DeleteButton,
+            DeleteButtonIcon,
             ForMoreWrapper,
-            SubCommentEditorFixer} from './style'
+            SubCommentEditorFixer,
+            loadingWrapper} from './style'
+    import Loading from '../../../../../loading/Loading.vue'
     import {mapActions, mapMutations, mapState} from "vuex";
     import SubCommentEditor from '../subCommentEditor/SubCommentEditor'
     import SubComment from '../subComment/SubComment.vue'
     import ForMore from '../../../../../forMore/ForMore.vue'
-    import {ACTION_GET_SUB_COMMENT_LIST} from "../../../../../../store/modules/action_types";
+    import {ACTION_DELETE_COMMENT, ACTION_GET_SUB_COMMENT_LIST} from "../../../../../../store/modules/action_types";
     import {MUTATION_APPOINT_REFERING_COMMENT} from "../../../../../../store/modules/mutation_types";
     export default {
 
@@ -123,7 +138,8 @@
                 startIndex: 0,
                 nextPage: 1,
                 maxPage: 1,
-                heightOfSubCommentEdior: '0px'
+                heightOfSubCommentEdior: '0px',
+                loading: false
             }
         },
 
@@ -160,31 +176,10 @@
             this.recordHeightOfSubCommentEdior()
         },
 
-        components: {
-                CommentWrapper,
-                VisitorInfo,
-                AvatarWrapper,
-                Avatar,
-                Name,
-                Gap,
-                GapH,
-                MultiContent,
-                ContentWrapper,
-                Content,
-                OperationRow,
-                ShowAll,
-                Platform,
-                ReleaseTime,
-                ReplyButton,
-                SubComment,
-                ForMore,
-                ForMoreWrapper,
-                SubCommentEditor,SubCommentEditorFixer
-        },
-
         methods: {
             ...mapActions({
-                action_getSubCommentList: ACTION_GET_SUB_COMMENT_LIST
+                action_getSubCommentList: ACTION_GET_SUB_COMMENT_LIST,
+                action_deleteComment: ACTION_DELETE_COMMENT
             }),
             ...mapMutations({
                 mutation_appointReferingComment: MUTATION_APPOINT_REFERING_COMMENT
@@ -239,8 +234,44 @@
                 }
             },
 
-            colorPicker: GenerateFeatureColor
 
+            deleteComment() {
+
+                this.loading = true
+
+                this.action_deleteComment(this.comment.comment_id)
+
+            },
+
+            colorPicker: GenerateFeatureColor,
+
+        },
+
+        components: {
+            CommentWrapper,
+            VisitorInfo,
+            AvatarWrapper,
+            Avatar,
+            Name,
+            Gap,
+            GapH,
+            MultiContent,
+            ContentWrapper,
+            Content,
+            OperationRow,
+            ShowAll,
+            Platform,
+            ReleaseTime,
+            ReplyButton,
+            DeleteButton,
+            DeleteButtonIcon,
+            SubComment,
+            ForMore,
+            ForMoreWrapper,
+            SubCommentEditor,
+            SubCommentEditorFixer,
+            loadingWrapper,
+            Loading
         }
     }
 </script>

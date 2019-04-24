@@ -74,8 +74,13 @@
     transition: all .4s ease;
 }
 
-.slide-in-enter,.slide-in-leave-to{
+.slide-in-enter{
     transform: translateY(30px);
+    opacity: 0;
+}
+
+.slide-in-leave-to{
+    transform: scale(0.7);
     opacity: 0;
 }
 
