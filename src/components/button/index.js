@@ -6,11 +6,12 @@ const buttonProps = {
     margin: String,
     disabled: Boolean,
     backgroundColor: String,
-    color: String
+    color: String,
+    borderColor: String
 }
 
 export const Button = styled('button',buttonProps)`
-        ${props => props.width ? 'width:' + props.width + ';' : ''}
+        flex-grow: 1;
         font-size: ${props => props.fontSize ? props.fontSize : '1rem'};
         display: inline-block;
         margin: ${props => props.margin ? props.margin : "0"};

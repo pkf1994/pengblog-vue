@@ -1,30 +1,34 @@
 <template>
     <FreshCommentItemWrapper>
 
-    <CommentSubject>
-        <Visitor>{{comment.comment_author.visitor_name}}</Visitor>:&nbsp;
-        <Content>{{comment.comment_content}}</Content>
-    </CommentSubject>
+        <CommentSubject>
+            <Visitor>{{comment.comment_author.visitor_name}}</Visitor>:&nbsp;
+            <Content>{{comment.comment_content}}</Content>
+        </CommentSubject>
 
-    <HostArticle>
-        <HostArticleInner>
-            <Label>[{{comment.comment_hostArticle.article_label}}]</Label>&nbsp;
-            <Title>{{comment.comment_hostArticle.article_title}}</Title>
-        </HostArticleInner>
+        <HostArticle>
+            <HostArticleInner>
+                <Label>[{{comment.comment_hostArticle.article_label}}]</Label>&nbsp;
+                <Title>{{comment.comment_hostArticle.article_title}}</Title>
+            </HostArticleInner>
 
-    </HostArticle>
+        </HostArticle>
 
 
-    <OperationColumn>
+        <OperationColumn>
 
-        <DeleteButton class="fa fa-minus-circle"/>
+            <DeleteButton class="fa fa-minus-circle"
+                          v-on:click="deleteComment"/>
 
-        <LiftedButton>lifted</LiftedButton>&nbsp;&nbsp;
+            <LiftedButton>lifted</LiftedButton>&nbsp;&nbsp;
 
-        <BanButton class="fa fa-ban"/>
+            <BanButton class="fa fa-ban"/>
 
-    </OperationColumn>
+        </OperationColumn>
 
+        <LoadingWrapper v-if="loading">
+            <Loading/>
+        </LoadingWrapper>
 
     </FreshCommentItemWrapper>
 </template>
@@ -42,10 +46,31 @@
         OperationColumn,
         DeleteButton,
         LiftedButton,
-        BanButton} from './style'
+        BanButton,
+        LoadingWrapper} from './style'
+    import {Loading} from '@/components'
+    import {ACTION_DELETE_COMMENT} from "../../../../store/modules/action_types";
+    import {mapActions} from "vuex";
     export default {
+        data() {
+            return {
+                loading: false
+            }
+        },
         props: {
             comment:Object
+        },
+        methods: {
+            ...mapActions({
+                action_deleteComment: ACTION_DELETE_COMMENT
+            }),
+            deleteComment() {
+
+                this.loading = true
+
+                this.action_deleteComment(this.comment.comment_id)
+
+            }
         },
         components: {
             FreshCommentItemWrapper,
@@ -59,7 +84,9 @@
             OperationColumn,
             DeleteButton,
             LiftedButton,
-            BanButton
+            BanButton,
+            LoadingWrapper,
+            Loading
         }
     }
 </script>

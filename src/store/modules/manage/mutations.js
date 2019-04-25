@@ -7,7 +7,7 @@ import {
     MUTATION_RESOLVE_ARTICLE_FILING_DATA,
     MUTATION_RESOLVE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE,
     MUTATION_RESOLVE_FRESH_COMMENT_LIST_DATA,
-    MUTATION_TRIGGER_IS_LOADING, MUTATION_TRIGGER_MULTI_SELECTING
+    MUTATION_TRIGGER_IS_LOADING, MUTATION_TRIGGER_MULTI_SELECTING, MUTATION_RECORD_COMMENT_JUST_DELETE
 } from "../mutation_types";
 
 export default {
@@ -31,6 +31,7 @@ export default {
         state.freshComments.commentList = state.freshComments.commentList.concat(payload.commentList)
         state.freshComments.maxPage = payload.maxPage
         state.freshComments.loading = false
+        state.freshComments.count = payload.count
     },
 
     [MUTATION_TRIGGER_IS_LOADING](state,payload) {
@@ -98,6 +99,35 @@ export default {
 
     [MUTATION_TRIGGER_MULTI_SELECTING](state,payload) {
         state.multiSelecting = payload
+    },
+
+    [MUTATION_RECORD_COMMENT_JUST_DELETE](state,payload) {
+
+        let deleteArray = []
+
+        state.freshComments.commentList.forEach((item) => {
+            if(item.comment_id === payload || (item.comment_referComment && item.comment_referComment.comment_id === payload)) {
+                deleteArray.push(item)
+            }
+        })
+
+        console.log(deleteArray)
+
+        for(let i = 0; i < deleteArray.length; i++) {
+            state.freshComments.commentList.forEach((item,index) => {
+                if(item.comment_id === deleteArray[i].comment_id) {
+                    state.freshComments.commentList.splice(index,1)
+                }
+            })
+        }
+
+        state.freshComments.startIndex = state.freshComments.startIndex - deleteArray.length
+
+        state.freshComments.count = state.freshComments.count - deleteArray.length
+
+        if(Math.ceil(state.freshComments.count/state.freshComments.pageScale) < state.freshComments.maxPage) {
+            state.freshComments.maxPage = Math.ceil(state.freshComments.count/state.freshComments.pageScale)
+        }
     }
 }
 

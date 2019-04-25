@@ -143,7 +143,7 @@ export const SubCommentEditorFixer = styled('div',{height: String,isBeenRefering
         height: ${props => props.isBeenRefering ? props.height : '0px'};
     `
 
-export const loadingWrapper = styled.div`
+export const LoadingWrapper = styled.div`
         position: absolute;
         top: 0;
         bottom: 0;

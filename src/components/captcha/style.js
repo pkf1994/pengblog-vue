@@ -1,7 +1,6 @@
 import styled from 'vue-styled-components'
 
 export const CaptchaWrapper = styled.div`
-        padding: 1rem 2rem;
         display: flex;
         align-items: stretch;
     `

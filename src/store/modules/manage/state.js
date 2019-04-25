@@ -23,6 +23,7 @@ export default {
         nextPage: 1,
         maxPage: 1,
         pageScale: 5,
-        loading: false
+        loading: false,
+        count: 0
     }
 }

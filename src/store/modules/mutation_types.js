@@ -70,3 +70,9 @@ export const MUTATION_TRIGGER_MULTI_SELECTING = 'mutation_triggerMultiSelecting'
 
 export const MUTATION_RECORD_COMMENT_JUST_DELETE = 'mutation_recordCommentJustDelete'
 
+export const MUTATION_APPOINT_LOGIN_MODE = 'mutation_appointLoginMode'
+
+export const MUTATION_COUNTDOWN_SECOND_TO_NEXT_GETTING_SMS = 'mutation_countdownSecondToNextGettingSms'
+
+export const MUTATION_APPOINT_SECOND_TO_NEXT_GETTING_SMS = 'mutation_appointSecondToNextGettingSms'
+

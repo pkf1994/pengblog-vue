@@ -1,13 +1,14 @@
 <template>
     <CaptchaWrapper>
-        <Input :value="captchaStore[captchaHost].captchaValue"
+        <Input :value="captchaValue"
+               :placeholder="placeholder"
                :ex=true
-               :showWarn="captchaStore[captchaHost].showWarn"
-               :warnMsg="captchaStore[captchaHost].warnMsg"
+               :showWarn="showWarn"
+               :warnMsg="warnMsg"
                @focus="focusHandler"
                @input="appointCaptchaValue"/>
 
-        <CaptchaImage @click="refreshCaptchaImage" :captchaImage="captchaStore[captchaHost].captchaImage">
+        <CaptchaImage @click="refreshCaptchaImage" :captchaImage="captchaImage">
             <LoadingWrapper v-if="loading">
                 <i class="fa fa-spinner fa-pulse" />
             </LoadingWrapper>
@@ -26,7 +27,8 @@
     export default {
 
         props: {
-            captchaHost: String
+            captchaHost: String,
+            placeholder: String
         },
 
         data() {
@@ -38,12 +40,25 @@
 
         computed: {
             ...mapState({
-                captchaStore: state => state.captcha,
+                captchaImage(state) {
+                    return state.captcha[this.captchaHost].captchaImage
+                },
+                captchaValue(state) {
+                    return state.captcha[this.captchaHost].captchaValue
+                },
+                showWarn(state) {
+                    return state.captcha[this.captchaHost].showWarn
+                },
+                warnMsg(state) {
+                    return state.captcha[this.captchaHost].warnMsg
+                }
             })
         },
 
         created() {
-            this.init()
+            if(!this.captchaImage) {
+                this.init()
+            }
         },
         beforeDestroy(){
             this.reset()
@@ -62,7 +77,6 @@
                     captchaValue: '',
                     showWarn: false
                 }
-                console.log('reset')
                 this.mutation_appointCaptcha(payload)
             },
             focusHandler() {

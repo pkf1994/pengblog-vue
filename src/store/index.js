@@ -16,7 +16,8 @@ import {articleStore,
         manageStore,
         paginationStore,
         searchBarStore,
-        articleEditStore} from './modules'
+        articleEditStore,
+    loginStore} from './modules'
 
 export default new Vuex.Store ({
     modules: {
@@ -34,7 +35,8 @@ export default new Vuex.Store ({
         manage: manageStore,
         pagination: paginationStore,
         searchBar: searchBarStore,
-        articleEdit: articleEditStore
+        articleEdit: articleEditStore,
+        login: loginStore
     }
 })
 

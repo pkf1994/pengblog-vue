@@ -8,10 +8,12 @@ const Article = () => import('./components/article/Article.vue')
 const Home = () => import('./views/home/Home.vue')
 const CommonHeader = () => import('./components/header/CommonHeader.vue')
 const ManagePageHeader = () => import('./components/header/ManagePageHeader.vue')
+const LoginPageHeader = () => import('./components/header/LoginPageHeader.vue')
 const ArticleEditPageHeader = () => import('./components/header/ArticleEditPageHeader.vue')
 const ArticlePage = () => import('./views/articlePage/ArticlePage.vue')
 const ManagePage = () => import('./views/managePage/ManagePage.vue')
 const ArticleEditPage = () => import('./views/articleEditPage/ArticleEditPage.vue')
+const LoginPage = () => import('./views/loginPage/LoginPage.vue')
 
 
 
@@ -62,6 +64,14 @@ let router =  new Router({
             components: {
                 ArticleEditPage: ArticleEditPage,
                 header: ArticleEditPageHeader
+            }
+        },
+        {
+            path: '/login',
+            name: 'loginPage',
+            components: {
+                LoginPage: LoginPage,
+                header: LoginPageHeader
             }
         }
     ],

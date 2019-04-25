@@ -16,9 +16,9 @@
 
             <router-view name="ArticleEditPage"/>
 
+            <router-view name="LoginPage"/>
+
         </MainArea>
-
-
 
         <Notice/>
         <Modal/>

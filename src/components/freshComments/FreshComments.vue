@@ -5,6 +5,7 @@
 
         <transition-group name="slide-up-fade">
             <FreshCommentItem v-for="comment in commentList"
+                              class="item"
                               :comment=comment
                               :key="comment.comment_id"/>
         </transition-group>
@@ -53,12 +54,26 @@
 
 <style scoped>
 
-    .slide-up-fade-enter-active {
+    .slide-up-fade-enter-active{
         transition: all .4s ease;
     }
 
-    .slide-up-fade-enter, .slide-up-fade-leave-to {
+    .slide-up-fade-leave-active {
+        transition: all .8s ease;
+        position: absolute;
+    }
+
+    .slide-up-fade-enter {
         transform: translateY(50px);
         opacity: 0;
+    }
+
+    .slide-up-fade-leave-to{
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    .item{
+        transition: all .8s;
     }
 </style>

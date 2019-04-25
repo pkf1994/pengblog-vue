@@ -165,6 +165,7 @@
     .input-ex{
         font-size: 1rem;
         width: 100%;
+        box-sizing: border-box;
         position: relative;
         background: none;
         outline: none;

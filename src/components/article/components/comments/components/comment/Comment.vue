@@ -84,9 +84,9 @@
 
         </MultiContent>
 
-        <loadingWrapper v-if="loading">
+        <LoadingWrapper v-if="loading">
             <Loading/>
-        </loadingWrapper>
+        </LoadingWrapper>
 
     </CommentWrapper>
 </template>
@@ -113,7 +113,7 @@
             DeleteButtonIcon,
             ForMoreWrapper,
             SubCommentEditorFixer,
-            loadingWrapper} from './style'
+            LoadingWrapper} from './style'
     import Loading from '../../../../../loading/Loading.vue'
     import {mapActions, mapMutations, mapState} from "vuex";
     import SubCommentEditor from '../subCommentEditor/SubCommentEditor'
@@ -270,7 +270,7 @@
             ForMoreWrapper,
             SubCommentEditor,
             SubCommentEditorFixer,
-            loadingWrapper,
+            LoadingWrapper,
             Loading
         }
     }

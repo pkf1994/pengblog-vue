@@ -19,6 +19,8 @@ import ArticleIndexItem from './articleIndexItem/ArticleIndexItem.vue'
 import Pagination from './pagination/Pagination.vue'
 import TitleImageEditor from './titleImageEditor/TitleImageEditor.vue'
 import ArticleEditor from './articleEditor/ArticleEditor.vue'
+import Loginer from './loginer/Loginer.vue'
+import DynamicLoginer from './loginer/DynamicLoginer.vue'
 
 export {Loading,
         ForMore,
@@ -40,4 +42,6 @@ export {Loading,
         ArticleIndexItem,
         Pagination,
         TitleImageEditor,
-        ArticleEditor}
+        ArticleEditor,
+    Loginer,
+    DynamicLoginer}

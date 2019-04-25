@@ -13,6 +13,7 @@ import manageStore from './manage'
 import paginationStore from './pagination'
 import searchBarStore from './searchBar'
 import articleEditStore from './articleEdit'
+import loginStore from './login'
 
 export {articleStore,
         apiStore,
@@ -28,4 +29,5 @@ export {articleStore,
         manageStore,
         paginationStore,
         searchBarStore,
-        articleEditStore}
+        articleEditStore,
+    loginStore}
