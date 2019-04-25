@@ -5,7 +5,7 @@
                    placeholder="手机号码"
                    type="text"
                    :value="phoneNumber"
-                   @input="(event) => appointInput('phoneNumber',event.target.value)"/>
+                   @input="(event) => inputHandler('phoneNumber',event.target.value)"/>
         </InputWrapper>
 
         <InputWrapper>
@@ -14,14 +14,14 @@
                    placeholder="动态密码"
                    type="password"
                    :value="dynamicPassword"
-                   @input="(event) => appointInput('dynamicPassword',event.target.value)"/>
+                   @input="(event) => inputHandler('dynamicPassword',event.target.value)"/>
             <GetSmsButtonWrapper>
                 <Button fontSize="0.8rem;"
                         backgroundColor="#EEEEEE"
-                        :disabled="secondToNextGetting > 0"
+                        :disabled="secondToNextGetting > 0 || gettingSms"
                         borderColor="#EEEEEE"
                         @click="tryToGetSms">
-                    {{secondToNextGetting > 0 ? '已发送（' + secondToNextGetting + 's）' : (haveGotSmsOnce ? '再试一次' : '获取动态密码')}}
+                    {{buttonStr}}
                 </Button>
             </GetSmsButtonWrapper>
         </InputWrapper>
@@ -30,7 +30,7 @@
             <ButtonFixer>
                 <Button backgroundColor='#CCFFCC'
                         borderColor='#CCFFCC'
-                        color="#009900">
+                        color="#009900" v-on:click="tryToLoginWithDynamicPassword">
                     <i class='fa fa-sign-in'/>&nbsp;&nbsp;登录&nbsp;&nbsp;
                 </Button>
             </ButtonFixer>
@@ -44,12 +44,13 @@
     import {Button} from '../button'
     import Input from '../input/Input.vue'
     import Captcha from '../captcha/Captcha.vue'
-    import {mapMutations, mapState} from "vuex";
+    import {mapActions, mapMutations, mapState} from "vuex";
     import {
         MUTATION_APPOINT_INPUT,
         MUTATION_APPOINT_SECOND_TO_NEXT_GETTING_SMS,
         MUTATION_COUNTDOWN_SECOND_TO_NEXT_GETTING_SMS
     } from "../../store/modules/mutation_types";
+    import {ACTION_GET_SMS} from "../../store/modules/action_types";
     export default {
         data() {
             return {
@@ -60,9 +61,22 @@
             ...mapState({
                 secondToNextGetting: state => state.login.dynamic.secondToNextGetting,
                 haveGotSmsOnce: state => state.login.dynamic.haveGotSmsOnce,
-                phoneNumber: state => state.login.dynamic.phoneNumber,
-                dynamicPassword: state => state.login.dynamic.dynamicPassword
-            })
+                phoneNumber: state => state.login.dynamic.phoneNumber.value,
+                dynamicPassword: state => state.login.dynamic.dynamicPassword.value,
+                gettingSms: state => state.login.dynamic.loading
+            }),
+            buttonStr() {
+                if(this.gettingSms) {
+                    return 'trying...'
+                }
+                if(this.secondToNextGetting > 0) {
+                    return '已发送（' + this.secondToNextGetting + 's）'
+                }
+                if(this.haveGotSmsOnce) {
+                    return '再试一次'
+                }
+                return '获取动态密码'
+            }
         },
         watch: {
             secondToNextGetting(newOne,oldOne) {
@@ -83,13 +97,22 @@
                 mutation_appointSecondToNextGettingSms: MUTATION_APPOINT_SECOND_TO_NEXT_GETTING_SMS,
                 mutation_appointInput: MUTATION_APPOINT_INPUT
             }),
+            ...mapActions({
+               action_getSms: ACTION_GET_SMS
+            }),
             tryToGetSms() {
-                this.mutation_appointSecondToNextGettingSms(59)
+
+                this.action_getSms()
+
             },
-            appointInput(key,value) {
+            tryToLoginWithDynamicPassword() {
+
+
+            },
+            inputHandler(id,value) {
                 const payload = {
                     loginMode: 'dynamic',
-                    key: key,
+                    id: id,
                     value: value
                 }
                 this.mutation_appointInput(payload)

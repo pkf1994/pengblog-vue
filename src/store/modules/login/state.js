@@ -1,14 +1,33 @@
 export default {
     loginMode: 'common',
+    alreadyLogin: false,
+    loading: false,
+    currentUser: undefined,
     common: {
-        username: undefined,
-        password: undefined
+        username: {
+            value: undefined,
+            showWarn: false,
+            warnMsg: '格式错误'
+        },
+        password: {
+            value: undefined,
+            showWarn: false,
+            warnMsg: '格式错误'
+        }
     },
     dynamic: {
         gettingSms: false,
         secondToNextGetting:  -1,
         haveGotSmsOnce: false,
-        phoneNumber: undefined,
-        dynamicPassword: undefined
+        phoneNumber: {
+            value: undefined,
+            showWarn: false,
+            warnMsg: '格式错误'
+        },
+        dynamicPassword: {
+            value: undefined,
+            showWarn: false,
+            warnMsg: '格式错误'
+        }
     }
 }

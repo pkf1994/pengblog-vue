@@ -29,10 +29,37 @@
   import {Modal,Notice} from './components'
   import styled from 'vue-styled-components'
   import store from '@/store'
+  import {mapMutations} from "vuex";
+  import {MUTATION_RESOLVE_LOGIN_RESULT} from "./store/modules/mutation_types";
   const MainArea = styled.div`
         margin-top: ${store.state.meta.heightOfHeader};
     `
   export default {
+        created() {
+            this.initLoginStatus()
+        },
+        methods: {
+            ...mapMutations({
+                mutation_resolveLoginResult: MUTATION_RESOLVE_LOGIN_RESULT
+            }),
+            initLoginStatus() {
+                if(localStorage.getItem('token') === undefined || localStorage.getItem('token') === null){
+                    return
+                }
+
+                if(localStorage.getItem('token') !== undefined && localStorage.getItem('token') !== null){
+                    let tokenObj = JSON.parse(localStorage.getItem('token'))
+                    let expTime = tokenObj.expTime
+
+                    if(expTime < new Date().getTime()){
+                        return
+                    }
+
+                    this.mutation_resolveLoginResult(tokenObj.username)
+
+                }
+            }
+        },
         components: {
             Modal,Notice,MainArea
         }

@@ -1,12 +1,17 @@
 import {CommentRequest} from '../request'
 import {
     MUTATION_APPEND_COMMENT_JUST_SUBMIT,
-    MUTATION_APPOINT_CAPTCHA, MUTATION_APPOINT_REFERING_COMMENT,
+    MUTATION_APPOINT_CAPTCHA,
+    MUTATION_APPOINT_REFERING_COMMENT,
     MUTATION_RESOLVE_TOP_COMMENT_LIST,
-    MUTATION_TRIGGER_IS_LOADING, MUTATION_TRIGGER_SHOW_MODAL,
+    MUTATION_TRIGGER_IS_LOADING,
+    MUTATION_TRIGGER_SHOW_MODAL,
     MUTATION_TRIGGER_SHOW_NOTICE,
     MUTATION_RESOLVE_SUB_COMMENT_LIST_DATA,
-    MUTATION_RESOLVE_FRESH_COMMENT_LIST_DATA, MUTATION_PUSH_PROGRASS_BAR_TO_END, MUTATION_RECORD_COMMENT_JUST_DELETE
+    MUTATION_RESOLVE_FRESH_COMMENT_LIST_DATA,
+    MUTATION_PUSH_PROGRASS_BAR_TO_END,
+    MUTATION_RECORD_COMMENT_JUST_DELETE,
+    MUTATION_RESET
 } from "../../mutation_types";
 import {
     ACTION_CHECK_CAPTCHA,
@@ -153,68 +158,83 @@ export default {
                 postHandler: async () => {
                     try{
 
+                        //打开modal的loading状态
+                        const payload__ = {
+                            id: 'modal',
+                            loading: true
+                        }
+                        context.commit(MUTATION_TRIGGER_IS_LOADING,payload__)
 
-                        try{
+                        //进行验证
+                        try {
 
-                            //打开modal的loading状态
                             const payload___ = {
-                                id: 'modal',
-                                loading: true
-                            }
-                            context.commit(MUTATION_TRIGGER_IS_LOADING,payload___)
-
-                            //进行验证
-                            const payload__ = {
                                 captchaHost: 'modal'
                             }
-                            await context.dispatch(ACTION_CHECK_CAPTCHA,payload__)
+                            await context.dispatch(ACTION_CHECK_CAPTCHA,payload___)
 
+                        }catch (err) {
+
+                            //打开modal的loading状态
                             const payload____ = {
                                 id: 'modal',
                                 loading: false
                             }
                             context.commit(MUTATION_TRIGGER_IS_LOADING,payload____)
 
-                            //关闭modal
-                            const payload_____ = {
-                                show: false
-                            }
-                            context.commit(MUTATION_TRIGGER_SHOW_MODAL,payload_____)
-
-                        }catch(err) {
-                            console.log(err)
-                            if(err.response){
-                                const payload = {
-                                    captchaHost: 'modal',
-                                    showWarn: true,
-                                    warnMsg: err.response.data
-                                }
-                                context.commit(MUTATION_APPOINT_CAPTCHA,payload)
-                            }
+                            //发生异常则中止
                             return
+
                         }
 
-                        const payload____ = {
+
+                        const payload_____ = {
+                            id: 'modal',
+                            loading: false
+                        }
+                        context.commit(MUTATION_TRIGGER_IS_LOADING,payload_____)
+
+                        //关闭modal
+                        const payload______ = {
+                            show: false
+                        }
+                        context.commit(MUTATION_TRIGGER_SHOW_MODAL,payload______)
+
+                        const payload_______ = {
                             commentEditorId: payload.commentEditorId
                         }
 
-                        await context.dispatch(ACTION_SUBMIT_COMMENT,payload____)
+                        await context.dispatch(ACTION_SUBMIT_COMMENT,payload_______)
 
+                        //重置editor
+                        const payload________ = {
+                            id: payload.commentEditorId
+                        }
+                        context.commit(MUTATION_RESET,payload________)
+
+                        //重置captcha
+                        const payload_________ = {
+                            id: 'captcha',
+                            captchaHost: payload.captchaHost
+                        }
+                        context.commit(MUTATION_RESET,payload_________)
                     }catch (err) {
+
                         console.log(err)
 
-                        const payload = {
+                        const payload__________ = {
                             show: true,
                             noticeContent: err.response ? err.response.data : err
                         }
 
-                        context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload)
+                        context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload__________)
 
                         //关闭modal
-                        const payload__ = {
+                        const payload___________ = {
                             show: false
                         }
-                        context.commit(MUTATION_TRIGGER_SHOW_MODAL,payload__)
+
+                        context.commit(MUTATION_TRIGGER_SHOW_MODAL,payload___________)
 
                     }
                 }
@@ -250,6 +270,8 @@ export default {
             captchaId: context.rootState.captcha.modal.captchaId,
             captchaCode: context.rootState.captcha.modal.captchaValue,
         }
+
+        console.log(payload_)
 
         const res = await CommentRequest.RequestSubmitComment(payload_)
 

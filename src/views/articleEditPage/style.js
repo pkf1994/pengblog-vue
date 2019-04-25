@@ -66,5 +66,5 @@ export const LoadingWrapper = styled.div`
         right: 0;
         left: 0;
         background: white;
-        opacity: 0.5;
+        opacity: 0.2;
     `

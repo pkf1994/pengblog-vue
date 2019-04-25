@@ -63,7 +63,6 @@
             </MainArea>
 
             <LoadingWrapper v-if="savingArticle">
-                <Loading/>
             </LoadingWrapper>
         </ArticleEditPageWrapper>
 
@@ -80,7 +79,7 @@
         Gap,
         ArticleEditorWrapper,
         LoadingWrapper} from './style'
-    import {TitleImageEditor,Input,ArticleEditor,Loading} from '@/components'
+    import {TitleImageEditor,Input,ArticleEditor} from '@/components'
     import {MUTATION_APPOINT_EDITING_ARTICLE} from "../../store/modules/mutation_types";
     import {mapActions, mapMutations, mapState} from "vuex";
     import {AutoTextarea} from "../../exJs/autoTextarea";
@@ -177,8 +176,7 @@
             Gap,
             ArticleEditor,
             ArticleEditorWrapper,
-            LoadingWrapper,
-            Loading
+            LoadingWrapper
         }
     }
 </script>

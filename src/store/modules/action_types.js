@@ -50,3 +50,10 @@ export const ACTION_DELETE_ARTICLE = 'action_deleteArticle'
 
 export const ACTION_DELETE_ARTICLE_LIST = 'action_deleteArticleList'
 
+export const ACTION_LOGIN = 'action_login'
+
+export const ACTION_LOGIN_WITH_DYNAMIC_PASSWORD = 'action_loginWithDynamicPassword'
+
+export const ACTION_LOGOUT = 'action_logout'
+
+export const ACTION_GET_SMS = 'action_getSms'

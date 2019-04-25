@@ -5,7 +5,7 @@
                :ex=true
                :showWarn="showWarn"
                :warnMsg="warnMsg"
-               @focus="focusHandler"
+               @focus="focusHandler_"
                @input="appointCaptchaValue"/>
 
         <CaptchaImage @click="refreshCaptchaImage" :captchaImage="captchaImage">
@@ -28,7 +28,8 @@
 
         props: {
             captchaHost: String,
-            placeholder: String
+            placeholder: String,
+            focusHandler: Function
         },
 
         data() {
@@ -79,12 +80,13 @@
                 }
                 this.mutation_appointCaptcha(payload)
             },
-            focusHandler() {
+            focusHandler_() {
                 const payload = {
                     captchaHost: this.captchaHost,
                     showWarn: false
                 }
                 this.mutation_appointCaptcha(payload)
+                this.focusHandler()
             },
             init() {
                 this.captchaId = uuidv4()

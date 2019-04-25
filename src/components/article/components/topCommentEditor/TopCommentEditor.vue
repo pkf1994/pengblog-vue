@@ -97,7 +97,6 @@
             SubmitTextBtn,
             LoadingWrapper,EmojiPickerFixer} from './style'
     import {mapActions, mapMutations, mapState} from "vuex";
-    import {CountLength} from "@/exJs/countStringLength";
     import {DeleteCookie,SetCookie,ReadCookie} from "@/exJs/cookieUtil";
     import {
         MUTATION_APPEND_TO_COMMENT_EDITOR,
@@ -245,7 +244,7 @@
                             this.mutation_appointInput(payload)
                             return false
                         }
-                        if(CountLength(value) > 14){
+                        if(value.length > 14){
                             const payload_ = {
                                 id: id,
                                 showWarn: true,

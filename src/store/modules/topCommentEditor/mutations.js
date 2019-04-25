@@ -1,6 +1,6 @@
 import {
     MUTATION_APPEND_TO_COMMENT_EDITOR,
-    MUTATION_APPOINT_INPUT,
+    MUTATION_APPOINT_INPUT, MUTATION_RESET,
     MUTATION_TRIGGER_IS_LOADING
 } from "../mutation_types";
 
@@ -29,6 +29,10 @@ export default {
         if(payload.commentEditorId === 'topCommentEditor') {
             state.content.value = state.content.value + payload.value
         }
+    },
+    [MUTATION_RESET](state,payload) {
+        if(payload.id === 'topCommentEditor')
+        state.content.value = ''
     }
 }
 

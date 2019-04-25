@@ -6,6 +6,7 @@
 
         <transition-group name="slide-in">
             <Comment v-for="comment in commentList"
+                     class="transition-group-item"
                      :comment=comment
                      :key="comment.comment_id"/>
         </transition-group>
@@ -70,10 +71,13 @@
 
 <style scoped>
 
-.slide-in-enter-active,.slide-in-leave-active{
+.slide-in-enter-active{
     transition: all .4s ease;
 }
-
+.slide-in-leave-active{
+    transition: all .4s ease;
+    position: absolute;
+}
 .slide-in-enter{
     transform: translateY(30px);
     opacity: 0;
@@ -84,4 +88,7 @@
     opacity: 0;
 }
 
+.transition-group-item{
+    transition: all .8s;
+}
 </style>

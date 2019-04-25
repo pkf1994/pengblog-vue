@@ -76,3 +76,9 @@ export const MUTATION_COUNTDOWN_SECOND_TO_NEXT_GETTING_SMS = 'mutation_countdown
 
 export const MUTATION_APPOINT_SECOND_TO_NEXT_GETTING_SMS = 'mutation_appointSecondToNextGettingSms'
 
+export const MUTATION_RESOLVE_LOGIN_RESULT = 'mutation_resolveLoginResult'
+
+export const MUTATION_RESOLVE_LOGOUT_RESULT = 'mutation_resolveLogoutResult'
+
+export const MUTATION_RESOLVE_SMS = 'mutation_resolveSms'
+

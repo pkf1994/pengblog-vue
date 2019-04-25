@@ -111,8 +111,6 @@ export default {
             }
         })
 
-        console.log(deleteArray)
-
         for(let i = 0; i < deleteArray.length; i++) {
             state.freshComments.commentList.forEach((item,index) => {
                 if(item.comment_id === deleteArray[i].comment_id) {

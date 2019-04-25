@@ -38,28 +38,7 @@ export const CaptchaWrapper = styled.div`
         margin-bottom: 2rem;
         display: flex;
     `
-export const CaptchaImage = styled.div`
-        margin-right: 1rem;
-        width: 10rem;
-        background: url(data:image/jpeg;base64,${props => props.captchaImage}) no-repeat;
-        background-size: 100% 100%;
-    `
 
-export const ThemeImage = styled.img`
-        width: 550px;
-        margin: 2rem;
-        margin-bottom: 8rem;
-        box-shadow:rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-    `
-
-export const Gap = styled.div`
-        width: 0;
-        border-right: solid 1px #f0f0f0;
-        align-self: stretch;
-         @media(max-width:1000px){
-            display: none
-        }
-    `
 
 
 export const ButtonWrapper = styled.div`
@@ -74,24 +53,6 @@ export const ButtonFixer = styled.div`
         @media(max-width:${store.state.meta.maxMobileWidth}px){
             width: 100%;
         }
-    `
-
-export const LoadingWrapper = styled.div`
-        position: fixed;
-        width: 100%;
-        height: 100%;
-    `
-
-export const LoginBar = styled.div`
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    `
-
-export const SwitchButton = styled.ul` 
-        display: flex;
-        margin: 0 3rem;
-        
     `
 
 export const Item = styled.li`
@@ -113,7 +74,49 @@ export const Item = styled.li`
         
     `
 
-export const Space = styled.li`
-        flex-grow: 1;
-        border-bottom: solid 1px #dee2e6;
+export const LoadingWrapper = styled.div`
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        background: white;
+        opacity: 0.2;
+    `
+
+
+//logout
+export const LogouterWrapper = styled.div`
+        box-sizing: border-box;
+        width: 400px;
+        min-height: 350px;
+        margin-bottom: 4rem;
+        padding: 4rem 3rem;
+        padding-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        @media(max-height:600px){
+            margin-bottom: 0;
+            padding: 1rem 3rem;
+        }
+    
+    `
+
+export const Title = styled.div`
+         font-size: 1.2rem;
+        font-weight: bold;
+        padding-bottom: 0.8rem;
+        border-bottom: solid 1px #f0f0f0;
+    `
+
+export const Info = styled.div`
+        display: flex;
+        justify-content: space-between;
+        color: grey;
+        padding-bottom: 0.5rem;
+    `
+
+export const CurrentAutoInfo = styled.div`
+        padding: 1rem 0;
     `

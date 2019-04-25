@@ -1,4 +1,4 @@
-import {MUTATION_APPOINT_CAPTCHA} from "../mutation_types";
+import {MUTATION_APPOINT_CAPTCHA, MUTATION_RESET} from "../mutation_types";
 
 export default {
     [MUTATION_APPOINT_CAPTCHA](state,payload) {
@@ -14,7 +14,16 @@ export default {
         payload.showWarn !== undefined && (target.showWarn = payload.showWarn)
 
         payload.warnMsg && (target.warnMsg = payload.warnMsg)
-    }
+    },
 
+    [MUTATION_RESET](state,payload) {
+        if(payload.id === 'captcha') {
+            let targetCaptcha = state[payload.captchaHost]
+            targetCaptcha.captchaImage = undefined
+            targetCaptcha.captchaValue = undefined
+            targetCaptcha.showWarn = false
+            targetCaptcha.captchaId = undefined
+        }
+    }
 
 }

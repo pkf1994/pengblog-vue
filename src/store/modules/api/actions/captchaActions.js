@@ -1,6 +1,6 @@
 import {CaptchaRequest} from '../request'
 import {timeout} from './articleActions'
-import {MUTATION_APPOINT_CAPTCHA, MUTATION_TRIGGER_SHOW_NOTICE} from "../../mutation_types";
+import {MUTATION_APPOINT_CAPTCHA, MUTATION_RESET, MUTATION_TRIGGER_SHOW_NOTICE} from "../../mutation_types";
 import {ACTION_CHECK_CAPTCHA, ACTION_GET_CAPTCHA_IMAGE} from "../../action_types";
 
 
@@ -43,13 +43,30 @@ export default {
 
     async [ACTION_CHECK_CAPTCHA](context,payload) {
 
-        const payload_ = {
-            captchaId: context.rootState.captcha[payload.captchaHost].captchaId,
-            uncheckCaptchaCode: context.rootState.captcha[payload.captchaHost].captchaValue
+        try {
+
+            const payload_ = {
+                captchaId: context.rootState.captcha[payload.captchaHost].captchaId,
+                uncheckCaptchaCode: context.rootState.captcha[payload.captchaHost].captchaValue
+            }
+
+            await CaptchaRequest.RequestCheckCaptcha(payload_)
+
+
+        }catch (err) {
+
+            console.log(err)
+
+            if(err.response){
+                const payload___ = {
+                    captchaHost: payload.captchaHost,
+                    showWarn: true,
+                    warnMsg: err.response.data
+                }
+                context.commit(MUTATION_APPOINT_CAPTCHA,payload___)
+            }
+
+            throw new Error("验证异常")
         }
-
-        const res = await CaptchaRequest.RequestCheckCaptcha(payload_)
-
-        return res
     }
 }

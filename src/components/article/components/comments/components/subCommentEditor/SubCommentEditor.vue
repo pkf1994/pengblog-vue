@@ -85,7 +85,6 @@
             SubmitButton,
             LoadingWrapper} from './style'
     import {mapActions, mapMutations, mapState} from "vuex";
-    import {CountLength} from "@/exJs/countStringLength";
     import {DeleteCookie,SetCookie,ReadCookie} from "@/exJs/cookieUtil";
     import {MUTATION_APPOINT_INPUT, MUTATION_TRIGGER_IS_LOADING} from "../../../../../../store/modules/mutation_types";
     import {ACTION_TRY_SUBMIT_COMMENT} from "../../../../../../store/modules/action_types";
@@ -232,7 +231,7 @@
                             this.mutation_appointInput(payload)
                             return false
                         }
-                        if(CountLength(value) > 14){
+                        if(value.length > 14){
                             const payload_ = {
                                 id: id,
                                 showWarn: true,

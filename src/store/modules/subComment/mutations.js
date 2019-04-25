@@ -13,6 +13,10 @@ export default {
 
     [MUTATION_APPEND_COMMENT_JUST_SUBMIT](state,payload) {
 
+        if(!state.subCommentListMap[payload.comment_referComment]){
+            return
+        }
+
         const insertIndex = state.subCommentListMap[payload.comment_referComment].indexOf(payload.comment_appendTo)
 
         state.subCommentListMap[payload.comment_referComment].splice(insertIndex + 1, 0, payload.comment)

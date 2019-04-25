@@ -92,6 +92,7 @@ export default {
             if(item.comment_id === payload) {
                 state.commentList.splice(index,1)
                 state.startIndex = state.startIndex - 1
+                state.countOfAllComment = state.countOfAllComment - 1
             }
         })
     },

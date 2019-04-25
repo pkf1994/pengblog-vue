@@ -21,6 +21,7 @@ import TitleImageEditor from './titleImageEditor/TitleImageEditor.vue'
 import ArticleEditor from './articleEditor/ArticleEditor.vue'
 import Loginer from './loginer/Loginer.vue'
 import DynamicLoginer from './loginer/DynamicLoginer.vue'
+import Logouter from './loginer/Logouter.vue'
 
 export {Loading,
         ForMore,
@@ -44,4 +45,5 @@ export {Loading,
         TitleImageEditor,
         ArticleEditor,
     Loginer,
-    DynamicLoginer}
+    DynamicLoginer,
+    Logouter}
