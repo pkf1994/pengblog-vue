@@ -17,7 +17,7 @@ export const NoticePositioner = styled.div`
         width: auto;
         max-width: 80%;
         margin: 5rem auto;
-        padding: 0 1rem;
+        padding: 0 2rem;
     `
 
 export const NoticeBody = styled.div`
@@ -25,7 +25,7 @@ export const NoticeBody = styled.div`
         max-width: 100%;
         line-height: 1.5;
         text-align: center;
-        padding: 1rem 1rem;
+        padding: 1rem 4rem;
         background: white;
         border-radius: 0.2rem;
         box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;

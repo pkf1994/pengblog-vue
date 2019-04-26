@@ -6,6 +6,7 @@ const backgroundColor = '#F7F7F7'
 export const InputWrapper = styled.div`
         position: relative;
         flex-grow: 1;
+        cursor: text;
     `
 
 

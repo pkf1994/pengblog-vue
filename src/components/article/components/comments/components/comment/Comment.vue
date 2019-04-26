@@ -51,7 +51,7 @@
                     <i class="fa fa-chevron-up"/>
                 </ReplyButton>
 
-                <DeleteButton>
+                <DeleteButton v-if="alreadyLogin">
                     &nbsp;|&nbsp;
                     <DeleteButtonIcon v-on:click="deleteComment"
                                       class="fa fa-trash-o"/>
@@ -65,8 +65,8 @@
             </SubCommentEditorFixer>
 
             <transition-group name="slide-in">
-                <SubComment v-if="subCommentListMap[$data._this.comment.comment_id]"
-                            v-for="comment in subCommentListMap[$data._this.comment.comment_id]"
+                <SubComment v-for="comment in subCommentList"
+                            class="slide-in-item"
                             :comment="comment"
                             :key="comment.comment_id"/>
             </transition-group>
@@ -134,10 +134,11 @@
                 showAll: false,
                 heightOfCommentContent: 210,
                 loadingMoreSubComment: false,
-                pageScale: 4,
+                pageScale: 2,
                 startIndex: 0,
                 nextPage: 1,
                 maxPage: 1,
+                count: 0,
                 heightOfSubCommentEdior: '0px',
                 loading: false
             }
@@ -158,10 +159,29 @@
             },
             ...mapState({
                 referingComment: state => state.subCommentEditor.referingComment,
-                subCommentListMap: state => state.subComment.subCommentListMap
-            }),
-            subCommentList () {
-                return this.subCommentListMap[this.comment.comment_id]
+                subCommentList(state) {
+                    return state.subComment.subCommentListMap[this.comment.comment_id]
+                },
+                lengthOfSubCommentList(state) {
+                    if(!state.subComment.subCommentListMap[this.comment.comment_id]) {
+                        return 0
+                    }
+                    return state.subComment.subCommentListMap[this.comment.comment_id].length
+                },
+                alreadyLogin: state => state.login.alreadyLogin,
+            })
+        },
+
+        watch: {
+            lengthOfSubCommentList(newOne,oldOne) {
+                if(oldOne - newOne === 1) {
+                    this.startIndex = this.startIndex - 1
+                    this.count = this.count - 1
+                    if(Math.ceil(this.count/this.pageScale) < this.maxPage) {
+                        this.maxPage = Math.ceil(this.count/this.pageScale)
+                        this.nextPage = this.nextPage - 1
+                    }
+                }
             }
         },
 
@@ -277,13 +297,24 @@
 </script>
 
 <style scoped>
-    .slide-in-enter-active,.slide-in-leave-active{
+    .slide-in-enter-active{
         transition: all .4s ease;
     }
-
-    .slide-in-enter,.slide-in-leave-to{
+    .slide-in-leave-active{
+        position: absolute;
+        transition: all .4s ease;
+    }
+    .slide-in-enter{
         transform: translateY(30px);
         opacity: 0;
+    }
+    .slide-in-leave-to{
+        transform: translateX(30px);
+        opacity: 0;
+    }
+
+    .slide-in-item{
+        transition: all .4s ease;
     }
 
     .fade-enter-active,.fade-leave-active{

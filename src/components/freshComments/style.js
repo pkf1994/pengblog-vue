@@ -2,6 +2,7 @@ import styled from 'vue-styled-components'
 import store from '@/store'
 
 export const FreshCommentsWrapper = styled.div`
+        position: relative;
         border-top: solid 1px ${store.state.meta.metaBorderColor};
         padding: 1rem 2rem;
         padding-top: 0;

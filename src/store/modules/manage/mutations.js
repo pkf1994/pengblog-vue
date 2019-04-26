@@ -125,6 +125,7 @@ export default {
 
         if(Math.ceil(state.freshComments.count/state.freshComments.pageScale) < state.freshComments.maxPage) {
             state.freshComments.maxPage = Math.ceil(state.freshComments.count/state.freshComments.pageScale)
+            state.freshComments.nextPage = state.freshComments.nextPage - 1
         }
     }
 }

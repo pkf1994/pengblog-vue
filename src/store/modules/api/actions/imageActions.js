@@ -5,11 +5,14 @@ import {
 } from "../../mutation_types";
 
 import {ACTION_APPOINT_EDITING_ARTICLE, ACTION_DELETE_COMMENT, ACTION_UPLOAD_IMAGE} from "../../action_types";
+import {checkToken} from "./articleActions";
 
 
 export default {
 
    async [ACTION_UPLOAD_IMAGE](context,payload) {
+
+       checkToken()
 
        try{
 

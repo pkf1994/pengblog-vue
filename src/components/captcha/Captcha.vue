@@ -29,7 +29,10 @@
         props: {
             captchaHost: String,
             placeholder: String,
-            focusHandler: Function
+            focusHandler: {
+                type: Function,
+                default: () => {}
+            }
         },
 
         data() {

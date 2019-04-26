@@ -1,7 +1,6 @@
 import {CommentRequest} from '../request'
 import {
     MUTATION_APPEND_COMMENT_JUST_SUBMIT,
-    MUTATION_APPOINT_CAPTCHA,
     MUTATION_APPOINT_REFERING_COMMENT,
     MUTATION_RESOLVE_TOP_COMMENT_LIST,
     MUTATION_TRIGGER_IS_LOADING,
@@ -22,6 +21,7 @@ import {
     ACTION_TRY_SUBMIT_COMMENT,
     ACTION_GET_FRESH_COMMENT_LIST, ACTION_DELETE_COMMENT
 } from "../../action_types";
+import {checkToken} from "./articleActions";
 
 
 export default {
@@ -104,6 +104,7 @@ export default {
 
             const res = await CommentRequest.RequestSubCommentList(payload_)
             payload.maxPage = res.data.maxPage
+            payload.count = res.data.count
             payload.startIndex = payload.startIndex + payload.pageScale
             payload.nextPage = payload.nextPage + 1
             payload.loadingMoreSubComment = false
@@ -175,7 +176,7 @@ export default {
 
                         }catch (err) {
 
-                            //打开modal的loading状态
+                            //trigger modal的loading状态
                             const payload____ = {
                                 id: 'modal',
                                 loading: false
@@ -187,7 +188,7 @@ export default {
 
                         }
 
-
+                        //trigger modal的loading状态
                         const payload_____ = {
                             id: 'modal',
                             loading: false
@@ -200,41 +201,55 @@ export default {
                         }
                         context.commit(MUTATION_TRIGGER_SHOW_MODAL,payload______)
 
+                        //trigger Editor loading
                         const payload_______ = {
+                            id: payload.commentEditorId,
+                            loading: true
+                        }
+                        context.commit(MUTATION_TRIGGER_IS_LOADING,payload_______)
+
+                        const payload________ = {
                             commentEditorId: payload.commentEditorId
                         }
 
-                        await context.dispatch(ACTION_SUBMIT_COMMENT,payload_______)
+                        await context.dispatch(ACTION_SUBMIT_COMMENT,payload________)
+
+                        //trigger Editor loading
+                        const payload_________ = {
+                            id: payload.commentEditorId,
+                            loading: false
+                        }
+                        context.commit(MUTATION_TRIGGER_IS_LOADING,payload_________)
 
                         //重置editor
-                        const payload________ = {
+                        const payload__________ = {
                             id: payload.commentEditorId
                         }
-                        context.commit(MUTATION_RESET,payload________)
+                        context.commit(MUTATION_RESET,payload__________)
 
                         //重置captcha
-                        const payload_________ = {
+                        const payload___________ = {
                             id: 'captcha',
-                            captchaHost: payload.captchaHost
+                            captchaHost: 'modal'
                         }
-                        context.commit(MUTATION_RESET,payload_________)
+                        context.commit(MUTATION_RESET,payload___________)
                     }catch (err) {
 
                         console.log(err)
 
-                        const payload__________ = {
+                        const payload___________ = {
                             show: true,
                             noticeContent: err.response ? err.response.data : err
                         }
 
-                        context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload__________)
+                        context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload___________)
 
                         //关闭modal
-                        const payload___________ = {
+                        const payload____________ = {
                             show: false
                         }
 
-                        context.commit(MUTATION_TRIGGER_SHOW_MODAL,payload___________)
+                        context.commit(MUTATION_TRIGGER_SHOW_MODAL,payload____________)
 
                     }
                 }
@@ -246,12 +261,12 @@ export default {
         catch(err) {
             console.log(err)
 
-            const payload = {
+            const payload_____________ = {
                 show: true,
                 noticeContent: err.response ? err.response.data : err
             }
 
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload)
+            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload_____________)
 
         }
 
@@ -270,8 +285,6 @@ export default {
             captchaId: context.rootState.captcha.modal.captchaId,
             captchaCode: context.rootState.captcha.modal.captchaValue,
         }
-
-        console.log(payload_)
 
         const res = await CommentRequest.RequestSubmitComment(payload_)
 
@@ -344,6 +357,7 @@ export default {
 
     async [ACTION_DELETE_COMMENT](context,payload) {
 
+        checkToken()
 
         try{
 

@@ -126,12 +126,7 @@
                     return
                 }
 
-                //loading
-                const payload = {
-                    id: 'subCommentEditor',
-                    loading: true
-                }
-                this.mutation_triggerIsLoading(payload)
+
 
                 //将数据存入cookie
                 this.rememberMe(this.name.value,this.email.value,this.site.value)

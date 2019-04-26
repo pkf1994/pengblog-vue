@@ -85,6 +85,7 @@ export default {
 
             if(Math.ceil(state.count/state.pageScale) < state.maxPage) {
                 state.maxPage = Math.ceil(state.count/state.pageScale)
+                state.nextPage = state.nextPage - 1
             }
         }
 

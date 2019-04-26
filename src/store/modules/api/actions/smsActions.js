@@ -18,7 +18,7 @@ export default {
             context.commit(MUTATION_TRIGGER_IS_LOADING,payload)
 
 
-            const phoneNumber = context.rootState.login.phoneNumber.value
+            const phoneNumber = context.rootState.login.dynamic.phoneNumber.value
 
             await SmsRequest.RequestSms(phoneNumber)
 

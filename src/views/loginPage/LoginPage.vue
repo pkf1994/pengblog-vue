@@ -17,11 +17,9 @@
                 </SwitchButton>
             </transition>
 
-
             <transition name="fade" mode="out-in">
                 <component v-bind:is="currentLoginer"/>
             </transition>
-
 
         </LoginBar>
 

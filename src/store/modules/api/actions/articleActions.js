@@ -15,7 +15,9 @@ import {
     MUTATION_APPOINT_CONTEXT,
     MUTATION_RESET,
     MUTATION_RESOLVE_DRAFT,
-    MUTATION_RECORD_ARTICLE_JUST_DELETED, MUTATION_RESET_PAGINATION, MUTATION_TRIGGER_SHOW_MODAL
+    MUTATION_RECORD_ARTICLE_JUST_DELETED,
+    MUTATION_RESET_PAGINATION,
+    MUTATION_TRIGGER_SHOW_MODAL
 } from "../../mutation_types";
 import {
     ACTION_GET_ARTICLE_DATA,
@@ -32,16 +34,20 @@ import {
     ACTION_SAVE_ARTICLE,
     ACTION_GET_DRAFT,
     ACTION_APPOINT_EDITING_ARTICLE,
-    ACTION_DELETE_ARTICLE, ACTION_DELETE_ARTICLE_LIST
+    ACTION_DELETE_ARTICLE,
+    ACTION_DELETE_ARTICLE_LIST
 } from "../../action_types";
 import {AXIOS_SOURCE_REQUEST_ARTICLE} from "../source_types";
 import {throttleByDelay} from "../../../../exJs/throttle";
+import router from '@/router'
 
 
 export default {
 
     //获取文章详情
     async [ACTION_GET_ARTICLE_DATA](context,payload) {
+
+
 
         if(parseInt(payload.article_id) === context.rootState.article.article.article_id){
             return
@@ -582,6 +588,8 @@ export default {
     //提交文章
     async [ACTION_SAVE_ARTICLE](context,payload) {
 
+        checkToken()
+
         try{
 
             if(payload.article_type === 'article'){
@@ -665,6 +673,8 @@ export default {
 
     async [ACTION_GET_DRAFT](context,payload) {
 
+        checkToken()
+
         try{
 
             context.commit(MUTATION_LAUNCH_PROGRASS_BAR)
@@ -741,6 +751,8 @@ export default {
 
     async [ACTION_DELETE_ARTICLE](context,payload) {
 
+        checkToken()
+
         try{
 
             await ArticleRequest.RequestDeleteArticle(payload.article_id)
@@ -772,6 +784,8 @@ export default {
     },
 
     async [ACTION_DELETE_ARTICLE_LIST](context) {
+
+        checkToken()
 
         try{
 
@@ -812,4 +826,21 @@ export const timeout = (ms) => {
     return new Promise((resolve) => {
         setTimeout(resolve, ms)
     })
+}
+
+export function checkToken(){
+
+    if(localStorage.getItem('token') === undefined || localStorage.getItem('token') === null){
+        router.push({path:'/login'})
+        return
+    }
+
+    if(localStorage.getItem('token') !== undefined && localStorage.getItem('token') !== null){
+        let tokenObj = JSON.parse(localStorage.getItem('token'))
+        let expTime = tokenObj.expTime
+
+        if(expTime < new Date().getTime()){
+            router.push({path:'/login'})
+        }
+    }
 }

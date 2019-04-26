@@ -31,6 +31,12 @@
                     <i class="fa fa-chevron-up"/>
                 </ReplyButton>
 
+                <DeleteButton v-if="alreadyLogin">
+                    &nbsp;|&nbsp;
+                    <DeleteButtonIcon v-on:click="deleteComment"
+                                      class="fa fa-trash-o"/>
+                </DeleteButton>
+
             </OperationRow>
 
 
@@ -39,6 +45,9 @@
                 <SubCommentEditor ref="subCommentEditor"/>
             </SubCommentEditorFixer>
 
+        <LoadingWrapper v-if="loading">
+            <Loading/>
+        </LoadingWrapper>
 
     </SubCommentWrapper>
 </template>
@@ -52,10 +61,15 @@
             Platform,
             ReleaseTime,
             ReplyButton,
-            SubCommentEditorFixer} from './style'
+            SubCommentEditorFixer,
+        DeleteButton,
+        DeleteButtonIcon,
+        LoadingWrapper} from './style'
+    import {Loading} from '@/components'
     import SubCommentEditor from '../subCommentEditor/SubCommentEditor.vue'
     import {MUTATION_APPOINT_REFERING_COMMENT} from "../../../../../../store/modules/mutation_types";
-    import {mapMutations, mapState} from "vuex";
+    import {mapActions, mapMutations, mapState} from "vuex";
+    import {ACTION_DELETE_COMMENT} from "../../../../../../store/modules/action_types";
 
     export default {
 
@@ -65,6 +79,7 @@
 
         data(){
             return {
+                loading: false,
                 isBeenDeleting: false,
                 heightOfSubCommentEdior: '0px'
             }
@@ -72,7 +87,8 @@
 
         computed: {
             ...mapState({
-                referingComment: state => state.subCommentEditor.referingComment
+                referingComment: state => state.subCommentEditor.referingComment,
+                alreadyLogin: state => state.login.alreadyLogin
             }),
             isBanned() {
                 return this.comment.comment_ip ? this.comment.comment_ip.ip_isBanned : false
@@ -91,6 +107,17 @@
             ...mapMutations({
                 mutation_appointReferingComment: MUTATION_APPOINT_REFERING_COMMENT
             }),
+            ...mapActions({
+                action_deleteComment: ACTION_DELETE_COMMENT
+            }),
+
+            deleteComment() {
+
+                this.loading = true
+
+                this.action_deleteComment(this.comment.comment_id)
+
+            },
 
             GetDateDiff: GetDateDiff,
 
@@ -144,7 +171,11 @@
             ReleaseTime,
             ReplyButton,
             SubCommentEditor,
-            SubCommentEditorFixer
+            SubCommentEditorFixer,
+            DeleteButton,
+            DeleteButtonIcon,
+            LoadingWrapper,
+            Loading
         }
     }
 </script>

@@ -1,13 +1,13 @@
 <template>
     <FreshCommentItemWrapper>
 
-        <CommentSubject>
+        <CommentSubject v-on:click="redirect">
             <Visitor>{{comment.comment_author.visitor_name}}</Visitor>:&nbsp;
             <Content>{{comment.comment_content}}</Content>
         </CommentSubject>
 
         <HostArticle>
-            <HostArticleInner>
+            <HostArticleInner v-on:click="redirect">
                 <Label>[{{comment.comment_hostArticle.article_label}}]</Label>&nbsp;
                 <Title>{{comment.comment_hostArticle.article_title}}</Title>
             </HostArticleInner>
@@ -70,6 +70,9 @@
 
                 this.action_deleteComment(this.comment.comment_id)
 
+            },
+            redirect() {
+                this.$router.push({path:'/article/' + this.comment.comment_hostArticle.article_id})
             }
         },
         components: {

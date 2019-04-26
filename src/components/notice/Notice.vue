@@ -14,7 +14,7 @@
     import {NoticeWrapper,NoticePositioner,NoticeBody} from './style'
     import {mapState} from "vuex";
 
-    const noticeTime = 2500
+    const noticeTime = 3500
 
     export default {
 

@@ -3,11 +3,20 @@ import {
     MUTATION_RESOLVE_SUB_COMMENT_LIST_DATA
 } from "../mutation_types";
 import {uniqueCommentList} from "../article/mutations";
+import Vue from 'vue'
 
 export default {
     [MUTATION_RESOLVE_SUB_COMMENT_LIST_DATA](state,payload) {
 
-        state.subCommentListMap[payload.hostCommentId] = uniqueCommentList(state.subCommentListMap[payload.hostCommentId] ? state.subCommentListMap[payload.hostCommentId].concat(payload.subCommentList) : payload.subCommentList)
+        if(!state.subCommentListMap[payload.hostCommentId]) {
+
+            Vue.set(state.subCommentListMap,payload.hostCommentId,payload.subCommentList)
+
+        }else{
+
+            state.subCommentListMap[payload.hostCommentId] = state.subCommentListMap[payload.hostCommentId].concat(payload.subCommentList)
+
+        }
 
     },
 
@@ -25,14 +34,15 @@ export default {
 
     [MUTATION_RECORD_COMMENT_JUST_DELETE](state,payload) {
 
-        for(var key in state.subCommentListMap){
+        for(var key in state.subCommentListMap) {
+
             state.subCommentListMap[key].forEach((item,index) => {
                 if(item.comment_id === payload) {
                     state.subCommentListMap[key].splice(index,1)
                 }
             })
-        }
 
+        }
     }
 
 }

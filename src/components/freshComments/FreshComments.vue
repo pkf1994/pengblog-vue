@@ -3,7 +3,7 @@
 
         <Title>最近评论</Title>
 
-        <transition-group name="slide-up-fade">
+        <transition-group name="slide-up-fade" tag="div" :style="{position:'relative'}">
             <FreshCommentItem v-for="comment in commentList"
                               class="item"
                               :comment=comment
@@ -59,7 +59,7 @@
     }
 
     .slide-up-fade-leave-active {
-        transition: all .8s ease;
+        transition: all .4s ease;
         position: absolute;
     }
 
@@ -74,6 +74,7 @@
     }
 
     .item{
-        transition: all .8s;
+        transition: all .4s;
+        box-sizing: border-box;
     }
 </style>

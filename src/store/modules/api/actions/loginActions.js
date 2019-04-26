@@ -1,17 +1,24 @@
 import {timeout} from './articleActions'
-import {ACTION_GET_SMS, ACTION_LOGIN, ACTION_LOGIN_WITH_DYNAMIC_PASSWORD, ACTION_LOGOUT} from "../../action_types";
 import {
-    MUTATION_RESOLVE_LOGIN_RESULT, MUTATION_RESOLVE_LOGOUT_RESULT, MUTATION_RESOLVE_SMS,
+    ACTION_LOGIN,
+    ACTION_LOGIN_WITH_DYNAMIC_PASSWORD,
+    ACTION_LOGOUT} from "../../action_types";
+import {
+    MUTATION_LAUNCH_PROGRASS_BAR, MUTATION_PUSH_PROGRASS_BAR_TO_END,
+    MUTATION_RESOLVE_LOGIN_RESULT,
+    MUTATION_RESOLVE_LOGOUT_RESULT,
     MUTATION_TRIGGER_IS_LOADING,
     MUTATION_TRIGGER_SHOW_NOTICE
 } from "../../mutation_types";
-import {LoginRequest,SmsRequest} from '../request'
+import {LoginRequest} from '../request'
 
 
 export default {
    async [ACTION_LOGIN](context) {
 
        try {
+
+           context.commit(MUTATION_LAUNCH_PROGRASS_BAR)
 
            const payload = {
                id: 'loginPage',
@@ -26,10 +33,14 @@ export default {
                captchaCode: context.rootState.captcha.loginPage.captchaValue,
            }
 
+           await timeout(1000)
+
            const res = await LoginRequest.RequestLogin(payload_)
 
            //本地存储token
            storeToken(res.data.token,res.data.validTimeMillis,context.rootState.login.common.username.value)
+
+           context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
 
            context.commit(MUTATION_RESOLVE_LOGIN_RESULT,context.rootState.login.common.username.value)
 
@@ -61,7 +72,9 @@ export default {
 
     async [ACTION_LOGIN_WITH_DYNAMIC_PASSWORD](context) {
 
-       try{
+        try{
+
+            context.commit(MUTATION_LAUNCH_PROGRASS_BAR)
 
            const payload = {
                id: 'loginPage',
@@ -71,76 +84,76 @@ export default {
 
            const payload_ = {
                phoneNumber: context.rootState.login.dynamic.phoneNumber.value,
-               password: context.rootState.login.dynamic.password.value,
+               password: context.rootState.login.dynamic.dynamicPassword.value,
            }
 
-           const res = await LoginRequest.RequestLoginWithDynamicPassword(payload_)
+            await timeout(1000)
+
+            const res = await LoginRequest.RequestLoginWithDynamicPassword(payload_)
 
            //本地存储token
-           storeToken(res.data.token,res.data.validTimeMillis,context.rootState.login.common.username.value)
+            storeToken(res.data.token,res.data.validTimeMillis,context.rootState.login.dynamic.phoneNumber.value)
 
-           context.commit(MUTATION_RESOLVE_LOGIN_RESULT,context.rootState.login.common.username.value)
+            context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
 
-           const payload__ = {
+            context.commit(MUTATION_RESOLVE_LOGIN_RESULT,context.rootState.login.dynamic.phoneNumber.value)
+
+            const payload__ = {
                id: 'loginPage',
                loading: false
-           }
-           context.commit(MUTATION_TRIGGER_IS_LOADING,payload__)
+            }
+            context.commit(MUTATION_TRIGGER_IS_LOADING,payload__)
 
-       }catch (err) {
+        }catch (err) {
 
-           const payload__ = {
+            const payload__ = {
                id: 'loginPage',
                loading: false
-           }
-           context.commit(MUTATION_TRIGGER_IS_LOADING,payload__)
+            }
+            context.commit(MUTATION_TRIGGER_IS_LOADING,payload__)
 
-           console.log(err)
+            console.log(err)
 
-           const payload___ = {
+            const payload___ = {
                show: true,
                noticeContent: 'ACTION_LOGIN_WITH_DYNAMIC_PASSWORD ERR: ' + (err.response ? err.response.data : err)
-           }
+            }
 
-           context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload___)
-       }
+            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload___)
+        }
 
 
     },
 
     async [ACTION_LOGOUT](context) {
 
+        context.commit(MUTATION_LAUNCH_PROGRASS_BAR)
+
         const payload = {
-            id: 'managePage',
+            id: 'loginPage',
             loading: true
         }
         context.commit(MUTATION_TRIGGER_IS_LOADING,payload)
 
+        await timeout(1000)
+
         localStorage.removeItem('token')
 
-        await timeout(1000)
+        context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
 
         context.commit(MUTATION_RESOLVE_LOGOUT_RESULT)
 
         const payload_= {
-            id: 'managePage',
-            loading: true
+            id: 'loginPage',
+            loading: false
         }
         context.commit(MUTATION_TRIGGER_IS_LOADING,payload_)
 
         const payload__ = {
             show: true,
-            noticeContent: '登录成功'
+            noticeContent: '登出成功'
         }
         context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload__)
-    },
-
-    async [ACTION_GET_SMS](context) {
-        const phoneNumber = context.rootState.login.phoneNumber.value
-
-        await SmsRequest.RequestSms(phoneNumber)
-
-        context.commit(MUTATION_RESOLVE_SMS)
     }
 }
 

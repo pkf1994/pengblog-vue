@@ -30,17 +30,24 @@
             <ButtonFixer>
                 <Button backgroundColor='#CCFFCC'
                         borderColor='#CCFFCC'
-                        color="#009900" v-on:click="tryToLoginWithDynamicPassword">
-                    <i class='fa fa-sign-in'/>&nbsp;&nbsp;登录&nbsp;&nbsp;
+                        color="#009900"
+                        :disabled="loading"
+                        v-on:click="tryToLoginWithDynamicPassword">
+                    <i class='fa fa-sign-in' v-if="!loading"/>&nbsp;&nbsp;
+                    {{loading ? 'trying...' : '登录'}}&nbsp;&nbsp;
                 </Button>
             </ButtonFixer>
 
         </ButtonWrapper>
+
+        <LoadingWrapper v-if="loading">
+
+        </LoadingWrapper>
     </LoginerWrapper>
 </template>
 
 <script>
-    import {LoginerWrapper,InputWrapper,CaptchaWrapper,ButtonWrapper,ButtonFixer,GetSmsButtonWrapper} from './style'
+    import {LoginerWrapper,InputWrapper,CaptchaWrapper,ButtonWrapper,ButtonFixer,GetSmsButtonWrapper,LoadingWrapper} from './style'
     import {Button} from '../button'
     import Input from '../input/Input.vue'
     import Captcha from '../captcha/Captcha.vue'
@@ -50,7 +57,7 @@
         MUTATION_APPOINT_SECOND_TO_NEXT_GETTING_SMS,
         MUTATION_COUNTDOWN_SECOND_TO_NEXT_GETTING_SMS
     } from "../../store/modules/mutation_types";
-    import {ACTION_GET_SMS} from "../../store/modules/action_types";
+    import {ACTION_GET_SMS, ACTION_LOGIN_WITH_DYNAMIC_PASSWORD} from "../../store/modules/action_types";
     export default {
         data() {
             return {
@@ -59,6 +66,7 @@
         },
         computed: {
             ...mapState({
+                loading: state => state.login.loading,
                 secondToNextGetting: state => state.login.dynamic.secondToNextGetting,
                 haveGotSmsOnce: state => state.login.dynamic.haveGotSmsOnce,
                 phoneNumber: state => state.login.dynamic.phoneNumber.value,
@@ -98,7 +106,8 @@
                 mutation_appointInput: MUTATION_APPOINT_INPUT
             }),
             ...mapActions({
-               action_getSms: ACTION_GET_SMS
+                action_getSms: ACTION_GET_SMS,
+                action_loginWithDynamicPassword: ACTION_LOGIN_WITH_DYNAMIC_PASSWORD
             }),
             tryToGetSms() {
 
@@ -107,6 +116,7 @@
             },
             tryToLoginWithDynamicPassword() {
 
+                this.action_loginWithDynamicPassword()
 
             },
             inputHandler(id,value) {
@@ -127,7 +137,8 @@
             ButtonFixer,
             Input,
             Captcha,
-            GetSmsButtonWrapper}
+            GetSmsButtonWrapper,
+            LoadingWrapper}
     }
 </script>
 

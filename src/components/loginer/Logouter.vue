@@ -22,14 +22,16 @@
 
         <ButtonWrapper>
 
-            <Button :disabled="loading"
-                    backgroundColor="#FFDDE4"
-                    color="#99001F"
-                    v-on:click="tryToLogout"
-                    borderColor="#FFDDE4" >
+            <ButtonFixer>
+                <Button :disabled="loading"
+                        backgroundColor="#FFDDE4"
+                        color="#99001F"
+                        v-on:click="tryToLogout"
+                        borderColor="#FFDDE4" >
                     <i class="fa fa-sign-out" v-if="!loading"/>
-                {{loading ? 'trying...' : '  登出  '}}
-            </Button>
+                    {{loading ? 'trying...' : '  登出  '}}
+                </Button>
+            </ButtonFixer>
 
         </ButtonWrapper>
     </LogouterWrapper>
@@ -38,7 +40,7 @@
 <script>
     import {DateFormat} from "../../exJs/dateFormatUtil";
     import {Button} from '@/components'
-    import {LogouterWrapper,Title,CurrentAutoInfo,Info,ButtonWrapper} from './style'
+    import {LogouterWrapper,Title,CurrentAutoInfo,Info,ButtonWrapper,ButtonFixer} from './style'
     import {mapActions, mapMutations, mapState} from "vuex";
     import {ACTION_LOGOUT} from "../../store/modules/action_types";
     export default {
@@ -71,7 +73,7 @@
                 action_logout: ACTION_LOGOUT
             })
         },
-        components: {LogouterWrapper,Title,CurrentAutoInfo,Info,ButtonWrapper,Button}
+        components: {LogouterWrapper,Title,CurrentAutoInfo,Info,ButtonWrapper,Button,ButtonFixer}
     }
 </script>
 
