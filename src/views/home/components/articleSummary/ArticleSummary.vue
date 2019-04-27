@@ -2,7 +2,7 @@
     <ArticleSummaryWrapper v-bind:class="{active: isActive}"
                            v-on:click="goToTheArticle">
 
-        <Title>
+        <Title :hasBeenDeleted="article.isDeleted">
             <Label :color="featureLabelColor">
                 [{{article.article_label}}]
             </Label>
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-    import {DateFormat} from "../../exJs/dateFormatUtil";
+    import {DateFormat} from "../../../../exJs/dateFormatUtil";
     import {GenerateFeatureColor} from '@/exJs/generateFeatureColor'
     import {ArticleSummaryWrapper,
             Title,

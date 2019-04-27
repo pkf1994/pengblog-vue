@@ -1,14 +1,7 @@
 import styled from 'vue-styled-components'
 import store from '@/store'
 
-export const Header = styled.div`
-        position: relative;
-        display:flex;
-        color: ${store.state.meta.metaGray};
-        border-bottom: solid 2px ${store.state.meta.metaBorderColor};
-    `
-
-export const Body = styled('div',{selected: Boolean,deleted: Boolean,hasBeenDeleted:Boolean})`
+export const ArticleItemWrapper = styled('div',{selected: Boolean,deleted: Boolean,hasBeenDeleted:Boolean})`
         position: relative;
         padding-left: ${props => props.selected ? '1rem' : '0'};
         display: flex;
@@ -27,17 +20,19 @@ export const Body = styled('div',{selected: Boolean,deleted: Boolean,hasBeenDele
         `}
     `
 
-export const ArticleTitle = styled('div',{multiSelecting:Boolean})`
-        width: 55%;
+export const ArticleTitle = styled('div',{multiSelecting:Boolean,hasBeenDeleted: Boolean})`
+        box-sizing: border-box;
+        width: 60%;
         display: flex;
         align-items: center;
         padding: 1rem;
         padding-left: ${props => props.multiSelecting ? '3rem' : '2rem'};
-        padding-right:3rem;
+        padding-right:${props => props.hasBeenDeleted ? '4rem' : '3rem'};
         line-height: 1.4;
         position: relative;
         justify-content: flex-start;
         transition: all .4s ease;
+        flex-shrink: 0;
     `
 
 export const ArticleTitleInner = styled.span`
@@ -50,7 +45,7 @@ export const ArticleTitleInner = styled.span`
         `}
     `
 
-export const DeleteButton = styled.div`
+export const OperationButton = styled.div`
         position: absolute;
         box-sizing: border-box;
         height: 100%;
@@ -61,11 +56,7 @@ export const DeleteButton = styled.div`
         align-items: center;
         color: black;  
         font-size: 1.2rem;
-         ${store.state.meta.browser === 'Safari' ? '' : `
-             &:hover{
-                color: #3367d6;
-            }     
-         `}
+        
     `
 
 
@@ -85,12 +76,7 @@ export const ArticleLabel = styled(ArticleAuthor)`
     `
 
 export const ArticleReleaseTime = styled(ArticleAuthor)`
-        width: 20%;
-    `
-
-
-export const ArticleItemWrapper = styled.div`
-       
+        flex-grow: 2;
     `
 
 export const CheckBoxWrapper = styled.div`
@@ -103,27 +89,6 @@ export const CheckBoxWrapper = styled.div`
         align-items: center;
     `
 
-export const MultiSelectBtn = styled.div`
-        position: absolute;
-        display: flex;
-        align-items: center;
-        height: 100%;
-        left: 0;
-        color: ${store.state.meta.metaLinkColor};
-        &:hover{
-            color: black;
-        }
-    `
-
-export const MultiSelectOperation = styled.div`
-        position: absolute;
-        display: flex;
-        align-items: center;
-        height: 100%;
-        left: 0;
-    `
-
-
 export const MultiDeleteBtn = styled.span`
         cursor: pointer;
         margin-right: 1rem;
@@ -134,3 +99,34 @@ export const MultiDeleteBtn = styled.span`
     `
 
 export const Cancel = styled(MultiDeleteBtn)``
+
+export const LoadingWrapper = styled.div`
+        transition: all .4s ease;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        background: #F7F7F7;
+        opacity: 0.5;
+    `
+
+export const DeleteBtnIcon = styled.i`
+        cursor: pointer;
+         ${store.state.meta.browser === 'Safari' ? '' : `
+             &:hover{
+                color: #3367d6;
+            } 
+            `   
+         }`
+
+
+export const RecycleBtnIcon = styled(DeleteBtnIcon)``
+
+export const DestroyBtnIcon = styled.span`
+        cursor: pointer;
+        ${store.state.meta.browser === 'Safari' ? '' : `
+             &:hover{
+                color: #3367d6;
+            }`   
+         }`

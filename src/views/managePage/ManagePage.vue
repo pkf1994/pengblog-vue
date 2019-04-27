@@ -28,15 +28,17 @@
 
       <ArticleListFixer>
 
-        <transition-group name="slide-up-fade">
+        <TableHeader/>
+        <transition-group name="slide-up-fade" tag="div" :style="{position:'relative'}">
           <ArticleIndexItem v-for="(article,index) in articleList"
                             :withHeader="index === 0"
+                            class="slide-up-fade-item"
                             :article="article"
                             :key="article.article_id"/>
         </transition-group>
 
 
-        <PaginationFixer>
+        <PaginationFixer v-show="maxPage > 1">
           <Pagination paginationId="managePage"/>
         </PaginationFixer>
 
@@ -51,12 +53,17 @@
 
 
     </ArticleListWrapper>
+
+    <Cover v-if="cleaningRecycleBin">
+
+    </Cover>
+
   </ManagePageWrapper>
 
 </template>
 
 <script>
-    import {mapActions, mapMutations, mapState} from 'vuex'
+import {mapActions, mapMutations, mapState} from 'vuex'
 import {
     ManagePageWrapper,
     CentralController,
@@ -64,15 +71,18 @@ import {
     ArticleListFixer,
     PaginationFixer,
     LoadingWrapper,
-    SearchBarWrapper} from './style'
+    SearchBarWrapper,Cover} from './style'
 import {
-    SearchBar,
-    ArticleFiling,
     ArticleClassification,
-    FreshComments,
-    ArticleIndexItem,
+    ArticleFiling,
+    SearchBar,
     Pagination,
     Loading} from '@/components'
+import {
+    ArticleIndexItem,
+    FreshComments,
+    TableHeader} from './components'
+
     import {
         ACTION_GET_ARTICLE_LIST_BY_CLASSIFICATION,
         ACTION_GET_ARTICLE_LIST_BY_FILING,
@@ -90,7 +100,9 @@ export default {
             articleList: state => state.manage.articleList,
             currentPage: state => state.pagination.managePage.currentPage,
             loading: state => state.manage.loading,
-            context: state => state.manage.context
+            context: state => state.manage.context,
+            cleaningRecycleBin: state => state.manage.header.loading,
+            maxPage: state => state.pagination.managePage.maxPage
         })
     },
     watch: {
@@ -179,7 +191,9 @@ export default {
         PaginationFixer,
         LoadingWrapper,
         Loading,
-        SearchBarWrapper
+        SearchBarWrapper,
+        Cover,
+        TableHeader
     }
 }
 </script>
@@ -190,11 +204,19 @@ export default {
     transition: all .4s ease;
   }
 
+  .slide-up-fade-leave-active {
+    position: absolute;
+  }
+
   .slide-up-fade-enter,
   .slide-up-fade-leave-to {
     transform: translateY(50px);
     opacity: 0;
   }
+  .slide-up-fade-item{
+    transition: all .4s ease;
+  }
+
 
   .fade-leave-active {
     transition: all .4s ease;

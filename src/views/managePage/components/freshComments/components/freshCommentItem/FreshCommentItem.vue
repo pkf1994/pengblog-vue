@@ -49,7 +49,7 @@
         BanButton,
         LoadingWrapper} from './style'
     import {Loading} from '@/components'
-    import {ACTION_DELETE_COMMENT} from "../../../../store/modules/action_types";
+    import {ACTION_DELETE_COMMENT} from "../../../../../../store/modules/action_types";
     import {mapActions} from "vuex";
     export default {
         data() {

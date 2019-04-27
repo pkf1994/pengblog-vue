@@ -10,6 +10,9 @@ export default {
     content: undefined,
     resolveDraftFlag: false,
     titleCache: undefined,
+    draftCache: {
+
+    },
     savingDraft: false,
     savingArticle: false,
     submitableAsArticle: false,

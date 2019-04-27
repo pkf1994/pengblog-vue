@@ -13,7 +13,10 @@
 
     export default {
         props: {
-            showTitle: true
+            showTitle: {
+                type: Boolean,
+                default: false
+            }
         },
         data(){
             return {loadingSpin: loadingSpin}

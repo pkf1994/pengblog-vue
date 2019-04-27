@@ -10,7 +10,7 @@
 
         <OperationColumn>
 
-            <ConfirmButton v-on:click="deleteArticle">
+            <ConfirmButton v-on:click="clean">
                 确定
             </ConfirmButton>
 
@@ -20,9 +20,6 @@
 
         </OperationColumn>
 
-        <LoadingWrapper v-if="loading">
-            <Loading/>
-        </LoadingWrapper>
     </ModalItemWrapper>
 </template>
 
@@ -37,24 +34,23 @@
         LoadingWrapper} from "../style"
     import {Loading} from '@/components'
     import {mapActions, mapMutations, mapState} from "vuex";
-    import {MUTATION_TRIGGER_IS_LOADING, MUTATION_TRIGGER_SHOW_MODAL} from "../../../store/modules/mutation_types";
-    import {ACTION_DELETE_ARTICLE} from "../../../store/modules/action_types";
+    import {MUTATION_RESET, MUTATION_TRIGGER_SHOW_MODAL} from "../../../store/modules/mutation_types";
+    import {ACTION_CLEAN_RECYCLEBIN, ACTION_GET_ARTICLE_LIST_DATA} from "../../../store/modules/action_types";
     export default {
 
         computed: {
             ...mapState({
                 modalContent: state => state.modal.modalContent,
-                deletingArticleId: state => state.modal.deletingArticleId,
-                loading: state => state.modal.loading
             })
         },
         methods: {
             ...mapMutations({
                 mutation_triggerShowModal: MUTATION_TRIGGER_SHOW_MODAL,
-                mutation_triggerIsLoading: MUTATION_TRIGGER_IS_LOADING
+                mutation_reset: MUTATION_RESET
             }),
             ...mapActions({
-                action_deleteArticle: ACTION_DELETE_ARTICLE
+                action_cleanRecycleBin: ACTION_CLEAN_RECYCLEBIN,
+                action_getArticleListOfHome: ACTION_GET_ARTICLE_LIST_DATA
             }),
             closeModal(){
                 const payload = {
@@ -62,30 +58,19 @@
                 }
                 this.mutation_triggerShowModal(payload)
             },
-            async deleteArticle() {
+            async clean() {
+
+                this.action_cleanRecycleBin()
+
                 const payload = {
-                    loading: true,
-                    id: 'modal'
-                }
-                this.mutation_triggerIsLoading(payload)
-
-                const payload_ = {
-                    article_id: this.deletingArticleId
-                }
-
-                await this.action_deleteArticle(payload_)
-
-                const payload__ = {
-                    loading: false,
-                    id: 'modal'
-                }
-                this.mutation_triggerIsLoading(payload__)
-
-                const payload___ = {
                     show: false
                 }
 
-                this.mutation_triggerShowModal(payload___)
+                this.mutation_triggerShowModal(payload)
+
+                this.mutation_reset('home')
+
+                this.action_getArticleListOfHome()
 
             }
         },

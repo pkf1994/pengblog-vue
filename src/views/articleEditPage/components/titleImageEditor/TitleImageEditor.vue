@@ -33,9 +33,8 @@
         DeleteBtn,
         loadingWrapper} from "./style";
     import {Loading} from '@/components'
-    import {mapActions, mapMutations, mapState} from "vuex";
-    import {ACTION_APPOINT_EDITING_ARTICLE, ACTION_UPLOAD_IMAGE} from "../../store/modules/action_types";
-    import {MUTATION_APPOINT_EDITING_ARTICLE} from "../../store/modules/mutation_types";
+    import {mapActions, mapState} from "vuex";
+    import {ACTION_APPOINT_EDITING_ARTICLE, ACTION_UPLOAD_IMAGE} from "../../../../store/modules/action_types";
 
     export default {
         data() {

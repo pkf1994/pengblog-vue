@@ -53,12 +53,10 @@
         ButtonFixer,
         LoginerWrapper,
         LoadingWrapper} from './style'
-    import {Button} from '../button'
-    import Input from '../input/Input.vue'
-    import Captcha from '../captcha/Captcha.vue'
+    import {Button,Input,Captcha} from '@/components'
     import {mapActions, mapMutations, mapState} from "vuex";
-    import {MUTATION_APPOINT_INPUT} from "../../store/modules/mutation_types";
-    import {ACTION_CHECK_CAPTCHA, ACTION_LOGIN} from "../../store/modules/action_types";
+    import {MUTATION_APPOINT_INPUT} from "../../../../store/modules/mutation_types";
+    import {ACTION_CHECK_CAPTCHA, ACTION_LOGIN} from "../../../../store/modules/action_types";
     export default {
         computed: {
             ...mapState({

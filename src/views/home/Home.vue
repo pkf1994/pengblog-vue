@@ -81,11 +81,11 @@
 </template>
 
 <script>
-    import {mapActions, mapMutations, mapState} from 'vuex'
+  import {mapActions, mapMutations, mapState} from 'vuex'
 import Article from '@/components/article/Article.vue'
-import ArticleSummary from '@/components/articleSummary/ArticleSummary.vue'
-import {Loading,ForMore,ThemeJumbotron,Footer,SearchBar,ArticleFiling,ArticleClassification} from '@/components'
-import {
+import {Loading,ForMore,Footer,SearchBar,ArticleFiling,ArticleClassification} from '@/components'
+import {ThemeJumbotron,ArticleSummary} from "./components"
+    import {
     HomeWrapper,
     ArticleList,
     LoadingArticleSummary,

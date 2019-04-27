@@ -48,16 +48,14 @@
 
 <script>
     import {LoginerWrapper,InputWrapper,CaptchaWrapper,ButtonWrapper,ButtonFixer,GetSmsButtonWrapper,LoadingWrapper} from './style'
-    import {Button} from '../button'
-    import Input from '../input/Input.vue'
-    import Captcha from '../captcha/Captcha.vue'
+    import {Button,Input,Captcha} from '@/components'
     import {mapActions, mapMutations, mapState} from "vuex";
     import {
         MUTATION_APPOINT_INPUT,
         MUTATION_APPOINT_SECOND_TO_NEXT_GETTING_SMS,
         MUTATION_COUNTDOWN_SECOND_TO_NEXT_GETTING_SMS
-    } from "../../store/modules/mutation_types";
-    import {ACTION_GET_SMS, ACTION_LOGIN_WITH_DYNAMIC_PASSWORD} from "../../store/modules/action_types";
+    } from "../../../../store/modules/mutation_types";
+    import {ACTION_GET_SMS, ACTION_LOGIN_WITH_DYNAMIC_PASSWORD} from "../../../../store/modules/action_types";
     export default {
         data() {
             return {

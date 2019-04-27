@@ -79,9 +79,9 @@
         Gap,
         ArticleEditorWrapper,
         LoadingWrapper} from './style'
-    import {TitleImageEditor,Input,ArticleEditor} from '@/components'
-    import {MUTATION_APPOINT_EDITING_ARTICLE} from "../../store/modules/mutation_types";
-    import {mapActions, mapMutations, mapState} from "vuex";
+    import {Input} from '@/components'
+    import {TitleImageEditor,ArticleEditor} from './components'
+    import {mapActions, mapState} from "vuex";
     import {AutoTextarea} from "../../exJs/autoTextarea";
     import {AutoInput} from "../../exJs/autoInput";
     import {ACTION_APPOINT_EDITING_ARTICLE, ACTION_GET_DRAFT} from "../../store/modules/action_types";
@@ -91,6 +91,7 @@
         mounted() {
             this.initTitleTextarea()
             this.initMetaInput()
+            this.adjustInput()
         },
         computed: {
             ...mapState({
@@ -133,6 +134,11 @@
                 action_getDraft: ACTION_GET_DRAFT,
                 action_appointEditingArticle: ACTION_APPOINT_EDITING_ARTICLE
             }),
+            adjustInput() {
+                this.DispatchUIEvent('authorInput','keyup')
+                this.DispatchUIEvent('labelInput','keyup')
+                this.DispatchUIEvent('title-textarea','focus')
+            },
             appointEditingArticle(key,value) {
                 const payload = {
                     key: key,

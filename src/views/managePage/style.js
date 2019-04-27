@@ -39,7 +39,6 @@ export const ArticleListFixer = styled.div`
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
          @media(max-width:${store.state.meta.maxMobileWidth}px){
             width: 100%;
         }
@@ -66,4 +65,14 @@ export const LoadingWrapper = styled.div`
 export const SearchBarWrapper = styled.div`
         padding: 1rem 2rem;
         border-bottom: solid 1px ${store.state.meta.metaBorderColor};
+    `
+
+export const Cover = styled.div`
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        background: white;
+        opacity: 0.4;
     `

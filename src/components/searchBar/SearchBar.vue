@@ -98,6 +98,7 @@
     }
     .input::-webkit-input-placeholder{
         transition: all .4s ease;
+        font-size: 0.9rem;
     }
     .focus{
         transition: all .4s ease;

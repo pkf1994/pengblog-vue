@@ -23,7 +23,9 @@
             </span>
 
             <SavingArticle v-if="savingArticle">
-                <img :src=loadingSpin alt="Loading icon" :style="{transform:'scale(0.7)'}"/>
+                <img :src=loadingSpin
+                     lt="Loading icon"
+                     :style="{transform:'scale(0.7)'}"/>
                 发布中...
             </SavingArticle>
 
@@ -80,6 +82,11 @@
                 this.$router.push({path:path})
             },
             async submitArticle() {
+
+                if(!this.submitableAsArticle) {
+                    return
+                }
+
                 const _this = this
 
                 const payload = {

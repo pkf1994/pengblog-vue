@@ -38,11 +38,11 @@
 </template>
 
 <script>
-    import {DateFormat} from "../../exJs/dateFormatUtil";
+    import {DateFormat} from "../../../../exJs/dateFormatUtil";
     import {Button} from '@/components'
     import {LogouterWrapper,Title,CurrentAutoInfo,Info,ButtonWrapper,ButtonFixer} from './style'
-    import {mapActions, mapMutations, mapState} from "vuex";
-    import {ACTION_LOGOUT} from "../../store/modules/action_types";
+    import {mapActions, mapState} from "vuex";
+    import {ACTION_LOGOUT} from "../../../../store/modules/action_types";
     export default {
         data() {
             return {

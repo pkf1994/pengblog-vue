@@ -15,7 +15,7 @@
 
                 <ContactMeModalItem v-if="context === 'contactMe'"/>
 
-                <DeleteArticleModalItem v-if="context === 'deleteArticle'"/>
+                <CleanRecycleBinModalItem v-if="context === 'cleanRecycleBin'"/>
 
                 <DeleteArticleListModalItem v-if="context === 'deleteArticleList'"/>
 
@@ -37,7 +37,7 @@
     import {ShareToWechatModalItem,
             CaptchaModalItem,
             ContactMeModalItem,
-            DeleteArticleModalItem,
+            CleanRecycleBinModalItem,
             DeleteArticleListModalItem} from './modalItems'
     import {mapMutations, mapState} from "vuex";
     import {MUTATION_TRIGGER_SHOW_MODAL} from "../../store/modules/mutation_types";
@@ -64,6 +64,7 @@
             }
         },
         components: {
+            CleanRecycleBinModalItem,
             ModalWrapper,
             BackgroundCover,
             ModalBody,
@@ -71,7 +72,7 @@
             ShareToWechatModalItem,
             CaptchaModalItem,
             ContactMeModalItem,
-            DeleteArticleModalItem,
+            CleanRecycleBinModalItem,
             DeleteArticleListModalItem
         }
     }

@@ -10,6 +10,8 @@ export default {
             return
         }
 
+        state.draftCache[payload.key] = state[payload.key]
+
         state[payload.key] = payload.value
 
         if(checkItemLength(state.title, 0, 50)
@@ -44,6 +46,7 @@ export default {
         state.titleCache = payload.article_title
         state.editor.cmd.do('insertHTML',  payload.article_content)
         state.resolveDraftFlag = true
+        state.draftCache = {...payload}
     },
 
     [MUTATION_RESET](state,payload) {

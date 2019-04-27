@@ -24,7 +24,6 @@ export const NavList = styled.div`
     `
 
 export const Item = styled('div',{disabled:Boolean})`
-        font-size: 1.2rem;
         display: flex;
         align-items: center;
         margin-left: 1rem;

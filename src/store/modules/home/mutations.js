@@ -44,7 +44,7 @@ export default {
     },
 
     [MUTATION_RESET](state,payload) {
-        if(payload.id === 'home') {
+        if(payload === 'home') {
             state.startIndex = 0
             state.nextPage = 1
             state.articleList = []

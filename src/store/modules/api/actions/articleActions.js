@@ -17,7 +17,7 @@ import {
     MUTATION_RESOLVE_DRAFT,
     MUTATION_RECORD_ARTICLE_JUST_DELETED,
     MUTATION_RESET_PAGINATION,
-    MUTATION_TRIGGER_SHOW_MODAL
+    MUTATION_TRIGGER_SHOW_MODAL, MUTATION_RECORD_ARTICLE_JUST_RECOVER, MUTATION_RECORD_ARTICLE_JUST_DESTROY
 } from "../../mutation_types";
 import {
     ACTION_GET_ARTICLE_DATA,
@@ -35,7 +35,7 @@ import {
     ACTION_GET_DRAFT,
     ACTION_APPOINT_EDITING_ARTICLE,
     ACTION_DELETE_ARTICLE,
-    ACTION_DELETE_ARTICLE_LIST
+    ACTION_DELETE_ARTICLE_LIST, ACTION_RECOVER_ARTICLE, ACTION_CLEAN_RECYCLEBIN, ACTION_DESTROY_ARTICLE
 } from "../../action_types";
 import {AXIOS_SOURCE_REQUEST_ARTICLE} from "../source_types";
 import {throttleByDelay} from "../../../../exJs/throttle";
@@ -633,10 +633,7 @@ export default {
             if(payload.article_type === 'article'){
 
                 //重置home
-                const payload_____ = {
-                    id:'home'
-                }
-                context.commit(MUTATION_RESET,payload_____)
+                context.commit(MUTATION_RESET,'home')
                 context.dispatch(ACTION_GET_ARTICLE_LIST_DATA)
 
                 //通知窗口提示提交成功
@@ -647,6 +644,8 @@ export default {
                 context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload_______)
 
                 context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
+
+                context.commit(MUTATION_RESET_PAGINATION,'managePage')
 
             }
 
@@ -717,11 +716,16 @@ export default {
 
     async [ACTION_APPOINT_EDITING_ARTICLE](context,payload) {
 
+
         try{
 
             context.commit(MUTATION_APPOINT_EDITING_ARTICLE,payload)
 
             if(payload.key === 'title' && payload.value === context.rootState.articleEdit.titleCache) {
+                return
+            }
+
+            if(payload.value === context.rootState.articleEdit.draftCache[payload.key]){
                 return
             }
 
@@ -755,13 +759,13 @@ export default {
 
         try{
 
-            await ArticleRequest.RequestDeleteArticle(payload.article_id)
+            await ArticleRequest.RequestDeleteArticle(payload)
 
-            context.commit(MUTATION_RECORD_ARTICLE_JUST_DELETED,payload.article_id)
+            context.commit(MUTATION_RECORD_ARTICLE_JUST_DELETED,payload)
 
-            setTimeout(() => {
+            /*setTimeout(() => {
                 context.commit(MUTATION_RESET_PAGINATION,'managePage')
-            },1000)
+            },1000)*/
 
         }catch (err) {
 
@@ -797,9 +801,9 @@ export default {
                 context.commit(MUTATION_RECORD_ARTICLE_JUST_DELETED,item)
             })
 
-            setTimeout(() => {
+            /*setTimeout(() => {
                 context.commit(MUTATION_RESET_PAGINATION,'managePage')
-            },1000)
+            },1000)*/
         }catch (err) {
 
             const payload___ = {
@@ -817,6 +821,90 @@ export default {
 
             context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload____)
         }
+    },
+
+    async [ACTION_RECOVER_ARTICLE](context,payload) {
+
+        try{
+
+            await ArticleRequest.RequestRecoverArticle(payload)
+
+            context.commit(MUTATION_RECORD_ARTICLE_JUST_RECOVER, payload)
+
+        }catch (err) {
+
+            console.log(err)
+
+            const payload____ = {
+                show: true,
+                noticeContent: 'DELETE ARTICLE FAIL: ' + (err.response ? err.response.data : err)
+            }
+
+            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload____)
+
+        }
+
+    },
+
+    async [ACTION_CLEAN_RECYCLEBIN](context) {
+        try{
+
+            const payload = {
+                loading: true,
+                id: 'managePage_header'
+            }
+            context.commit(MUTATION_TRIGGER_IS_LOADING,payload)
+
+            await ArticleRequest.RequestDestroyAllArticleDeleted()
+
+            const payload_ = {
+                loading: false,
+                id: 'managePage_header'
+            }
+            context.commit(MUTATION_TRIGGER_IS_LOADING,payload_)
+
+            context.commit(MUTATION_RESET_PAGINATION,'managePage')
+
+        }catch (err) {
+
+            const payload__ = {
+                loading: false,
+                id: 'managePage_header'
+            }
+            context.commit(MUTATION_TRIGGER_IS_LOADING,payload__)
+
+            console.log(err)
+
+            const payload___ = {
+                show: true,
+                noticeContent: 'DELETE ARTICLE FAIL: ' + (err.response ? err.response.data : err)
+            }
+
+            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload___)
+        }
+    },
+
+    async [ACTION_DESTROY_ARTICLE](context,payload) {
+
+        try{
+
+            await ArticleRequest.RequestDestroyArticle(payload)
+
+            context.commit(MUTATION_RECORD_ARTICLE_JUST_DESTROY,payload)
+
+        }catch (err) {
+
+            console.log(err)
+
+            const payload___ = {
+                show: true,
+                noticeContent: 'DELETE ARTICLE FAIL: ' + (err.response ? err.response.data : err)
+            }
+
+            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload___)
+
+        }
+
     }
 
 }

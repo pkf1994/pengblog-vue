@@ -57,3 +57,9 @@ export const ACTION_LOGIN_WITH_DYNAMIC_PASSWORD = 'action_loginWithDynamicPasswo
 export const ACTION_LOGOUT = 'action_logout'
 
 export const ACTION_GET_SMS = 'action_getSms'
+
+export const ACTION_RECOVER_ARTICLE = 'action_recoverArticle'
+
+export const ACTION_CLEAN_RECYCLEBIN = 'action_cleanRecycleBin'
+
+export const ACTION_DESTROY_ARTICLE = 'action_destroyArticle'

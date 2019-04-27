@@ -18,10 +18,11 @@
         TextArea} from "./style";
 
     import E from 'wangeditor'
-    import {mapMutations, mapState} from "vuex";
-    import {MUTATION_APPOINT_EDITING_ARTICLE} from "../../store/modules/mutation_types";
-    import {API_UPLOAD_IMAGE} from "../../store/modules/api/request/apiConstant";
-    import {getToken} from "../../store/modules/api/request/imageRequest";
+    import {mapActions, mapMutations, mapState} from "vuex";
+    import {API_UPLOAD_IMAGE} from "../../../../store/modules/api/request/apiConstant";
+    import {getToken} from "../../../../store/modules/api/request/imageRequest";
+    import {ACTION_APPOINT_EDITING_ARTICLE} from "../../../../store/modules/action_types";
+    import {MUTATION_APPOINT_EDITING_ARTICLE} from "../../../../store/modules/mutation_types";
 
     export default {
         computed: {
@@ -35,6 +36,9 @@
             this.init()
         },
         methods: {
+            ...mapActions({
+                action_appointEditingArticle: ACTION_APPOINT_EDITING_ARTICLE
+            }),
             ...mapMutations({
                 mutation_appointEditingArticle: MUTATION_APPOINT_EDITING_ARTICLE
             }),
@@ -43,7 +47,7 @@
                     key: key,
                     value: value
                 }
-                this.mutation_appointEditingArticle(payload)
+                this.action_appointEditingArticle(payload)
             },
             init() {
                 const articleEditor = new E(this.$refs.toolBar.$el,this.$refs.textArea.$el)

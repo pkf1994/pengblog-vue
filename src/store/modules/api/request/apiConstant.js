@@ -66,3 +66,5 @@ export const API_RECOVER_ARTICLE = server + 'article/recover_article.do'
 export const API_GET_DELETED_ARTICLE_LIST = server + 'article/get_deleted_article_list.do'
 
 export const API_DESTROY_ALL_DELETED_ARTICLE = server + 'article/destroy_all_article_deleted.do'
+
+export const API_DESTROY_ARTICLE = server + 'article/destroy_article.do'

@@ -32,8 +32,7 @@
         DateSelector,
         SubmitButton,
         LoadingWrapper} from './style'
-    import Select from '../select/Select.vue'
-    import Loading from '../loading/Loading.vue'
+    import {Loading,Select} from '@/components'
     import {mapActions, mapMutations, mapState} from "vuex";
     import {MUTATION_APPOINT_SELECT_DATA} from "../../store/modules/mutation_types";
     import {ACTION_GET_ARTICLE_FILING_DATA} from "../../store/modules/action_types";

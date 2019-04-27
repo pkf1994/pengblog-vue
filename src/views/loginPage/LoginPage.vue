@@ -27,7 +27,7 @@
 </template>
 
 <script>
-    import {Loginer,DynamicLoginer,Logouter} from '@/components'
+    import {Loginer,DynamicLoginer,Logouter} from './components'
     import {LoginPageWrapper,Jumbotron,Slogan,Gap,LoginBar,SwitchButton,Item,Space} from './style'
     import {mapMutations, mapState} from "vuex";
     import {MUTATION_APPOINT_LOGIN_MODE} from "../../store/modules/mutation_types";

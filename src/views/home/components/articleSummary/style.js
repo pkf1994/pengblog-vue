@@ -13,11 +13,12 @@ export const ArticleSummaryWrapper = styled.div`
         }
     `
 
-export const Title = styled.div`
+export const Title = styled('div',{hasBeenDeleted: Boolean})`
         font-size: 1.2rem;
         line-height: 1.4; 
         font-weight: bold;
         cursor: pointer;
+        text-decoration: ${props => props.hasBeenDeleted ? 'line-through' : 'none'};
     `
 
 export const Label = styled('span',{color: String})`

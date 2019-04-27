@@ -82,3 +82,7 @@ export const MUTATION_RESOLVE_LOGOUT_RESULT = 'mutation_resolveLogoutResult'
 
 export const MUTATION_RESOLVE_SMS = 'mutation_resolveSms'
 
+export const MUTATION_RECORD_ARTICLE_JUST_RECOVER = 'mutation_recordArticleJustRecover'
+
+export const MUTATION_RECORD_ARTICLE_JUST_DESTROY = 'mutation_recordArticleJustDestroy'
+

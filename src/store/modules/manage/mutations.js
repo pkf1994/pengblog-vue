@@ -1,13 +1,18 @@
 import {
-    MUTATION_APPOINT_CONTEXT, MUTATION_APPOINT_ARTICLE_LIST_SELECTED,
+    MUTATION_APPOINT_CONTEXT,
+    MUTATION_APPOINT_ARTICLE_LIST_SELECTED,
     MUTATION_APPOINT_SELECT_DATA,
-    MUTATION_APPOINT_SELECTED_LABEL, MUTATION_RECORD_ARTICLE_JUST_DELETED,
+    MUTATION_APPOINT_SELECTED_LABEL,
+    MUTATION_RECORD_ARTICLE_JUST_DELETED,
     MUTATION_RESET_CENTRAL_CONTROLLER,
     MUTATION_RESOLVE_ARTICLE_CLASSIFICATION_DATA,
     MUTATION_RESOLVE_ARTICLE_FILING_DATA,
     MUTATION_RESOLVE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE,
     MUTATION_RESOLVE_FRESH_COMMENT_LIST_DATA,
-    MUTATION_TRIGGER_IS_LOADING, MUTATION_TRIGGER_MULTI_SELECTING, MUTATION_RECORD_COMMENT_JUST_DELETE
+    MUTATION_TRIGGER_IS_LOADING,
+    MUTATION_TRIGGER_MULTI_SELECTING,
+    MUTATION_RECORD_COMMENT_JUST_DELETE,
+    MUTATION_RECORD_ARTICLE_JUST_RECOVER, MUTATION_RECORD_ARTICLE_JUST_DESTROY
 } from "../mutation_types";
 
 export default {
@@ -82,7 +87,19 @@ export default {
     },
 
     [MUTATION_RECORD_ARTICLE_JUST_DELETED](state,payload) {
-        state.articleListDeleted.push(payload)
+        state.articleList.forEach((item) => {
+            if(item.article_id === payload) {
+                item.isDeleted = true
+            }
+        })
+    },
+
+    [MUTATION_RECORD_ARTICLE_JUST_RECOVER](state,payload) {
+        state.articleList.forEach((item) => {
+            if(item.article_id === payload) {
+                item.isDeleted = false
+            }
+        })
     },
 
     [MUTATION_APPOINT_ARTICLE_LIST_SELECTED](state,payload) {
@@ -127,6 +144,16 @@ export default {
             state.freshComments.maxPage = Math.ceil(state.freshComments.count/state.freshComments.pageScale)
             state.freshComments.nextPage = state.freshComments.nextPage - 1
         }
+    },
+
+    [MUTATION_RECORD_ARTICLE_JUST_DESTROY](state,payload) {
+
+        state.articleList.forEach((item,index) => {
+            if(item.article_id === payload) {
+                state.articleList.splice(index,1)
+            }
+        })
+
     }
 }
 

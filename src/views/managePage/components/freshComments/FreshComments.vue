@@ -27,7 +27,7 @@
     import {FreshCommentItem} from "./components";
     import {ForMore} from '@/components'
     import {FreshCommentsWrapper,Title,ForMoreWrapper} from './style'
-    import {ACTION_GET_FRESH_COMMENT_LIST} from "../../store/modules/action_types";
+    import {ACTION_GET_FRESH_COMMENT_LIST} from "../../../../store/modules/action_types";
     import {mapActions, mapState} from "vuex";
     export default {
         computed: {

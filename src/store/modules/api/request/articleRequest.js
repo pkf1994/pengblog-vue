@@ -5,8 +5,13 @@ import {getToken} from "./imageRequest";
 
 export function RequestArticleList(payload) {
 
+    const token = getToken()
+
     let config = {
-        params: payload
+        params: payload,
+        headers: {
+            Authorization: token
+        }
     }
 
     return axios.get(Api.API_GET_ARTICLE_LIST_BY_LIMITINDEX, config)
@@ -27,20 +32,43 @@ export const RequestArticle = (article_id) => {
 }
 
 export const RequestArticleFilingData = () => {
-    return axios.get(Api.API_GET_ARTICLE_FILING)
+
+    const token = getToken()
+
+    const config = {
+        headers: {
+            Authorization: token
+        }
+    }
+
+    return axios.get(Api.API_GET_ARTICLE_FILING,config)
 }
 
 export const RequestArticleClassificationData = () => {
-    return axios.get(Api.API_GET_ARTICLE_LABEL)
+
+    const token = getToken()
+
+    const config = {
+        headers: {
+            Authorization: token
+        }
+    }
+
+    return axios.get(Api.API_GET_ARTICLE_LABEL,config)
 }
 
 export const RequestArticleListDataBykeyword = (payload) => {
 
-    let config = {
+    const token = getToken()
+
+    const config = {
         params: {
             startIndex: payload.startIndex,
             pageScale: payload.pageScale,
             searchString: payload.searchString
+        },
+        headers: {
+            Authorization: token
         }
     }
 
@@ -49,12 +77,17 @@ export const RequestArticleListDataBykeyword = (payload) => {
 
 export const RequestArticleListDataByFiling = (payload) => {
 
+    const token = getToken()
+
     let config = {
         params: {
             startIndex: payload.startIndex,
             pageScale: payload.pageScale,
             selectedYear: payload.selectedYear,
             selectedMonth: payload.selectedMonth
+        },
+        headers: {
+            Authorization: token
         }
     }
 
@@ -62,11 +95,17 @@ export const RequestArticleListDataByFiling = (payload) => {
 }
 
 export const RequestArticleListDataByLabel = (payload) => {
+
+    const token = getToken()
+
     let config = {
         params: {
             startIndex: payload.startIndex,
             pageScale: payload.pageScale,
             article_label: payload.article_label
+        },
+        headers: {
+            Authorization: token
         }
     }
 
@@ -128,6 +167,52 @@ export const RequestDeleteArticleList = (payload) => {
     }
 
     return axios.post(Api.API_DELETE_ARTICLE_LIST, deleteArticleListData, config)
+
+}
+
+export const RequestRecoverArticle = (payload) => {
+    let token = getToken()
+
+    let config = {
+        params: {
+            article_id: payload
+        },
+        headers: {
+            Authorization: token
+        }
+    }
+
+    return axios.get(Api.API_RECOVER_ARTICLE, config)
+}
+
+export const RequestDestroyAllArticleDeleted = () => {
+
+    let token = getToken()
+
+    let config = {
+        headers: {
+            Authorization: token
+        }
+    }
+
+    return axios.get(Api.API_DESTROY_ALL_DELETED_ARTICLE, config)
+
+}
+
+export const RequestDestroyArticle = (payload) => {
+
+    let token = getToken()
+
+    let config = {
+        params: {
+            article_id: payload
+        },
+        headers: {
+            Authorization: token
+        }
+    }
+
+    return axios.get(Api.API_DESTROY_ARTICLE, config)
 
 }
 
