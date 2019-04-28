@@ -63,3 +63,9 @@ export const ACTION_RECOVER_ARTICLE = 'action_recoverArticle'
 export const ACTION_CLEAN_RECYCLEBIN = 'action_cleanRecycleBin'
 
 export const ACTION_DESTROY_ARTICLE = 'action_destroyArticle'
+
+export const ACTION_BAN_IP = 'action_banIP'
+
+export const ACTION_LIFTED_IP = 'action_liftedIP'
+
+export const ACTION_GET_IP_LIST = 'action_getIPList'

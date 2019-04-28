@@ -12,7 +12,10 @@ import {
     MUTATION_TRIGGER_IS_LOADING,
     MUTATION_TRIGGER_MULTI_SELECTING,
     MUTATION_RECORD_COMMENT_JUST_DELETE,
-    MUTATION_RECORD_ARTICLE_JUST_RECOVER, MUTATION_RECORD_ARTICLE_JUST_DESTROY
+    MUTATION_RECORD_ARTICLE_JUST_RECOVER,
+    MUTATION_RECORD_ARTICLE_JUST_DESTROY,
+    MUTATION_RECORD_COMMENT_JUST_BAN,
+    MUTATION_RECORD_COMMENT_JUST_LIFTED
 } from "../mutation_types";
 
 export default {
@@ -154,7 +157,26 @@ export default {
             }
         })
 
-    }
+    },
+
+    [MUTATION_RECORD_COMMENT_JUST_BAN](state,payload) {
+
+        state.freshComments.commentList.forEach((item,index) => {
+            if(item.comment_ip.ip_ip === payload) {
+                item.comment_ip.ip_isBanned = true
+            }
+        })
+
+    },
+
+    [MUTATION_RECORD_COMMENT_JUST_LIFTED](state,payload) {
+
+        state.freshComments.commentList.forEach((item,index) => {
+            if(item.comment_ip.ip_ip === payload) {
+                item.comment_ip.ip_isBanned = false
+            }
+        })
+    },
 }
 
 const resetState = {

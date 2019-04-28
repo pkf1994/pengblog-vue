@@ -1,32 +1,45 @@
 <template>
-    <ThemeJumbotron :minHeightOfJumbotron="minHeightOfJumbotron">
+    <transition name="fade" appear>
 
-        <Inner>
-            <ThemeImageWrapper>
-                <ThemeImage :src="themeImage"/>
-                <ThemeTitle/>
-            </ThemeImageWrapper>
+        <ThemeJumbotronWrapper>
 
+            <ThemeJumbotron :minHeightOfJumbotron="minHeightOfJumbotron"
+                            :themeImage_Ready="themeImage_Ready"
+                            :background="themeImage_">
 
-            <PoweredBy>
-                <VueLogo :src="vueLogo"/>
-                <Title>Vue.js</Title>
-            </PoweredBy>
-        </Inner>
+            </ThemeJumbotron>
 
-    </ThemeJumbotron>
+            <Inner>
+                <ThemeImageWrapper>
+                    <transition name="fade-delay" appear>
+                        <ThemeImage :src="themeImage" v-if="themeImageReady" :style="{width:'100%'}"/>
+                    </transition>
+
+                    <transition name="slide-up-delay" appear>
+                        <ThemeTitle/>
+                    </transition>
+                </ThemeImageWrapper>
+            </Inner>
+        </ThemeJumbotronWrapper>
+
+    </transition>
 </template>
 
 <script>
-    import {ThemeJumbotron,Inner,ThemeImageWrapper,ThemeImage,Gap,PoweredBy,VueLogo,Title} from './style'
+    import {ThemeJumbotronWrapper,ThemeJumbotron,Inner,ThemeImageWrapper,ThemeImage,Gap,PoweredBy,VueLogo,Title} from './style'
     import {ThemeTitle} from './components'
     import vueLogo from '@/assets/svg/vue.svg'
     import {mapState} from "vuex";
+    import {imageLoader} from "../../../../exJs/imageLoader";
+
     export default {
         data() {
             return {
-                themeImage: 'https://pengblogimage-1257899590.cos.ap-guangzhou.myqcloud.com/theme.a5d5fc1c.png',
-                vueLogo
+                themeImage: 'https://pengblogimage-1257899590.cos.ap-guangzhou.myqcloud.com/theme.png',
+                themeImageReady: false,
+                vueLogo,
+                themeImage_: 'https://pengblogimage-1257899590.cos.ap-guangzhou.myqcloud.com/black-and-white-nature-sky-field.440ec64e.jpg',
+                themeImage_Ready: false
             }
         },
         computed: {
@@ -34,8 +47,22 @@
                 minHeightOfJumbotron: state => 'calc(' + state.meta.heightOfWindow + 'px' + ' - ' + state.meta.heightOfHeader + ')'
             })
         },
+        created() {
+            this.preloadImage()
+        },
+        methods: {
+            preloadImage() {
+                this.imageLoader(this.themeImage,() => {
+                    this.themeImageReady = true
+                })
+                this.imageLoader(this.themeImage_,() => {
+                    this.themeImage_Ready = true
+                })
+            },
+            imageLoader
+        },
         components: {
-            ThemeJumbotron,Inner,
+            ThemeJumbotronWrapper,ThemeJumbotron,Inner,
             ThemeImageWrapper,
             ThemeImage,
             Gap,
@@ -48,4 +75,32 @@
 
 <style scoped>
 
+    .fade-delay-enter-active,.fade-delay-leave-active{
+        transition: all 1s ease;
+        transition-delay: 1s;
+    }
+
+    .fade-delay-enter,.fade-delay-leave-to{
+        opacity: 0;
+    }
+
+
+    .slide-up-delay-enter-active,.slide-up-delay-leave-active{
+        transition: all 1s ease;
+        transition-delay: 0.5s;
+    }
+
+    .slide-up-delay-enter,.slide-up-delay-leave-to{
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    .fade-enter-active,.fade-leave-active{
+        transition: all 1s ease;
+    }
+
+    .fade-enter,.fade-leave-to{
+        opacity: 0;
+        transform: translateY(10px);
+    }
 </style>

@@ -20,12 +20,16 @@ export default {
         let target = state[payload]
 
         target.currentPage = 0
-        target.startIndex = getStartIndex()
-
+        if(payload === 'managePage') {
+            target.startIndex = getStartIndex(window.innerHeight - 200,54)
+        }
+        if(payload === 'ipManagePage') {
+            target.startIndex = getStartIndex(window.innerHeight - 200,50)
+        }
     }
 
 }
 
-const getStartIndex = () => {
-    return window.innerWidth < 500 ? - 8 : - parseInt((window.innerHeight - 200)/54)
+export const getStartIndex = (viewHeight,itemSize) => {
+    return window.innerWidth < 500 ? - 8 : - parseInt(viewHeight/itemSize)
 }

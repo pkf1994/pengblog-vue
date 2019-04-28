@@ -1,7 +1,8 @@
 import {CaptchaRequest} from '../request'
 import {timeout} from './articleActions'
 import {MUTATION_APPOINT_CAPTCHA, MUTATION_RESET, MUTATION_TRIGGER_SHOW_NOTICE} from "../../mutation_types";
-import {ACTION_CHECK_CAPTCHA, ACTION_GET_CAPTCHA_IMAGE} from "../../action_types";
+import {ACTION_CHECK_CAPTCHA, ACTION_DESTROY_ARTICLE, ACTION_GET_CAPTCHA_IMAGE} from "../../action_types";
+import {exceptionNoticer} from "./index";
 
 
 export default {
@@ -30,12 +31,7 @@ export default {
 
         }catch(err){
 
-            const payload = {
-                show: true,
-                noticeContent: err.response ? err.response.data : err
-            }
-
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload)
+            exceptionNoticer(err,ACTION_GET_CAPTCHA_IMAGE,context)
 
         }
 

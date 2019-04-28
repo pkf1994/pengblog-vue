@@ -1,1 +1,7 @@
 export const AXIOS_SOURCE_REQUEST_ARTICLE = 'axiosSource_requestArticle'
+
+export const AXIOS_SOURCE_REQUEST_ARTICLE_LIST = 'axiosSource_requestArticleList'
+
+export const AXIOS_SOURCE_REQUEST_ARTICLE_FILING_DATA = 'axiosSource_requestArticleFilingData'
+
+export const AXIOS_SOURCE_REQUEST_ARTICLE_CLASSIFICATION_DATA = 'axiosSource_requestArticleClassificationData'

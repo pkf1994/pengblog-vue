@@ -5,6 +5,7 @@
                    placeholder="手机号码"
                    type="text"
                    :value="phoneNumber"
+                   :style="{flexGrow:'1'}"
                    @input="(event) => inputHandler('phoneNumber',event.target.value)"/>
         </InputWrapper>
 
@@ -14,6 +15,7 @@
                    placeholder="动态密码"
                    type="password"
                    :value="dynamicPassword"
+                   :style="{flexGrow:'1'}"
                    @input="(event) => inputHandler('dynamicPassword',event.target.value)"/>
             <GetSmsButtonWrapper>
                 <Button fontSize="0.8rem;"

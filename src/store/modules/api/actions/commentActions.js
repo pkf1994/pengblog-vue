@@ -5,12 +5,11 @@ import {
     MUTATION_RESOLVE_TOP_COMMENT_LIST,
     MUTATION_TRIGGER_IS_LOADING,
     MUTATION_TRIGGER_SHOW_MODAL,
-    MUTATION_TRIGGER_SHOW_NOTICE,
     MUTATION_RESOLVE_SUB_COMMENT_LIST_DATA,
     MUTATION_RESOLVE_FRESH_COMMENT_LIST_DATA,
     MUTATION_PUSH_PROGRASS_BAR_TO_END,
     MUTATION_RECORD_COMMENT_JUST_DELETE,
-    MUTATION_RESET
+    MUTATION_RESET,
 } from "../../mutation_types";
 import {
     ACTION_CHECK_CAPTCHA,
@@ -19,9 +18,11 @@ import {
     ACTION_GET_TOP_COMMENT_LIST,
     ACTION_SUBMIT_COMMENT,
     ACTION_TRY_SUBMIT_COMMENT,
-    ACTION_GET_FRESH_COMMENT_LIST, ACTION_DELETE_COMMENT
+    ACTION_GET_FRESH_COMMENT_LIST,
+    ACTION_DELETE_COMMENT
 } from "../../action_types";
 import {checkToken} from "./articleActions";
+import {exceptionNoticer} from "./index";
 
 
 export default {
@@ -73,17 +74,12 @@ export default {
 
         }catch(err){
 
-            console.log(err)
-
             if(err.message === 'Cancel') {
                 context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
                 return
             }
 
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,({
-                noticeContent: '获取评论数据失败',
-                show: true
-            }))
+            exceptionNoticer(err,ACTION_GET_TOP_COMMENT_LIST,context)
 
         }
 
@@ -118,14 +114,7 @@ export default {
 
         }catch (err) {
 
-            console.log(err)
-
-            const payload___ = {
-                show: true,
-                noticeContent: err.response ? err.response.data : err
-            }
-
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload___)
+            exceptionNoticer(err,ACTION_GET_SUB_COMMENT_LIST,context)
 
         }
 
@@ -235,14 +224,7 @@ export default {
                         context.commit(MUTATION_RESET,payload___________)
                     }catch (err) {
 
-                        console.log(err)
-
-                        const payload___________ = {
-                            show: true,
-                            noticeContent: err.response ? err.response.data : err
-                        }
-
-                        context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload___________)
+                        exceptionNoticer(err,ACTION_SUBMIT_COMMENT,context)
 
                         //关闭modal
                         const payload____________ = {
@@ -259,14 +241,8 @@ export default {
         }
 
         catch(err) {
-            console.log(err)
 
-            const payload_____________ = {
-                show: true,
-                noticeContent: err.response ? err.response.data : err
-            }
-
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload_____________)
+            exceptionNoticer(err,ACTION_CHECK_WHETHER_NEED_CAPTCHA_TO_SUBMIT_COMMENT,context)
 
         }
 
@@ -343,14 +319,7 @@ export default {
 
         }catch (err) {
 
-            console.log(err)
-
-            const payload__ = {
-                show: true,
-                noticeContent: err.response ? err.response.data : err
-            }
-
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload__)
+            exceptionNoticer(err,ACTION_GET_FRESH_COMMENT_LIST,context)
 
         }
     },
@@ -367,18 +336,12 @@ export default {
 
         }catch (err) {
 
-            console.log(err)
-
-            const payload_ = {
-                show:true,
-                noticeContent: 'ACTION_DELETE_COMMENT ERR: ' + (err.response ? err.response.data : err)
-            }
-
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload_)
+            exceptionNoticer(err,ACTION_DELETE_COMMENT,context)
 
         }
 
     }
+
 
 }
 

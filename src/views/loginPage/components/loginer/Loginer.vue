@@ -6,6 +6,7 @@
                    :value="username.value"
                    :showWarn="username.showWarn"
                    :warnMsg="username.warnMsg"
+                   :style="{flexGrow:'1'}"
                    @focus="focusHandler"
                    @input="(event) => inputHandler('username',event.target.value)"/>
         </InputWrapper>
@@ -16,6 +17,7 @@
                    :value="password.value"
                    :showWarn="password.showWarn"
                    :warnMsg="password.warnMsg"
+                   :style="{flexGrow:'1'}"
                    @focus="focusHandler"
                    @input="(event) => inputHandler('password',event.target.value)"/>
         </InputWrapper>

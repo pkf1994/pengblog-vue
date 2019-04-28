@@ -58,3 +58,33 @@ export function RequestDeleteComment(payload) {
 
     return axios.get(Api.API_DELETE_COMMENT, config)
 }
+
+export function RequestBanIP(payload) {
+
+    const token = getToken()
+
+    let config = {
+        params: {
+            ip: payload
+        },
+        headers: {
+            Authorization: token
+        }
+    }
+    return axios.get(Api.API_BAN_IP, config)
+}
+
+export function RequestLiftedIP(payload) {
+
+    const token = getToken()
+
+    let config = {
+        params: {
+            ip: payload
+        },
+        headers: {
+            Authorization: token
+        }
+    }
+    return axios.get(Api.API_LIFTED_IP, config)
+}

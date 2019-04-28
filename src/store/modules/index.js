@@ -14,6 +14,7 @@ import paginationStore from './pagination'
 import searchBarStore from './searchBar'
 import articleEditStore from './articleEdit'
 import loginStore from './login'
+import ipManageStore from './ipManage'
 
 export {articleStore,
         apiStore,
@@ -30,4 +31,5 @@ export {articleStore,
         paginationStore,
         searchBarStore,
         articleEditStore,
-    loginStore}
+    loginStore,
+    ipManageStore}

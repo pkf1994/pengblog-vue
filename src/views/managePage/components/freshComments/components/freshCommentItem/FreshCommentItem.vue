@@ -1,8 +1,8 @@
 <template>
-    <FreshCommentItemWrapper>
+    <FreshCommentItemWrapper :isBanned="comment.comment_ip.ip_isBanned">
 
         <CommentSubject v-on:click="redirect">
-            <Visitor>{{comment.comment_author.visitor_name}}</Visitor>:&nbsp;
+            <Visitor :isBanned="comment.comment_ip.ip_isBanned">{{comment.comment_author.visitor_name}}</Visitor>:&nbsp;
             <Content>{{comment.comment_content}}</Content>
         </CommentSubject>
 
@@ -15,21 +15,25 @@
         </HostArticle>
 
 
-        <OperationColumn>
+        <OperationColumn v-if="alreadyLogin">
 
             <DeleteButton class="fa fa-minus-circle"
                           v-on:click="deleteComment"/>
 
-            <LiftedButton>lifted</LiftedButton>&nbsp;&nbsp;
+            <LiftedButton v-if="alreadyLogin && comment.comment_ip.ip_isBanned"
+                          v-on:click="liftedIP">lifted</LiftedButton>&nbsp;&nbsp;
 
-            <BanButton class="fa fa-ban"/>
+            <BanButton v-if="alreadyLogin && !comment.comment_ip.ip_isBanned"
+                       class="fa fa-ban"
+                       v-on:click="banIP"/>
 
         </OperationColumn>
 
-        <LoadingWrapper v-if="loading">
-            <Loading/>
-        </LoadingWrapper>
-
+        <transition name="fade">
+            <LoadingWrapper v-if="loading">
+                <Loading/>
+            </LoadingWrapper>
+        </transition>
     </FreshCommentItemWrapper>
 </template>
 
@@ -49,8 +53,8 @@
         BanButton,
         LoadingWrapper} from './style'
     import {Loading} from '@/components'
-    import {ACTION_DELETE_COMMENT} from "../../../../../../store/modules/action_types";
-    import {mapActions} from "vuex";
+    import {ACTION_BAN_IP, ACTION_DELETE_COMMENT, ACTION_LIFTED_IP} from "../../../../../../store/modules/action_types";
+    import {mapActions, mapState} from "vuex";
     export default {
         data() {
             return {
@@ -60,15 +64,40 @@
         props: {
             comment:Object
         },
+        computed: {
+            ...mapState({
+                alreadyLogin: state => state.login.alreadyLogin
+            })
+        },
         methods: {
             ...mapActions({
-                action_deleteComment: ACTION_DELETE_COMMENT
+                action_deleteComment: ACTION_DELETE_COMMENT,
+                action_banIP: ACTION_BAN_IP,
+                action_liftedIP: ACTION_LIFTED_IP
             }),
             deleteComment() {
 
                 this.loading = true
 
                 this.action_deleteComment(this.comment.comment_id)
+
+            },
+            async banIP() {
+
+                this.loading = true
+
+                await this.action_banIP(this.comment.comment_ip.ip_ip)
+
+                this.loading = false
+
+            },
+            async liftedIP() {
+
+                this.loading = true
+
+                await this.action_liftedIP(this.comment.comment_ip.ip_ip)
+
+                this.loading = false
 
             },
             redirect() {
@@ -95,5 +124,11 @@
 </script>
 
 <style scoped>
+.fade-enter-active,.fade-leave-active{
+    transition: all .4s ease;
+}
 
+.fade-enter,.fade-leave-to{
+    opacity: 0;
+}
 </style>

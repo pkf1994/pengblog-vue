@@ -1,24 +1,42 @@
 import axios from 'axios'
 import * as Api from './apiConstant'
-import {AXIOS_SOURCE_REQUEST_ARTICLE} from "../source_types";
+import {
+    AXIOS_SOURCE_REQUEST_ARTICLE, AXIOS_SOURCE_REQUEST_ARTICLE_CLASSIFICATION_DATA,
+    AXIOS_SOURCE_REQUEST_ARTICLE_FILING_DATA,
+    AXIOS_SOURCE_REQUEST_ARTICLE_LIST
+} from "../source_types";
 import {getToken} from "./imageRequest";
 
 export function RequestArticleList(payload) {
 
+    if(window[AXIOS_SOURCE_REQUEST_ARTICLE_LIST]){
+        window[AXIOS_SOURCE_REQUEST_ARTICLE_LIST].cancel('Cancel')
+    }
+
+    window[AXIOS_SOURCE_REQUEST_ARTICLE_LIST] = axios.CancelToken.source();
+
     const token = getToken()
 
     let config = {
+        cancelToken: window[AXIOS_SOURCE_REQUEST_ARTICLE_LIST].token,
         params: payload,
         headers: {
             Authorization: token
         }
     }
 
-    return axios.get(Api.API_GET_ARTICLE_LIST_BY_LIMITINDEX, config)
+    return axios.get(Api.API_GET_ARTICLE_LIST_BY_LIMITINDEX, config).then((res) => {
+        window[AXIOS_SOURCE_REQUEST_ARTICLE_LIST] = undefined
+        return res
+    })
 }
 
 
 export const RequestArticle = (article_id) => {
+
+    if(window[AXIOS_SOURCE_REQUEST_ARTICLE]){
+        window[AXIOS_SOURCE_REQUEST_ARTICLE].cancel('Cancel')
+    }
 
     window[AXIOS_SOURCE_REQUEST_ARTICLE] = axios.CancelToken.source();
 
@@ -28,40 +46,73 @@ export const RequestArticle = (article_id) => {
             article_id: article_id
         }
     }
-    return axios.get(Api.API_GET_ARTICLE_BY_ID, config)
+
+    return axios.get(Api.API_GET_ARTICLE_BY_ID, config).then((res) => {
+        window[AXIOS_SOURCE_REQUEST_ARTICLE] = undefined
+        return res
+    })
 }
 
 export const RequestArticleFilingData = () => {
 
+    if(window[AXIOS_SOURCE_REQUEST_ARTICLE_FILING_DATA]){
+        window[AXIOS_SOURCE_REQUEST_ARTICLE_FILING_DATA].cancel('Cancel')
+    }
+
+    window[AXIOS_SOURCE_REQUEST_ARTICLE_FILING_DATA] = axios.CancelToken.source();
+
     const token = getToken()
 
     const config = {
+        cancelToken: window[AXIOS_SOURCE_REQUEST_ARTICLE_FILING_DATA].token,
         headers: {
             Authorization: token
         }
     }
 
-    return axios.get(Api.API_GET_ARTICLE_FILING,config)
+    return axios.get(Api.API_GET_ARTICLE_FILING,config).then((res) => {
+        window[AXIOS_SOURCE_REQUEST_ARTICLE_FILING_DATA] = undefined
+
+        return res
+    })
 }
 
 export const RequestArticleClassificationData = () => {
 
+    if(window[AXIOS_SOURCE_REQUEST_ARTICLE_CLASSIFICATION_DATA]){
+        window[AXIOS_SOURCE_REQUEST_ARTICLE_CLASSIFICATION_DATA].cancel('Cancel')
+    }
+
+    window[AXIOS_SOURCE_REQUEST_ARTICLE_CLASSIFICATION_DATA] = axios.CancelToken.source();
+
     const token = getToken()
 
     const config = {
+        cancelToken: window[AXIOS_SOURCE_REQUEST_ARTICLE_CLASSIFICATION_DATA].token,
         headers: {
             Authorization: token
         }
     }
 
-    return axios.get(Api.API_GET_ARTICLE_LABEL,config)
+    return axios.get(Api.API_GET_ARTICLE_LABEL,config).then((res) => {
+        window[AXIOS_SOURCE_REQUEST_ARTICLE_CLASSIFICATION_DATA] = undefined
+
+        return res
+    })
 }
 
 export const RequestArticleListDataBykeyword = (payload) => {
 
+    if(window[AXIOS_SOURCE_REQUEST_ARTICLE_LIST]){
+        window[AXIOS_SOURCE_REQUEST_ARTICLE_LIST].cancel('Cancel')
+    }
+
+    window[AXIOS_SOURCE_REQUEST_ARTICLE_LIST] = axios.CancelToken.source();
+
     const token = getToken()
 
     const config = {
+        cancelToken: window[AXIOS_SOURCE_REQUEST_ARTICLE_LIST].token,
         params: {
             startIndex: payload.startIndex,
             pageScale: payload.pageScale,
@@ -72,14 +123,25 @@ export const RequestArticleListDataBykeyword = (payload) => {
         }
     }
 
-    return axios.get(Api.API_GET_ARTICLE_LIST_BY_SEARCH, config)
+    return axios.get(Api.API_GET_ARTICLE_LIST_BY_SEARCH, config).then((res) => {
+        window[AXIOS_SOURCE_REQUEST_ARTICLE_LIST] = undefined
+
+        return res
+    })
 }
 
 export const RequestArticleListDataByFiling = (payload) => {
 
+    if(window[AXIOS_SOURCE_REQUEST_ARTICLE_LIST]){
+        window[AXIOS_SOURCE_REQUEST_ARTICLE_LIST].cancel('Cancel')
+    }
+
+    window[AXIOS_SOURCE_REQUEST_ARTICLE_LIST] = axios.CancelToken.source();
+
     const token = getToken()
 
     let config = {
+        cancelToken: window[AXIOS_SOURCE_REQUEST_ARTICLE_LIST].token,
         params: {
             startIndex: payload.startIndex,
             pageScale: payload.pageScale,
@@ -91,14 +153,25 @@ export const RequestArticleListDataByFiling = (payload) => {
         }
     }
 
-    return axios.get(Api.API_GET_ARTICLE_LIST_BY_FILING, config)
+    return axios.get(Api.API_GET_ARTICLE_LIST_BY_FILING, config).then((res) => {
+        window[AXIOS_SOURCE_REQUEST_ARTICLE_LIST] = undefined
+
+        return res
+    })
 }
 
 export const RequestArticleListDataByLabel = (payload) => {
 
+    if(window[AXIOS_SOURCE_REQUEST_ARTICLE_LIST]){
+        window[AXIOS_SOURCE_REQUEST_ARTICLE_LIST].cancel('Cancel')
+    }
+
+    window[AXIOS_SOURCE_REQUEST_ARTICLE_LIST] = axios.CancelToken.source();
+
     const token = getToken()
 
     let config = {
+        cancelToken: window[AXIOS_SOURCE_REQUEST_ARTICLE_LIST].token,
         params: {
             startIndex: payload.startIndex,
             pageScale: payload.pageScale,
@@ -109,7 +182,11 @@ export const RequestArticleListDataByLabel = (payload) => {
         }
     }
 
-    return axios.get(Api.API_GET_ARTICLE_LIST_BY_LABEL, config)
+    return axios.get(Api.API_GET_ARTICLE_LIST_BY_LABEL, config).then((res) => {
+        window[AXIOS_SOURCE_REQUEST_ARTICLE_LIST] = undefined
+
+        return res
+    })
 }
 
 export const SaveArticle = (payload) => {

@@ -3,6 +3,21 @@
 
         <Logo v-on:click.native="() => goTo('/')"/>
 
+        <NavList>
+            <Item>
+                <span class="iconfont"
+                      :style="{fontSize:'1.2rem'}"
+                      v-on:click="() => goTo('/manage')">&#xe76a;</span>
+                <span v-on:click="() => goTo('/manage')">索引</span>
+            </Item>
+
+            <Item v-if="alreadyLogin">
+                <span class="iconfont"
+                      :style="{fontSize:'1.2rem'}"
+                      v-on:click="() => goTo('/edit')">&#xe67f;</span>
+                <span v-on:click="() => goTo('/edit')">写作</span>
+            </Item>
+        </NavList>
     </HeaderWrapper>
 
 </template>

@@ -1,14 +1,15 @@
 <template>
     <HeaderWrapper>
-
-        <Logo v-on:click.native="() => goTo('/')"/>
-
-
+        <Inner>
+            <Logo v-on:click.native="() => goTo('/')"/>
+            <GapLineVertical/>
+            <Title>封禁IP列表</Title>
+        </Inner>
     </HeaderWrapper>
 </template>
 
 <script>
-    import {HeaderWrapper,NavList,Item} from "./style"
+    import {HeaderWrapper,NavList,Title,Inner,GapLineVertical,Item} from "./style"
     import {Logo} from './components'
     export default {
         methods: {
@@ -20,6 +21,9 @@
             HeaderWrapper,
             Logo,
             NavList,
+            Title,
+            Inner,
+            GapLineVertical,
             Item
         }
     }

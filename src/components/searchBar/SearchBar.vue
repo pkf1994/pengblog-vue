@@ -1,21 +1,24 @@
 <template>
-    <SearchBarWrapper>
+    <transition name="slide-in" appear>
+        <SearchBarWrapper>
 
-        <input class="input"
-               :style="inputStyle"
-               :value="value"
-               :class="{focus:isFocus}"
-               placeholder="标题、作者、标签"
-               v-on:input="appointValue"
-               v-on:focus="() => triggerFocus(true)"
-               v-on:blur="() => triggerFocus(false)"
-               v-on:keydown="checkKeyNumber"/>
+            <input class="input"
+                   :style="inputStyle"
+                   :value="value"
+                   :class="{focus:isFocus}"
+                   placeholder="标题、作者、标签"
+                   v-on:input="appointValue"
+                   v-on:focus="() => triggerFocus(true)"
+                   v-on:blur="() => triggerFocus(false)"
+                   v-on:keydown="checkKeyNumber"/>
 
-        <SubmitButton :isFocus="isFocus" v-on:click="clickHandler">
-            <i class='fa fa-search'/>
-        </SubmitButton>
+            <SubmitButton :isFocus="isFocus" v-on:click="clickHandler">
+                <i class='fa fa-search'/>
+            </SubmitButton>
 
-    </SearchBarWrapper>
+        </SearchBarWrapper>
+    </transition>
+
 </template>
 
 <script>
@@ -106,5 +109,13 @@
     .focus::-webkit-input-placeholder{
         transition: all .4s ease;
         opacity:0;
+    }
+
+    .slide-in-enter-active,.slide-in-leave-active{
+        transition: .4s ease
+    }
+
+    .slide-in-enter,.slide-in-leave-to{
+        transform: translateX(-100%);
     }
 </style>

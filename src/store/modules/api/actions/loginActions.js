@@ -1,8 +1,10 @@
 import {timeout} from './articleActions'
 import {
+    ACTION_GET_TOP_COMMENT_LIST,
     ACTION_LOGIN,
     ACTION_LOGIN_WITH_DYNAMIC_PASSWORD,
-    ACTION_LOGOUT} from "../../action_types";
+    ACTION_LOGOUT
+} from "../../action_types";
 import {
     MUTATION_LAUNCH_PROGRASS_BAR, MUTATION_PUSH_PROGRASS_BAR_TO_END,
     MUTATION_RESOLVE_LOGIN_RESULT,
@@ -11,6 +13,7 @@ import {
     MUTATION_TRIGGER_SHOW_NOTICE
 } from "../../mutation_types";
 import {LoginRequest} from '../request'
+import {exceptionNoticer} from "./index";
 
 
 export default {
@@ -58,14 +61,7 @@ export default {
            }
            context.commit(MUTATION_TRIGGER_IS_LOADING,payload__)
 
-           console.log(err)
-
-           const payload___ = {
-               show: true,
-               noticeContent: 'ACTION_LOGIN ERR: ' + (err.response ? err.response.data : err)
-           }
-
-           context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload___)
+           exceptionNoticer(err,ACTION_LOGIN,context)
        }
 
    },
@@ -112,14 +108,7 @@ export default {
             }
             context.commit(MUTATION_TRIGGER_IS_LOADING,payload__)
 
-            console.log(err)
-
-            const payload___ = {
-               show: true,
-               noticeContent: 'ACTION_LOGIN_WITH_DYNAMIC_PASSWORD ERR: ' + (err.response ? err.response.data : err)
-            }
-
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload___)
+            exceptionNoticer(err,ACTION_LOGIN_WITH_DYNAMIC_PASSWORD,context)
         }
 
 

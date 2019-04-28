@@ -1,6 +1,6 @@
 import styled from 'vue-styled-components'
 
-export const FreshCommentItemWrapper = styled.div`
+export const FreshCommentItemWrapper = styled('div',{isBanned: Boolean})`
         position: relative;
         border: solid 1px #CCCCCC;
         border-radius: 0.4rem;
@@ -10,7 +10,7 @@ export const FreshCommentItemWrapper = styled.div`
         color:grey;
         font-size:0.9rem;
         margin-top: 0.5rem;
-        background: white;
+        background: ${props => props.isBanned ? '#F7F7F7' : 'white'};
     `
 
 export const DeleteButton = styled.i`

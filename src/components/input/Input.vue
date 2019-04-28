@@ -156,6 +156,7 @@
         border: solid 1px #F7F7F7;
         border-radius: 0.4rem;
         transition: all .4s ease;
+        flex-grow: 1;
     }
     .focusActive:focus{
          box-shadow: 1px 1px 2px #999999 inset;
@@ -171,6 +172,7 @@
         outline: none;
         border: none;
         padding: 0.5rem;
+        flex-grow: 1;
         padding-left: 1rem !important;
         transition: all 0.2s ease;}
     .input-ex::placeholder{

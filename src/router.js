@@ -7,13 +7,16 @@ Vue.use(Router)
 const Article = () => import('./components/article/Article.vue')
 const Home = () => import('./views/home/Home.vue')
 const CommonHeader = () => import('./components/header/CommonHeader.vue')
+const HomeHeader = () => import('./components/header/HomeHeader.vue')
 const ManagePageHeader = () => import('./components/header/ManagePageHeader.vue')
-const LoginPageHeader = () => import('./components/header/LoginPageHeader.vue')
 const ArticleEditPageHeader = () => import('./components/header/ArticleEditPageHeader.vue')
+const IPManagePageHeader = () => import('./components/header/IPManagePageHeader.vue')
 const ArticlePage = () => import('./views/articlePage/ArticlePage.vue')
 const ManagePage = () => import('./views/managePage/ManagePage.vue')
 const ArticleEditPage = () => import('./views/articleEditPage/ArticleEditPage.vue')
 const LoginPage = () => import('./views/loginPage/LoginPage.vue')
+const IPManagePage = () => import('./views/ipManagePage/IPManagePage.vue')
+const NotFoundPage = () => import('./views/notFoundPage/NotFoundPage.vue')
 
 
 
@@ -30,7 +33,7 @@ let router =  new Router({
             path: '/home',
             components: {
                 Home: Home,
-                header: CommonHeader
+                header: HomeHeader
             },
             children: [
                 {
@@ -71,7 +74,23 @@ let router =  new Router({
             name: 'loginPage',
             components: {
                 LoginPage: LoginPage,
-                header: LoginPageHeader
+                header: CommonHeader
+            }
+        },
+        {
+            path: '/ip',
+            name: 'ipManagePage',
+            components: {
+                IPManagePage: IPManagePage,
+                header: IPManagePageHeader
+            }
+        },
+        {
+            path: '/404',
+            name: 'notFoundPage',
+            components: {
+                NotFoundPage: NotFoundPage,
+                header: CommonHeader
             }
         }
     ],

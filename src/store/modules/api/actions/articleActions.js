@@ -12,12 +12,13 @@ import {
     MUTATION_APPOINT_PAGINATION,
     MUTATION_LAUNCH_PROGRASS_BAR,
     MUTATION_APPOINT_EDITING_ARTICLE,
-    MUTATION_APPOINT_CONTEXT,
     MUTATION_RESET,
     MUTATION_RESOLVE_DRAFT,
     MUTATION_RECORD_ARTICLE_JUST_DELETED,
     MUTATION_RESET_PAGINATION,
-    MUTATION_TRIGGER_SHOW_MODAL, MUTATION_RECORD_ARTICLE_JUST_RECOVER, MUTATION_RECORD_ARTICLE_JUST_DESTROY
+    MUTATION_TRIGGER_SHOW_MODAL,
+    MUTATION_RECORD_ARTICLE_JUST_RECOVER,
+    MUTATION_RECORD_ARTICLE_JUST_DESTROY
 } from "../../mutation_types";
 import {
     ACTION_GET_ARTICLE_DATA,
@@ -35,11 +36,15 @@ import {
     ACTION_GET_DRAFT,
     ACTION_APPOINT_EDITING_ARTICLE,
     ACTION_DELETE_ARTICLE,
-    ACTION_DELETE_ARTICLE_LIST, ACTION_RECOVER_ARTICLE, ACTION_CLEAN_RECYCLEBIN, ACTION_DESTROY_ARTICLE
+    ACTION_DELETE_ARTICLE_LIST,
+    ACTION_RECOVER_ARTICLE,
+    ACTION_CLEAN_RECYCLEBIN,
+    ACTION_DESTROY_ARTICLE
 } from "../../action_types";
 import {AXIOS_SOURCE_REQUEST_ARTICLE} from "../source_types";
 import {throttleByDelay} from "../../../../exJs/throttle";
 import router from '@/router'
+import {exceptionNoticer} from "./index";
 
 
 export default {
@@ -70,16 +75,9 @@ export default {
         }
         context.commit(MUTATION_RECORD_CURRENT_ARTICLE_ID, payload__)
 
-        //如果此时存在未完成的同类请求，取消它
-        if(window[AXIOS_SOURCE_REQUEST_ARTICLE]){
-            window[AXIOS_SOURCE_REQUEST_ARTICLE].cancel('Cancel')
-        }
-
         try{
 
             const res = await ArticleRequest.RequestArticle(payload.article_id)
-
-            window[AXIOS_SOURCE_REQUEST_ARTICLE] = undefined
 
             const payload___ = {
                 article: res.data
@@ -99,19 +97,7 @@ export default {
 
         }catch(err){
 
-            console.log(err)
-
-            if(err.message === 'Cancel') {
-                context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
-                return
-            }
-
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,({
-                noticeContent: '获取文章数据失败, err:' + (err.response ? err.response.data : err),
-                show: true
-            }))
-
-
+            exceptionNoticer(err,ACTION_GET_ARTICLE_DATA,context)
 
         }
 
@@ -150,12 +136,7 @@ export default {
 
         }catch(err){
 
-            console.log(err)
-
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,({
-                noticeContent: '获取文章列表数据失败,err:' + (err.response ? err.response.data : err),
-                show: true
-            }))
+            exceptionNoticer(err,ACTION_GET_ARTICLE_LIST_DATA,context)
 
         }
 
@@ -184,7 +165,6 @@ export default {
 
             const payload__ = {
                 articleList: res.data.articleList,
-                maxPage: res.data.maxPage
             }
             context.commit(MUTATION_RESOLVE_ARTICLE_LIST_DATA_TO_MANAGE_PAGE,payload__)
 
@@ -204,12 +184,7 @@ export default {
 
         }catch(err){
 
-            console.log(err)
-
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,{
-                noticeContent: '获取文章列表数据失败,err:' + (err.response ? err.response.data : err),
-                show: true
-            })
+            exceptionNoticer(err,ACTION_GET_ARTICLE_LIST_DATA_OF_MANAGE_PAGE,context)
 
         }
 
@@ -241,14 +216,9 @@ export default {
             context.commit(MUTATION_TRIGGER_IS_LOADING,payload__)
 
         }catch (err) {
-            console.log(err)
 
-            const payload_ = {
-                show: true,
-                noticeContent: err.response ? err.response.data : err
-            }
+            exceptionNoticer(err,ACTION_GET_ARTICLE_FILING_DATA,context)
 
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload_)
         }
     },
 
@@ -278,14 +248,9 @@ export default {
             context.commit(MUTATION_TRIGGER_IS_LOADING,payload___)
 
         }catch (err) {
-            console.log(err)
 
-            const payload____ = {
-                show: true,
-                noticeContent: err.response ? err.response.data : err
-            }
+            exceptionNoticer(err,ACTION_GET_ARTICLE_CLASSIFICATION_DATA,context)
 
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload____)
         }
 
     },
@@ -332,14 +297,9 @@ export default {
             context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
 
         }catch (err) {
-            console.log(err)
 
-            const payload______ = {
-                show: true,
-                noticeContent: 'ACTION_GET_ARTICLE_LIST_BY_KEYWORD ERR: ' + (err.response ? err.response.data : err)
-            }
+            exceptionNoticer(err,ACTION_GET_ARTICLE_LIST_BY_KEYWORD,context)
 
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload______)
         }
 
     },
@@ -389,14 +349,7 @@ export default {
             context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
 
         }catch (err) {
-            console.log(err)
-
-            const payload______ = {
-                show: true,
-                noticeContent: 'ACTION_GET_ARTICLE_LIST_BY_KEYWORD ERR: ' + (err.response ? err.response.data : err)
-            }
-
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload______)
+            exceptionNoticer(err,ACTION_GET_ARTICLE_LIST_BY_FILING,context)
         }
 
     },
@@ -443,14 +396,7 @@ export default {
             context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
 
         }catch (err) {
-            console.log(err)
-
-            const payload______ = {
-                show: true,
-                noticeContent: 'ACTION_GET_ARTICLE_LIST_BY_KEYWORD ERR: ' + (err.response ? err.response.data : err)
-            }
-
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload______)
+            exceptionNoticer(err,ACTION_GET_ARTICLE_LIST_BY_CLASSIFICATION,context)
         }
 
     },
@@ -488,12 +434,7 @@ export default {
 
         }catch(err){
 
-            console.log(err)
-
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,({
-                noticeContent: 'ACTION_GET_ARTICLE_LIST_OF_HOME_BY_KEYWORD ERR:' + (err.response ? err.response.data : err),
-                show: true
-            }))
+            exceptionNoticer(err,ACTION_GET_ARTICLE_LIST_OF_HOME_BY_KEYWORD,context)
 
         }
     },
@@ -532,12 +473,7 @@ export default {
 
         }catch(err){
 
-            console.log(err)
-
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,({
-                noticeContent: '获取文章列表数据失败,err:' + (err.response ? err.response.data : err),
-                show: true
-            }))
+            exceptionNoticer(err,ACTION_GET_ARTICLE_LIST_OF_HOME_BY_FILING,context)
 
         }
     },
@@ -575,12 +511,7 @@ export default {
 
         }catch(err){
 
-            console.log(err)
-
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,({
-                noticeContent: '获取文章列表数据失败,err:' + (err.response ? err.response.data : err),
-                show: true
-            }))
+            exceptionNoticer(err,ACTION_GET_ARTICLE_LIST_OF_HOME_BY_LABEL,context)
 
         }
     },
@@ -658,14 +589,7 @@ export default {
             }
 
         }catch (err) {
-            console.log(err)
-
-            const payload_________ = {
-                show:true,
-                noticeContent: 'ACTION_SAVE_ARTICLE ERR: ' + (err.response ? err.response.data: err)
-            }
-
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload_________)
+            exceptionNoticer(err,ACTION_SAVE_ARTICLE,context)
         }
 
     },
@@ -704,13 +628,7 @@ export default {
             }
             context.commit(MUTATION_TRIGGER_IS_LOADING,payload__)
 
-            console.log(err)
-
-            const payload___ = {
-                show:true,
-                noticeContent: 'ACTION_GET_DRAFT ERR: ' + (err.response ? err.response.data : err)
-            }
-            context.commit(payload___)
+            exceptionNoticer(err,ACTION_GET_DRAFT,context)
         }
     },
 
@@ -741,14 +659,7 @@ export default {
 
 
         }catch (err) {
-
-            console.log(err)
-
-            const payload___ = {
-                show:true,
-                noticeContent: 'ACTION_APPOINT_EDITING_ARTICLE ERR: ' + (err.response ? err.response.data : err)
-            }
-            context.commit(payload___)
+            exceptionNoticer(err,ACTION_APPOINT_EDITING_ARTICLE,context)
         }
 
     },
@@ -775,14 +686,7 @@ export default {
 
             context.commit(MUTATION_TRIGGER_SHOW_MODAL,payload__)
 
-            console.log(err)
-
-            const payload___ = {
-                show: true,
-                noticeContent: 'DELETE ARTICLE FAIL: ' + (err.response ? err.response.data : err)
-            }
-
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload___)
+            exceptionNoticer(err,ACTION_DELETE_ARTICLE,context)
         }
 
     },
@@ -812,14 +716,7 @@ export default {
 
             context.commit(MUTATION_TRIGGER_SHOW_MODAL,payload___)
 
-            console.log(err)
-
-            const payload____ = {
-                show: true,
-                noticeContent: 'DELETE ARTICLE FAIL: ' + (err.response ? err.response.data : err)
-            }
-
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload____)
+            exceptionNoticer(err,ACTION_DELETE_ARTICLE_LIST,context)
         }
     },
 
@@ -833,14 +730,7 @@ export default {
 
         }catch (err) {
 
-            console.log(err)
-
-            const payload____ = {
-                show: true,
-                noticeContent: 'DELETE ARTICLE FAIL: ' + (err.response ? err.response.data : err)
-            }
-
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload____)
+            exceptionNoticer(err,ACTION_RECOVER_ARTICLE,context)
 
         }
 
@@ -873,14 +763,7 @@ export default {
             }
             context.commit(MUTATION_TRIGGER_IS_LOADING,payload__)
 
-            console.log(err)
-
-            const payload___ = {
-                show: true,
-                noticeContent: 'DELETE ARTICLE FAIL: ' + (err.response ? err.response.data : err)
-            }
-
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload___)
+            exceptionNoticer(err,ACTION_CLEAN_RECYCLEBIN,context)
         }
     },
 
@@ -894,14 +777,7 @@ export default {
 
         }catch (err) {
 
-            console.log(err)
-
-            const payload___ = {
-                show: true,
-                noticeContent: 'DELETE ARTICLE FAIL: ' + (err.response ? err.response.data : err)
-            }
-
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload___)
+            exceptionNoticer(err,ACTION_DESTROY_ARTICLE,context)
 
         }
 

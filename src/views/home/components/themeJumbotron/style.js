@@ -1,7 +1,11 @@
 import styled from 'vue-styled-components'
 import store from '@/store'
 
-export const ThemeJumbotron = styled('div',{minHeightOfJumbotron:String})`
+export const ThemeJumbotronWrapper = styled.div`
+        position: relative;
+    `
+
+export const ThemeJumbotron = styled('div',{minHeightOfJumbotron:String,background:String,themeImage_Ready:Boolean})`
         box-sizing: border-box;
         min-height: ${props => props.minHeightOfJumbotron};
         width: 100%;
@@ -9,13 +13,19 @@ export const ThemeJumbotron = styled('div',{minHeightOfJumbotron:String})`
         justify-content: center;
         align-items: center;
         padding: 0 2rem;
+        background:url(${props => props.background}) no-repeat center;
+        background-size: cover;
+        transition: all 1s ease;
+        opacity: ${props => props.themeImage_Ready ? '1' : '0'};
     `
 
 export const Inner = styled.div`
-        max-width: 100%;
-        width: 650px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
         display: flex;
-        margin-bottom: 5%;
         justify-content: center;
         align-items: center;
     `
@@ -23,16 +33,10 @@ export const Inner = styled.div`
 export const ThemeImageWrapper = styled.div`
         display: flex;
         flex-direction: column;
+        justify-content: center;
         align-items: center;
-        width: 70%;
-        padding-right: 2rem;
-        margin-right: 2rem;
-        border-right: solid 1px ${store.state.meta.metaBorderColor}; 
-        @media(max-width:800px){
-            padding-right: 0;
-            margin-right: 0;
-            border-right: none; 
-        }
+        width: 350px;
+        max-width: 80%;
     `
 
 export const ThemeImage = styled.img`

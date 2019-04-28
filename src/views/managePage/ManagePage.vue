@@ -208,11 +208,16 @@ export default {
     position: absolute;
   }
 
-  .slide-up-fade-enter,
-  .slide-up-fade-leave-to {
+  .slide-up-fade-enter{
     transform: translateY(50px);
     opacity: 0;
   }
+
+  .slide-up-fade-leave-to {
+    opacity: 0;
+  }
+
+
   .slide-up-fade-item{
     transition: all .4s ease;
   }

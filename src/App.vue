@@ -16,7 +16,12 @@
 
             <router-view name="ArticleEditPage"/>
 
+
             <router-view name="LoginPage"/>
+
+            <router-view name="IPManagePage"/>
+
+            <router-view name="NotFoundPage"/>
 
         </MainArea>
 

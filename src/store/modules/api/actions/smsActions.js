@@ -1,9 +1,10 @@
 import {timeout} from './articleActions'
 import {ACTION_GET_SMS} from "../../action_types";
 import {
-    MUTATION_RESOLVE_SMS, MUTATION_TRIGGER_IS_LOADING, MUTATION_TRIGGER_SHOW_NOTICE
+    MUTATION_RESOLVE_SMS, MUTATION_TRIGGER_IS_LOADING
 } from "../../mutation_types";
 import {SmsRequest} from '../request'
+import {exceptionNoticer} from "./index";
 
 
 export default {
@@ -32,14 +33,7 @@ export default {
 
         }catch (err) {
 
-            console.log(err)
-
-            const payload__ = {
-                show: true,
-                noticeContent: 'ACTION_GET_SMS ERR: ' + (err.response ? err.response.data : err)
-            }
-
-            context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload__)
+            exceptionNoticer(err,ACTION_GET_SMS,context)
 
         }
 

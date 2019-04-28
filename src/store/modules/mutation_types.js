@@ -86,3 +86,8 @@ export const MUTATION_RECORD_ARTICLE_JUST_RECOVER = 'mutation_recordArticleJustR
 
 export const MUTATION_RECORD_ARTICLE_JUST_DESTROY = 'mutation_recordArticleJustDestroy'
 
+export const MUTATION_RECORD_COMMENT_JUST_BAN = 'mutation_recordCommentJustBan'
+
+export const MUTATION_RECORD_COMMENT_JUST_LIFTED = 'mutation_recordCommentJustLifted'
+
+export const MUTATION_RESOLVE_IP_LIST_DATA = 'mutation_resolveIPListData'

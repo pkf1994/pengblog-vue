@@ -1,11 +1,13 @@
 import {ImageRequest} from '../request'
-import {
-    MUTATION_APPOINT_EDITING_ARTICLE, MUTATION_TRIGGER_IS_LOADING,
-    MUTATION_TRIGGER_SHOW_NOTICE
+import { MUTATION_TRIGGER_IS_LOADING,
 } from "../../mutation_types";
 
-import {ACTION_APPOINT_EDITING_ARTICLE, ACTION_DELETE_COMMENT, ACTION_UPLOAD_IMAGE} from "../../action_types";
+import {
+    ACTION_APPOINT_EDITING_ARTICLE,
+    ACTION_UPLOAD_IMAGE
+} from "../../action_types";
 import {checkToken} from "./articleActions";
+import {exceptionNoticer} from "./index";
 
 
 export default {
@@ -39,14 +41,7 @@ export default {
 
        }catch (err) {
 
-           console.log(err)
-
-           const payload___ = {
-               show: true,
-               noticeContent: 'ACTION_UPLOAD_IMAGE ERR: ' + (err.response ? err.response.data : err)
-           }
-
-           context(MUTATION_TRIGGER_SHOW_NOTICE,payload___)
+           exceptionNoticer(err,ACTION_UPLOAD_IMAGE,context)
        }
 
    }

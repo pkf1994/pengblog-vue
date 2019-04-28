@@ -11,18 +11,26 @@ export const LoginPageWrapper = styled.div`
         min-height: calc(100% - 70px);
     `
 
-export const Jumbotron = styled('div',{imageSrc:String})`
+export const Jumbotron = styled.div`
          position: relative;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         width: calc(100% - 400px);
-        background:url(${props => props.imageSrc}) no-repeat center;
-        background-size: cover;
         @media(max-width:1000px){
             display: none
         }
+    `
+
+export const JumbotronImage = styled('div',{imageSrc:String})`
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background:url(${props => props.imageSrc}) no-repeat center;
+        background-size: cover;
     `
 
 export const LogoWrapper = styled.div`
@@ -139,6 +147,7 @@ export const Space = styled.li`
     `
 
 export const Slogan = styled.span`
+        z-index: 2;
         font-family: SimSun, Arial;
         font-size: 1.4rem;
         color: rgb(0, 102, 170);
