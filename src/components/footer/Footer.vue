@@ -1,7 +1,7 @@
 <template>
     <FooterWrapper>
 
-        <Row1>粤ICP备18156165号 |&nbsp;
+        <Row1><a href="http://www.miit.gov.cn/">粤ICP备18156165号</a> |&nbsp;
             <ContactMe v-on:click="showContactMeModal">
                 与我联系
             </ContactMe>

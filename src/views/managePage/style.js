@@ -18,6 +18,10 @@ export const CentralController = styled.div`
         @media(max-width:${store.state.meta.maxMobileWidth}px){
             display:none
         }
+        
+        @media(max-width:800px){
+            width: 280px;
+        }
     `
 
 export const ArticleListWrapper = styled.div`
@@ -28,6 +32,10 @@ export const ArticleListWrapper = styled.div`
         box-sizing: border-box;
         margin-left: 300px;
         width: calc(100% - 300px);
+         @media(max-width:800px){
+            margin-left: 280px;
+        width: calc(100% - 280px);
+        }
     
     `
 

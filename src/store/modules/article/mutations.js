@@ -63,6 +63,7 @@ export default {
     [MUTATION_APPEND_COMMENT_JUST_SUBMIT](state,payload) {
         if(payload.commentEditorId === "topCommentEditor") {
             state.commentList.push(payload.comment)
+            state.countOfAllComment = state.countOfAllComment + 1
         }
     },
 

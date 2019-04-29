@@ -15,7 +15,7 @@
         </ArticleLabel>
 
         <ArticleReleaseTime>
-            发布时间
+            发布于
         </ArticleReleaseTime>
 
         <MultiSelectBtn v-if="!multiSelecting && alreadyLogin">

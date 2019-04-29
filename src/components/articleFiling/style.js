@@ -35,6 +35,8 @@ export const SubmitButton = styled('button',{year: Boolean})`
         outline: none;
         cursor: ${props => props.year ? 'pointer' : 'default'};
         color: white;
+        height: 2rem;
+        max-height: 100%;
         background: ${store.state.meta.metaColor};
         border: solid 1px ${store.state.meta.metaColor};
         border-radius: 0.4rem;

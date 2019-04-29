@@ -47,7 +47,7 @@
         </ArticleLabel>
 
         <ArticleReleaseTime>
-            {{DateFormat('yy-MM-dd', new Date(article.article_releaseTime))}}
+            {{DateFormat('yy/MM/dd', new Date(article.article_releaseTime))}}
         </ArticleReleaseTime>
 
         <transition name="fade">

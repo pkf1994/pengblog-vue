@@ -10,7 +10,7 @@ export const TableHeaderWrapper = styled.div`
 
 export const ArticleTitle = styled('div',{multiSelecting:Boolean,hasBeenDeleted: Boolean})`
         box-sizing: border-box;
-        width: 65%;
+        width: 55%;
         display: flex;
         align-items: center;
         padding: 1rem;

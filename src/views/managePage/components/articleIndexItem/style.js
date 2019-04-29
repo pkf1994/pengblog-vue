@@ -22,7 +22,7 @@ export const ArticleItemWrapper = styled('div',{selected: Boolean,deleted: Boole
 
 export const ArticleTitle = styled('div',{multiSelecting:Boolean,hasBeenDeleted: Boolean})`
         box-sizing: border-box;
-        width: 60%;
+        width: 55%;
         display: flex;
         align-items: center;
         padding: 1rem;
@@ -33,6 +33,9 @@ export const ArticleTitle = styled('div',{multiSelecting:Boolean,hasBeenDeleted:
         justify-content: flex-start;
         transition: all .4s ease;
         flex-shrink: 0;
+        @media(max-width:800px){
+            padding-left: ${props => props.multiSelecting ? '2rem' : '1rem'};
+        }
     `
 
 export const ArticleTitleInner = styled.span`

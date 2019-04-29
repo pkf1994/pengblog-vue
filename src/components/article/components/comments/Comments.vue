@@ -22,7 +22,7 @@
 </template>
 
 <script>
-    import {ForMore} from '@/components'
+    import ForMore from '../../../forMore/ForMore.vue'
     import {CommentsWrapper,Title,CommentsIcon,ForMoreWrapper} from './style'
     import {Comment} from './components'
     import {mapActions, mapMutations, mapState} from "vuex";
