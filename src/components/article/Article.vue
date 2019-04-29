@@ -103,11 +103,18 @@
     },
 
     created(){
-        this.action_GetArticleData({article_id: this.article_id})
+        this.getData()
     },
 
 
     methods: {
+        async getData() {
+            try{
+                await this.action_GetArticleData({article_id: this.article_id})
+            }catch (err) {
+                this.$router.push({path:'/404'})
+            }
+        },
         refresh() {
         this.refreshIndex = false
         this.$nextTick(() => {

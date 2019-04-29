@@ -11,10 +11,9 @@
 
             <Inner>
                 <ThemeImageWrapper>
-                    <transition name="fade-delay" appear>
-                        <ThemeImage :src="themeImage" v-if="themeImageReady" :style="{width:'100%'}"/>
-                    </transition>
-
+                    <ThemeImage :src="themeImage"
+                                :themeImageReady="themeImageReady"
+                                :style="{width:'100%'}"/>
                     <transition name="slide-up-delay" appear>
                         <ThemeTitle/>
                     </transition>
@@ -62,7 +61,9 @@
             imageLoader
         },
         components: {
-            ThemeJumbotronWrapper,ThemeJumbotron,Inner,
+            ThemeJumbotronWrapper,
+            ThemeJumbotron,
+            Inner,
             ThemeImageWrapper,
             ThemeImage,
             Gap,

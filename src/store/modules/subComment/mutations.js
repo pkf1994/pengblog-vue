@@ -14,7 +14,7 @@ export default {
 
         }else{
 
-            state.subCommentListMap[payload.hostCommentId] = state.subCommentListMap[payload.hostCommentId].concat(payload.subCommentList)
+            state.subCommentListMap[payload.hostCommentId] = uniqueCommentList(state.subCommentListMap[payload.hostCommentId].concat(payload.subCommentList))
 
         }
 

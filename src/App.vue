@@ -1,7 +1,9 @@
 <template>
     <div id="app">
 
-        <router-view name="header"/>
+        <router-view v-if="!isMobile" name="Header"/>
+
+        <router-view v-if="isMobile" name="MobileHeader"/>
 
         <MainArea>
             <keep-alive>
@@ -15,7 +17,6 @@
             </keep-alive>
 
             <router-view name="ArticleEditPage"/>
-
 
             <router-view name="LoginPage"/>
 
@@ -31,17 +32,22 @@
 </template>
 
 <script>
-  import {Modal,Notice} from './components'
-  import styled from 'vue-styled-components'
-  import store from '@/store'
-  import {mapMutations} from "vuex";
-  import {MUTATION_RESOLVE_LOGIN_RESULT} from "./store/modules/mutation_types";
-  const MainArea = styled.div`
+    import {Modal,Notice} from './components'
+    import styled from 'vue-styled-components'
+    import store from '@/store'
+    import {mapMutations, mapState} from "vuex";
+    import {MUTATION_RESOLVE_LOGIN_RESULT} from "./store/modules/mutation_types";
+    const MainArea = styled.div`
         margin-top: ${store.state.meta.heightOfHeader};
     `
-  export default {
+    export default {
         created() {
             this.initLoginStatus()
+        },
+        computed: {
+            ...mapState({
+                isMobile: state => state.meta.widthOfWindow < state.meta.maxMobileWidth
+            })
         },
         methods: {
             ...mapMutations({
@@ -66,9 +72,9 @@
             }
         },
         components: {
-            Modal,Notice,MainArea
+                Modal,Notice,MainArea
         }
-  }
+    }
 </script>
 
 

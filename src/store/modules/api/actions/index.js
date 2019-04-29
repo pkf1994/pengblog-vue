@@ -11,9 +11,8 @@ export default Object.assign(smsActions,articleActions,commentActions,captchaAct
 
 export const exceptionNoticer = (err,action,context) => {
 
-    if(err.message === 'Cancel') {
+    while(context.rootState.prograssBar.nanobarTimers.length > 0) {
         context.commit(MUTATION_PUSH_PROGRASS_BAR_TO_END)
-        return
     }
 
     console.log(err)
@@ -26,3 +25,4 @@ export const exceptionNoticer = (err,action,context) => {
     context.commit(MUTATION_TRIGGER_SHOW_NOTICE,payload_)
 
 }
+

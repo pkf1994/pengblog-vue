@@ -10,6 +10,10 @@
                       :warnMsg="content.warnMsg"
                       @input="(event) => inputHandler('content',event)"
                       @focus="() => shutdownWarnMsg('content')"/>
+
+            <EmojiPickerFixer>
+                <EmojiPicker :post-handler="appendEmoji"/>
+            </EmojiPickerFixer>
         </Content>
 
         <VisitorInfo>
@@ -75,6 +79,7 @@
     import {Loading} from '@/components'
     import Input from '../../../../../input/Input.vue'
     import TextArea from '../../../../../textArea/TextArea.vue'
+    import EmojiPicker from '../../../../../emojiPicker/EmojiPicker.vue'
     import {SubCommentEditorWrapper,
             Name,
             Title,
@@ -83,10 +88,15 @@
             InputWrapper,
             SubmitButtonWrapper,
             SubmitButton,
-            LoadingWrapper} from './style'
+            LoadingWrapper,
+        EmojiPickerFixer} from './style'
     import {mapActions, mapMutations, mapState} from "vuex";
     import {DeleteCookie,SetCookie,ReadCookie} from "@/exJs/cookieUtil";
-    import {MUTATION_APPOINT_INPUT, MUTATION_TRIGGER_IS_LOADING} from "../../../../../../store/modules/mutation_types";
+    import {
+        MUTATION_APPEND_TO_COMMENT_EDITOR,
+        MUTATION_APPOINT_INPUT,
+        MUTATION_TRIGGER_IS_LOADING
+    } from "../../../../../../store/modules/mutation_types";
     import {ACTION_TRY_SUBMIT_COMMENT} from "../../../../../../store/modules/action_types";
 
 
@@ -126,8 +136,6 @@
                     return
                 }
 
-
-
                 //将数据存入cookie
                 this.rememberMe(this.name.value,this.email.value,this.site.value)
 
@@ -165,6 +173,13 @@
                 SetCookie('name',name,30)
                 SetCookie('email',email,30)
                 SetCookie('site',site,30)
+            },
+            appendEmoji(value) {
+                const payload = {
+                    commentEditorId: 'subCommentEditor',
+                    value: value
+                }
+                this.mutation_appendToCommentEditor(payload)
             },
             //从cookie读取数据
             writeVisitorInfoSilently() {
@@ -278,7 +293,8 @@
             },
             ...mapMutations({
                 mutation_appointInput: MUTATION_APPOINT_INPUT,
-                mutation_triggerIsLoading: MUTATION_TRIGGER_IS_LOADING
+                mutation_triggerIsLoading: MUTATION_TRIGGER_IS_LOADING,
+                mutation_appendToCommentEditor: MUTATION_APPEND_TO_COMMENT_EDITOR
             }),
             ...mapActions({
                 action_trySubmitComment: ACTION_TRY_SUBMIT_COMMENT
@@ -296,7 +312,9 @@
             SubmitButtonWrapper,
             SubmitButton,
             LoadingWrapper,
-            Loading
+            Loading,
+            EmojiPicker,
+            EmojiPickerFixer
         }
     }
 </script>

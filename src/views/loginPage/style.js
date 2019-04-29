@@ -12,6 +12,7 @@ export const LoginPageWrapper = styled.div`
     `
 
 export const Jumbotron = styled.div`
+        z-index: 2;
          position: relative;
         display: flex;
         flex-direction: column;

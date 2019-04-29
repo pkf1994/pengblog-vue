@@ -2,7 +2,7 @@ import {
     MUTATION_APPOINT_INPUT,
     MUTATION_TRIGGER_IS_LOADING,
     MUTATION_APPOINT_REFERING_COMMENT,
-    MUTATION_RESET
+    MUTATION_RESET, MUTATION_APPEND_TO_COMMENT_EDITOR
 } from "../mutation_types";
 
 export default {
@@ -33,6 +33,11 @@ export default {
     [MUTATION_RESET](state,payload) {
         if(payload.id === 'subCommentEditor')
             state.content.value = ''
+    },
+    [MUTATION_APPEND_TO_COMMENT_EDITOR](state, payload) {
+        if(payload.commentEditorId === 'subCommentEditor') {
+            state.content.value = state.content.value + payload.value
+        }
     }
 }
 

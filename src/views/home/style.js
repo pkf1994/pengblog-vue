@@ -138,10 +138,10 @@ export const SearchBarWrapper = styled('div',{showCentralController:Boolean})`
         ${store.state.meta.browser === 'Edge' ? 'z-index: 2;' : ''}
     `
 
-export const SearchBarFixer = styled('div',{showCentralController:Boolean})`
+export const SearchBarFixer = styled('div',{showCentralController:Boolean,disableCentralControllerTrigger:Boolean})`
         transition: all .4s ease;
         @media(max-width:${store.state.meta.maxMobileWidth}px) {
-            width: ${props => props.showCentralController ? '100%' : 'calc(100% - 2rem)'};
+            width: ${props => props.showCentralController || props.disableCentralControllerTrigger ? '100%' : 'calc(100% - 2rem)'};
         }
     `
 

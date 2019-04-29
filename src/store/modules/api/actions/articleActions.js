@@ -97,8 +97,10 @@ export default {
 
         }catch(err){
 
+
             exceptionNoticer(err,ACTION_GET_ARTICLE_DATA,context)
 
+            throw new Error()
         }
 
     },

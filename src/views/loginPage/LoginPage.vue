@@ -25,7 +25,7 @@
                 </SwitchButton>
             </transition>
 
-            <transition name="fade" mode="out-in" appear>
+            <transition name="slide-in" mode="out-in" appear>
                 <component v-bind:is="currentLoginer"/>
             </transition>
 
@@ -91,10 +91,23 @@
 
 <style scoped>
     .fade-enter-active, .fade-leave-active {
-        transition: opacity 1s ease;
+        transition: opacity .4s ease;
     }
     .fade-enter, .fade-leave-to
         /* .component-fade-leave-active for below version 2.1.8 */ {
+        opacity: 0;
+    }
+
+    .slide-in-enter-active, .slide-in-leave-active {
+        transition: all .4s ease;
+    }
+    .slide-in-enter{
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    .slide-in-leave-to
+        /* .component-fade-leave-active for below version 2.1.8 */ {
+        transform: translateX(-100%);
         opacity: 0;
     }
 </style>

@@ -80,3 +80,9 @@ export const LoadingWrapper = styled.div`
         background: white;
         opacity: 0.5
     `
+
+export const EmojiPickerFixer = styled.div`
+        position: absolute;
+        right: 1rem;
+        bottom: 1rem;
+    `

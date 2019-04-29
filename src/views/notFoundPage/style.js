@@ -9,9 +9,11 @@ export const NotFoundPageWrapper = styled.div`
         min-height: calc(${store.state.meta.heightOfWindow}px - ${store.state.meta.heightOfHeader});
     `
 
-export const NotFoundImage = styled.img`
+export const NotFoundImage = styled('img',{imageUrlReady:Boolean})`
         width: 300px;
         height: auto;
+        transition: all 1s ease;
+        opacity: ${props => props.imageUrlReady ? '1' : '0'};
     `
 
 export const Title = styled.div`

@@ -12,7 +12,7 @@ export const HeaderWrapper = styled.div`
         display: flex;
         align-items: center;
         justify-content: space-between;
-        height: 4.5rem;
+        height: ${store.state.meta.heightOfHeader};
         border-bottom: solid 1px ${store.state.meta.metaBorderColor};
         @media(max-width: ${store.state.meta.maxMobileWidth}px){
             padding: 0 1rem;

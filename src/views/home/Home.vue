@@ -1,18 +1,19 @@
 <template>
 
   <HomeWrapper>
-
     <!--侧边栏文章列表-->
-    <ArticleList>
+    <ArticleList ref="articleList">
 
       <SearchBarWrapper :showCentralController="showCentralController">
 
-        <SearchBarFixer :showCentralController="showCentralController">
+        <SearchBarFixer :showCentralController="showCentralController"
+                        :disableCentralControllerTrigger="disableCentralControllerTrigger">
           <SearchBar searchBarId="home"
                      :searchBarPostHandler="searchBarPostHandler"/>
         </SearchBarFixer>
 
-        <MoreCondition :showCentralController="showCentralController">
+        <MoreCondition :showCentralController="showCentralController"
+                       v-if="!disableCentralControllerTrigger">
           <div class="iconfont"
                :showCentralController="showCentralController"
                 v-on:click="() => triggerShow(true)">&#xe609;</div>
@@ -113,7 +114,8 @@ export default {
     data() {
         return {
             heightOfCentralController: '0px',
-            showCentralController: false
+            showCentralController: false,
+            disableCentralControllerTrigger: false
         }
     },
 
@@ -123,6 +125,7 @@ export default {
 
     mounted() {
         this.recordHeightOfCentralController()
+        this.initScrollHandler()
     },
 
     computed: {
@@ -152,8 +155,17 @@ export default {
             action_getArticleListOfHomeByLabel: ACTION_GET_ARTICLE_LIST_OF_HOME_BY_LABEL
         }),
         ...mapMutations({
-           mutation_appointContext: MUTATION_APPOINT_CONTEXT
+            mutation_appointContext: MUTATION_APPOINT_CONTEXT
         }),
+        initScrollHandler() {
+            this.$refs.articleList.$el.addEventListener('scroll',() => {
+                if(this.$refs.articleList.$el.scrollTop > parseInt(this.heightOfCentralController)) {
+                    this.disableCentralControllerTrigger = true
+                    return
+                }
+                this.disableCentralControllerTrigger = false
+            })
+        },
         getData() {
             switch (this.context) {
                 case 'common':

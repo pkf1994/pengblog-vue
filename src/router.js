@@ -17,6 +17,7 @@ const ArticleEditPage = () => import('./views/articleEditPage/ArticleEditPage.vu
 const LoginPage = () => import('./views/loginPage/LoginPage.vue')
 const IPManagePage = () => import('./views/ipManagePage/IPManagePage.vue')
 const NotFoundPage = () => import('./views/notFoundPage/NotFoundPage.vue')
+const MobileHeader = () => import ('./components/mobileHeader/MobileHeader.vue')
 
 
 
@@ -33,7 +34,8 @@ let router =  new Router({
             path: '/home',
             components: {
                 Home: Home,
-                header: HomeHeader
+                Header: HomeHeader,
+                MobileHeader: MobileHeader
             },
             children: [
                 {
@@ -49,7 +51,8 @@ let router =  new Router({
             name: 'managePage',
             components: {
                 ManagePage: ManagePage,
-                header: ManagePageHeader
+                Header: ManagePageHeader,
+                MobileHeader: MobileHeader
             }
         },
         {
@@ -57,7 +60,8 @@ let router =  new Router({
             name: 'article',
             components: {
                 ArticlePage: ArticlePage,
-                header: CommonHeader
+                Header: CommonHeader,
+                MobileHeader: MobileHeader
             },
             props: {ArticlePage:true}
         },
@@ -66,7 +70,8 @@ let router =  new Router({
             name: 'articleEdit',
             components: {
                 ArticleEditPage: ArticleEditPage,
-                header: ArticleEditPageHeader
+                Header: ArticleEditPageHeader,
+                MobileHeader: MobileHeader
             }
         },
         {
@@ -74,7 +79,8 @@ let router =  new Router({
             name: 'loginPage',
             components: {
                 LoginPage: LoginPage,
-                header: CommonHeader
+                Header: CommonHeader,
+                MobileHeader: MobileHeader
             }
         },
         {
@@ -82,15 +88,17 @@ let router =  new Router({
             name: 'ipManagePage',
             components: {
                 IPManagePage: IPManagePage,
-                header: IPManagePageHeader
+                Header: IPManagePageHeader,
+                MobileHeader: MobileHeader
             }
         },
         {
-            path: '/404',
+            path: '*',
             name: 'notFoundPage',
             components: {
                 NotFoundPage: NotFoundPage,
-                header: CommonHeader
+                Header: CommonHeader,
+                MobileHeader: MobileHeader
             }
         }
     ],
@@ -126,5 +134,7 @@ const appointDocumentTitle = (to) => {
         document.title = '远方有鱼'
     }else if(to.path.match(/^\/home\/article/) != null) {
         document.title = store.state.article.article.article_title
+    }else if(to.path.match(/^\/40/) != null) {
+        document.title = '40X'
     }
 }

@@ -39,12 +39,15 @@ export const ThemeImageWrapper = styled.div`
         max-width: 80%;
     `
 
-export const ThemeImage = styled.img`
+export const ThemeImage = styled('img',{themeImageReady:Boolean})`
         box-sizing: border-box;
         width: 80%;
         object-fit: contain;
         margin-bottom: 1rem;
         padding: 0 1rem;
+        transition: all 1s ease;
+        transition-delay: 1s;
+        opacity: ${props => props.themeImageReady ? '1' : '0'};
         @media(max-width:800px){
            width: 100%;
         }
